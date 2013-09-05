@@ -31,27 +31,6 @@ function os2dagsorden_sidepane_menu_menu_default_menu_links() {
     'expanded' => '0',
     'weight' => '-50',
   );
-  // Exported menu link: menu-sidepane-menu:http://drupal.org
-  $menu_links['menu-sidepane-menu:http://drupal.org'] = array(
-    'menu_name' => 'menu-sidepane-menu',
-    'link_path' => 'http://drupal.org',
-    'router_path' => '',
-    'link_title' => 'Budget 2014',
-    'options' => array(
-      'attributes' => array(
-        'id' => 'menu-byradet',
-        'class' => array(
-          0 => 'menu-sidepane',
-        ),
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => '0',
-    'external' => '1',
-    'has_children' => '0',
-    'expanded' => '0',
-    'weight' => '0',
-  );
   // Exported menu link: menu-sidepane-menu:meetings/print
   $menu_links['menu-sidepane-menu:meetings/print'] = array(
     'menu_name' => 'menu-sidepane-menu',
@@ -75,7 +54,6 @@ function os2dagsorden_sidepane_menu_menu_default_menu_links() {
   );
   // Translatables
   // Included for use with string extractors like potx.
-  t('Budget 2014');
   t('Halvårs-kalender');
   t('Hjem');
 
