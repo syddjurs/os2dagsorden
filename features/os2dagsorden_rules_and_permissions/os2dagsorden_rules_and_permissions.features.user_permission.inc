@@ -668,6 +668,16 @@ function os2dagsorden_rules_and_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: edit any page content
+  $permissions['edit any page content'] = array(
+    'name' => 'edit any page content',
+    'roles' => array(
+      0 => 'administrator',
+      1 => 'os2dagsorden admin',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: edit any speaker_paper content
   $permissions['edit any speaker_paper content'] = array(
     'name' => 'edit any speaker_paper content',
