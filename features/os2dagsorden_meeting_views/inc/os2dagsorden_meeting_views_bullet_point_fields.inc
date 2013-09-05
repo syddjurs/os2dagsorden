@@ -19,13 +19,22 @@ function os2dagsorden_meeting_views_bullet_point_print_send_to_friend(){
   $q = explode('/',$_GET['q']);
   $meeting_id = $q[1];
   $bp_id = $q[3];
-  print '<div class="controls-right" style="padding-top: 5px;">';
+  print '<div class="controls-right">';
   print '<a href="' . $base_url . '?q=meeting/' . $meeting_id . '/bullet-point/' . $bp_id . '/send_to_friend_form" class="form-submit" rel="lightframe">Send til en ven</a>
-  <a href="' . $base_url . '?q=/print/meeting/' . $meeting_id . '/bullet-point/' . $bp_id . '/print" class="form-submit next-control print-button" target="_blank">Print</a>';
+  <a href="' . $base_url . '?q=/print/meeting/' . $meeting_id . '/bullet-point/' . $bp_id . '/print" class="form-submit print-button" target="_blank">Print</a>';
   print '</div>';
   print '<div class="clearfix"></div>';
 }
 
+function os2dagsorden_meeting_views_bullet_point_print_to_pdf(){
+  global $base_url;
+  $q = explode('/',$_GET['q']);
+  $meeting_id = $q[1];
+  $bp_id = $q[3];
+  print '<div class="controls-right">';
+  print '<a href="' . $base_url . '?q=/printpdf/meeting/' . $meeting_id . '/bullet-point/' . $bp_id . '/print" class="form-submit" target="_blank">PDF</a>';
+  print '</div>';
+}
 /////////////////////////////////////////header END /////////////////////////////////////////
 
 /////////////////////////////////////////PAGE START /////////////////////////////////////////
