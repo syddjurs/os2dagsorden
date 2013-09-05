@@ -10,7 +10,7 @@
 function os2dagsorden_sidepane_menu_menu_default_menu_custom() {
   $menus = array();
 
-  // Exported menu: menu-sidepane-menu
+  // Exported menu: menu-sidepane-menu.
   $menus['menu-sidepane-menu'] = array(
     'menu_name' => 'menu-sidepane-menu',
     'title' => 'Sidepane menu',

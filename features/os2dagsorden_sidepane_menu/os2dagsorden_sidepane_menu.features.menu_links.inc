@@ -52,25 +52,6 @@ function os2dagsorden_sidepane_menu_menu_default_menu_links() {
     'expanded' => '0',
     'weight' => '0',
   );
-  // Exported menu link: menu-sidepane-menu:meetings-search
-  $menu_links['menu-sidepane-menu:meetings-search'] = array(
-    'menu_name' => 'menu-sidepane-menu',
-    'link_path' => 'meetings-search',
-    'router_path' => 'meetings-search',
-    'link_title' => 'Søg',
-    'options' => array(
-      'attributes' => array(
-        'id' => 'menu-sog',
-        'rel' => 'menu-sidepane',
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => '1',
-    'external' => '0',
-    'has_children' => '0',
-    'expanded' => '0',
-    'weight' => '-48',
-  );
   // Exported menu link: menu-sidepane-menu:meetings/print
   $menu_links['menu-sidepane-menu:meetings/print'] = array(
     'menu_name' => 'menu-sidepane-menu',
@@ -97,7 +78,6 @@ function os2dagsorden_sidepane_menu_menu_default_menu_links() {
   t('Budget 2014');
   t('Halvårs-kalender');
   t('Hjem');
-  t('Søg');
 
 
   return $menu_links;
