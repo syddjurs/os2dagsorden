@@ -102,8 +102,7 @@ function _os2web_esdh_provider_node_tab_access($nid) {
  */
 function os2web_esdh_provider_node_delete($node) {
   if ($node->type === 'meeting') {
-    //db_delete('os2web_meetings_imported')->condition('nid', $node->nid)->execute();
-    // TODO: Delete bullets from meeting.
+    //deleting bullet points
     $items = array_shift($node->field_ref_bullet_points);
     if (is_array($items)) {
       foreach ($items as $nids) {
@@ -112,13 +111,33 @@ function os2web_esdh_provider_node_delete($node) {
     }
   }
   if ($node->type === 'bullet_point') {
-    // TODO: Delete bullet attachments from meeting.
+    //deleting attachments
     $bullets = array_shift($node->field_ref_attachment);
     if (is_array($bullets)) {
       foreach ($bullets as $nids) {
         node_delete($nids['target_id']);
       }
     }
+    
+    //deleting speaker papers
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->propertyCondition('type', array('speaker_paper'))
+      ->fieldCondition('field_ref_bullet_point', 'target_id', $node->nid);
+
+    $result = $query->execute();
+    if (isset($result['node'])) {
+      $nids = array_keys($result['node']);
+      foreach ($nids as $nid) {
+	  node_delete($nid);
+      }
+    }    
+  }
+  if ($node->type === 'bullet_point_attachment') {
+    //deleting annotator notes
+    db_delete('os2dagsorden_annotator_notes')
+      ->condition('bilag_id', $node->nid)
+      ->execute();
   }
 }
 

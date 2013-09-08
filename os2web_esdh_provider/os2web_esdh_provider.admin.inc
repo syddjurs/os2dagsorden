@@ -62,13 +62,6 @@ function os2web_esdh_provider_import_form() {
     '#title' => t('Focused import id'),
     '#description' => t('Ie. 1577 to reimport XML_1577.xml.'),
   );
-  $form['group']['participants_delimeter'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Participants delimeter sign'),
-    '#default_value' => variable_get('participants_delimeter'),
-    '#description' => t('Sign with which the participants of the meeting will be separated. Is used in the meeting view.'),
-  );
-  
   return $form;
 }
 
