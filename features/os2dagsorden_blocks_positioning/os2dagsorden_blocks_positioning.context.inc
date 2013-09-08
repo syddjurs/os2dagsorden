@@ -61,7 +61,7 @@ function os2dagsorden_blocks_positioning_context_default_contexts() {
           'dashboard_inactive' => 0,
         ),
       ),
-      'syddjurs_omega_subtheme' => array(
+      'os2dagsorden_theme' => array(
         'disable' => array(
           'page_top' => 'page_top',
           'page_bottom' => 'page_bottom',

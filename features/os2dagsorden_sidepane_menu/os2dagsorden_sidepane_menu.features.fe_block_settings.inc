@@ -24,12 +24,12 @@ function os2dagsorden_sidepane_menu_default_fe_block_settings() {
     ),
   );
 
-  // syddjurs_omega_subtheme
+  // os2dagsorden_theme
   $theme = array();
 
   $theme['block-show_hide_menu_block'] = array(
     'module' => 'block',
-    'theme' => 'syddjurs_omega_subtheme',
+    'theme' => 'os2dagsorden_theme',
     'status' => 0,
     'weight' => '0',
     'region' => '',
@@ -44,7 +44,7 @@ function os2dagsorden_sidepane_menu_default_fe_block_settings() {
   $theme['menu-menu-sidepane-menu'] = array(
     'module' => 'menu',
     'delta' => 'menu-sidepane-menu',
-    'theme' => 'syddjurs_omega_subtheme',
+    'theme' => 'os2dagsorden_theme',
     'status' => 0,
     'weight' => '-19',
     'region' => '',
@@ -55,7 +55,7 @@ function os2dagsorden_sidepane_menu_default_fe_block_settings() {
     'cache' => -1,
   );
 
-  $export['theme']['syddjurs_omega_subtheme'] = $theme;
+  $export['theme']['os2dagsorden_theme'] = $theme;
 
   $theme_default = variable_get('theme_default', 'garland');
   $themes = list_themes();
