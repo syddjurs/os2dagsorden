@@ -106,7 +106,39 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
       '#default_value' => isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE),
       '#title' => t('Frequency of Adlib (* to PDF) conversion cron job'), 
   );
+  $form['#submit'][] = 'os2dagsorden_settings_cron_job_submit';
   
+  //expand or not expand bilag on bullet point expand
+  $form['os2dagsorden_expand_attachment_settings'] = array(
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#title' => t('Expand/not expand Bilag on bullet point expanding'),
+  );
+  $options = array('true' => t('Expand'), 'false' => t('Not expand (but keep it that way if the bilag has been expanded before)'));
+  $form['os2dagsorden_expand_attachment_settings']['os2dagsorden_expand_attachment'] = array(
+    '#type' => 'radios',
+    '#title' => t('Expand attachment'),
+    '#default_value' => variable_get('os2dagsorden_expand_attachment'),
+    '#options' => $options,
+    '#description' => t('This decides whether a certain type of bullet point attachment - bilag will be expanded (activated) when functionality "Expand whole bullet point" is executed.'),
+  );
+  
+  //Meeting import settings
+  $form['os2dagsorden_meeting_import'] = array(
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#title' => t('General meeting import settings'),
+  );
+  
+  $form['os2dagsorden_meeting_import']['participants_delimeter'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Participants delimeter sign'),
+    '#default_value' => variable_get('participants_delimeter'),
+    '#description' => t('Sign with which the participants of the meeting will be separated. Is used in the meeting view.<br/> E.g. if delimeter is <b>coma (,)</b> the list would look like:<br/>
+    Jørgen Andersen, Nich Bendtsen, Poul Møller, ...<br/><br/>HTML tags (such as &lt;br/&gt;) can be used.'),
+  );
+  
+  //hidden agenda
   $form['os2dagsorden_hidden_agenda_committee'] = array(
     '#type' => 'textfield',
     '#title' => 'List of committees which agenda is completely hidden to those without the rights',
@@ -114,8 +146,6 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#description' => 'Comma-separated list of committees ID which agenda and the summary (samlet dokument) is hidden to those without the rights',
     '#default_value' => variable_get('os2dagsorden_hidden_agenda_committee', OS2DAGSORDEN_HIDDEN_AGENGA_COMMITTEE),
   );
-  
-  $form['#submit'][] = 'os2dagsorden_settings_cron_job_submit';
   
   return system_settings_form($form);
 }
