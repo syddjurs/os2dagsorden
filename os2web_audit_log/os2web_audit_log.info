@@ -1,0 +1,4 @@
+name = OS2web auding log
+description = Handles logging of sensitive information
+package = os2web
+core = 7.x
