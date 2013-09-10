@@ -140,16 +140,16 @@ function os2web_audit_log_overview_page_form($form, $form_state) {
     ->limit(50);
   
   //setting params from GET if form values are empty
-  $form_state['values']['time_from'] = isset($form_state['values']['time_from'])? $form_state['values']['time_from'] : check_plain($_GET['time_from']);
-  $form_state['values']['time_until'] = isset($form_state['values']['time_until'])? $form_state['values']['time_until'] : check_plain($_GET['time_until']);
-  $form_state['values']['user'] = isset($form_state['values']['user'])? $form_state['values']['user'] : check_plain($_GET['user']);
-  $form_state['values']['user_ip'] = isset($form_state['values']['user_ip'])? $form_state['values']['user_ip'] : check_plain($_GET['user_ip']);
-  $form_state['values']['node'] = isset($form_state['values']['node'])? $form_state['values']['node'] : check_plain($_GET['node']);
-  $form_state['values']['node_type'] = isset($form_state['values']['node_type'])? $form_state['values']['node_type'] : check_plain($_GET['node_type']);
-  $form_state['values']['action'] = isset($form_state['values']['action'])? $form_state['values']['action'] : check_plain($_GET['action']);
+  $form_state['values']['time_from'] = empty($form_state['values']['time_from'])? check_plain($_GET['time_from']) : $form_state['values']['time_from'];
+  $form_state['values']['time_until'] = empty($form_state['values']['time_until'])? check_plain($_GET['time_until']) : $form_state['values']['time_until'];
+  $form_state['values']['user'] = empty($form_state['values']['user'])? check_plain($_GET['user']) : $form_state['values']['user'] : ;
+  $form_state['values']['user_ip'] = empty($form_state['values']['user_ip'])? check_plain($_GET['user_ip']) : $form_state['values']['user_ip'];
+  $form_state['values']['node'] = empty($form_state['values']['node'])? check_plain($_GET['node']) : $form_state['values']['node'];
+  $form_state['values']['node_type'] = empty($form_state['values']['node_type'])? check_plain($_GET['node_type']) : $form_state['values']['node_type'];
+  $form_state['values']['action'] = empty($form_state['values']['action'])? check_plain($_GET['action']) : $form_state['values']['action'];
   
   //time from filter field
-  if (isset($form_state['values']['time_from'])) {
+  if (!empty($form_state['values']['time_from'])) {
     $filter_time_from = $form_state['values']['time_from'];
     $form['filter']['time_from']['#default_value'] = $filter_time_from;
     $_GET['time_from'] = $filter_time_from;
@@ -158,7 +158,7 @@ function os2web_audit_log_overview_page_form($form, $form_state) {
   }
   
   //time until filter field
-  if (isset($form_state['values']['time_until'])) {
+  if (!empty($form_state['values']['time_until'])) {
     $filter_time_until = $form_state['values']['time_until'];
     $form['filter']['time_until']['#default_value'] = $filter_time_until;
     $_GET['time_until'] = $filter_time_until;
@@ -167,7 +167,7 @@ function os2web_audit_log_overview_page_form($form, $form_state) {
   }
   
   //user filter field
-  if (isset($form_state['values']['user'])) {
+  if (!empty($form_state['values']['user'])) {
     $filter_user = $form_state['values']['user'];
     $form['filter']['user']['#default_value'] = $filter_user;
     $_GET['user'] = $filter_user;
@@ -191,7 +191,7 @@ function os2web_audit_log_overview_page_form($form, $form_state) {
   }
   
   //user ip filter field
-  if (isset($form_state['values']['user_ip'])) {
+  if (!empty($form_state['values']['user_ip'])) {
     $filter_user_ip = $form_state['values']['user_ip'];
     $form['filter']['user_ip']['#default_value'] = $filter_user_ip;
     $_GET['user_ip'] = $filter_user_ip;
@@ -200,7 +200,7 @@ function os2web_audit_log_overview_page_form($form, $form_state) {
   }
   
   //node filter field
-  if (isset($form_state['values']['node'])) {
+  if (!empty($form_state['values']['node'])) {
     $filter_node = $form_state['values']['node'];
     $form['filter']['node']['#default_value'] = $filter_node;
     $_GET['node'] = $filter_node;
@@ -224,7 +224,7 @@ function os2web_audit_log_overview_page_form($form, $form_state) {
   }
   
   //node type field
-  if (isset($form_state['values']['node_type'])) {
+  if (!empty($form_state['values']['node_type'])) {
     $filter_node_type = $form_state['values']['node_type'];
     $form['filter']['node_type']['#default_value'] = $filter_node_type;
     $_GET['node_type'] = $filter_node_type;
@@ -233,7 +233,7 @@ function os2web_audit_log_overview_page_form($form, $form_state) {
   }
   
   //action field
-  if (isset($form_state['values']['action'])) {
+  if (!empty($form_state['values']['action'])) {
     $filter_action = $form_state['values']['action'];
     $form['filter']['action']['#default_value'] = $filter_action;
     $_GET['action'] = $filter_action;
