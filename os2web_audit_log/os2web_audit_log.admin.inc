@@ -142,7 +142,7 @@ function os2web_audit_log_overview_page_form($form, $form_state) {
   //setting params from GET if form values are empty
   $form_state['values']['time_from'] = empty($form_state['values']['time_from'])? check_plain($_GET['time_from']) : $form_state['values']['time_from'];
   $form_state['values']['time_until'] = empty($form_state['values']['time_until'])? check_plain($_GET['time_until']) : $form_state['values']['time_until'];
-  $form_state['values']['user'] = empty($form_state['values']['user'])? check_plain($_GET['user']) : $form_state['values']['user'] : ;
+  $form_state['values']['user'] = empty($form_state['values']['user'])? check_plain($_GET['user']) : $form_state['values']['user'];
   $form_state['values']['user_ip'] = empty($form_state['values']['user_ip'])? check_plain($_GET['user_ip']) : $form_state['values']['user_ip'];
   $form_state['values']['node'] = empty($form_state['values']['node'])? check_plain($_GET['node']) : $form_state['values']['node'];
   $form_state['values']['node_type'] = empty($form_state['values']['node_type'])? check_plain($_GET['node_type']) : $form_state['values']['node_type'];
