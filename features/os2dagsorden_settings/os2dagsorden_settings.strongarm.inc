@@ -55,25 +55,6 @@ function os2dagsorden_settings_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'language_default';
-  $strongarm->value = (object) array(
-    'language' => 'en',
-    'name' => 'English',
-    'native' => 'English',
-    'direction' => '0',
-    'enabled' => 1,
-    'plurals' => '0',
-    'formula' => '',
-    'domain' => '',
-    'prefix' => 'en',
-    'weight' => '0',
-    'javascript' => '',
-  );
-  $export['language_default'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'os2dagsorden_pws_v_acadregroups_url';
   $strongarm->value = '706dwweb01.intern.syddjurs.dk/OS2DagsordenDataService/OS2DagsordenDataService.asmx/GetXMLView?viewName=V_web_AcadreGroups';
   $export['os2dagsorden_pws_v_acadregroups_url'] = $strongarm;
