@@ -1,7 +1,7 @@
 name = Acadre ESDH System
 description = Acadre backend for ESDH system.
 
-package = OS2Web
+package = OS2Web - ESDH
 core = 7.x
 version = "7.x-0.1"
 
