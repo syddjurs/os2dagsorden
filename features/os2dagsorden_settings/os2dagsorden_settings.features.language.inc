@@ -10,7 +10,7 @@
 function os2dagsorden_settings_locale_default_languages() {
   $languages = array();
 
-  // Exported language: da
+  // Exported language: da.
   $languages['da'] = array(
     'language' => 'da',
     'name' => 'Danish',
