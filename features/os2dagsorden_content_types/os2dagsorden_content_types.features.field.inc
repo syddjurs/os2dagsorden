@@ -10,7 +10,7 @@
 function os2dagsorden_content_types_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'node-bullet_point-body'
+  // Exported field: 'node-bullet_point-body'.
   $fields['node-bullet_point-body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -33,6 +33,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '0',
@@ -88,7 +89,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point-field_bul_point_closed'
+  // Exported field: 'node-bullet_point-field_bul_point_closed'.
   $fields['node-bullet_point-field_bul_point_closed'] = array(
     'field_config' => array(
       'active' => '1',
@@ -105,6 +106,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'value',
         ),
       ),
+      'locked' => '0',
       'module' => 'list',
       'settings' => array(
         'allowed_values' => array(
@@ -159,7 +161,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point-field_bul_point_number'
+  // Exported field: 'node-bullet_point-field_bul_point_number'.
   $fields['node-bullet_point-field_bul_point_number'] = array(
     'field_config' => array(
       'active' => '1',
@@ -169,6 +171,7 @@ function os2dagsorden_content_types_field_default_fields() {
       'field_name' => 'field_bul_point_number',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -215,12 +218,12 @@ function os2dagsorden_content_types_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '1',
+        'weight' => '2',
       ),
     ),
   );
 
-  // Exported field: 'node-bullet_point-field_bul_point_personal'
+  // Exported field: 'node-bullet_point-field_bul_point_personal'.
   $fields['node-bullet_point-field_bul_point_personal'] = array(
     'field_config' => array(
       'active' => '1',
@@ -234,6 +237,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'value',
         ),
       ),
+      'locked' => '0',
       'module' => 'list',
       'settings' => array(
         'allowed_values' => array(
@@ -284,7 +288,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point-field_bullet_point_id'
+  // Exported field: 'node-bullet_point-field_bullet_point_id'.
   $fields['node-bullet_point-field_bullet_point_id'] = array(
     'field_config' => array(
       'active' => '1',
@@ -292,12 +296,26 @@ function os2dagsorden_content_types_field_default_fields() {
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_bullet_point_id',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'module' => 'number',
-      'settings' => array(),
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
       'translatable' => '0',
-      'type' => 'number_integer',
+      'type' => 'text',
     ),
     'field_instance' => array(
       'bundle' => 'bullet_point',
@@ -307,15 +325,10 @@ function os2dagsorden_content_types_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'number',
-          'settings' => array(
-            'decimal_separator' => '.',
-            'prefix_suffix' => TRUE,
-            'scale' => 0,
-            'thousand_separator' => ' ',
-          ),
-          'type' => 'number_integer',
-          'weight' => 3,
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 6,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -329,23 +342,22 @@ function os2dagsorden_content_types_field_default_fields() {
       'label' => 'ID',
       'required' => 0,
       'settings' => array(
-        'max' => '',
-        'min' => '',
-        'prefix' => '',
-        'suffix' => '',
+        'text_processing' => '0',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
-        'active' => 0,
-        'module' => 'number',
-        'settings' => array(),
-        'type' => 'number',
-        'weight' => '0',
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '1',
       ),
     ),
   );
 
-  // Exported field: 'node-bullet_point-field_enclosures'
+  // Exported field: 'node-bullet_point-field_enclosures'.
   $fields['node-bullet_point-field_enclosures'] = array(
     'field_config' => array(
       'active' => '1',
@@ -366,6 +378,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 1,
@@ -423,7 +436,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point-field_ref_attachment'
+  // Exported field: 'node-bullet_point-field_ref_attachment'.
   $fields['node-bullet_point-field_ref_attachment'] = array(
     'field_config' => array(
       'active' => '1',
@@ -444,6 +457,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'target_id',
         ),
       ),
+      'locked' => '0',
       'module' => 'entityreference',
       'settings' => array(
         'handler' => 'base',
@@ -518,7 +532,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point_attachment-field_bpa_body'
+  // Exported field: 'node-bullet_point_attachment-field_bpa_body'.
   $fields['node-bullet_point_attachment-field_bpa_body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -539,6 +553,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '0',
@@ -590,7 +605,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point_attachment-field_bpa_closed'
+  // Exported field: 'node-bullet_point_attachment-field_bpa_closed'.
   $fields['node-bullet_point_attachment-field_bpa_closed'] = array(
     'field_config' => array(
       'active' => '1',
@@ -604,6 +619,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'value',
         ),
       ),
+      'locked' => '0',
       'module' => 'list',
       'settings' => array(
         'allowed_values' => array(
@@ -658,7 +674,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point_attachment-field_bpa_file'
+  // Exported field: 'node-bullet_point_attachment-field_bpa_file'.
   $fields['node-bullet_point_attachment-field_bpa_file'] = array(
     'field_config' => array(
       'active' => '1',
@@ -679,6 +695,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 1,
@@ -730,7 +747,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point_attachment-field_bpa_file_html'
+  // Exported field: 'node-bullet_point_attachment-field_bpa_file_html'.
   $fields['node-bullet_point_attachment-field_bpa_file_html'] = array(
     'field_config' => array(
       'active' => '1',
@@ -751,6 +768,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -802,7 +820,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point_attachment-field_bpa_id'
+  // Exported field: 'node-bullet_point_attachment-field_bpa_id'.
   $fields['node-bullet_point_attachment-field_bpa_id'] = array(
     'field_config' => array(
       'active' => '1',
@@ -823,6 +841,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '255',
@@ -870,7 +889,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-bullet_point_attachment-field_bpa_page_amount'
+  // Exported field: 'node-bullet_point_attachment-field_bpa_page_amount'.
   $fields['node-bullet_point_attachment-field_bpa_page_amount'] = array(
     'field_config' => array(
       'active' => '1',
@@ -880,6 +899,7 @@ function os2dagsorden_content_types_field_default_fields() {
       'field_name' => 'field_bpa_page_amount',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -931,7 +951,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_committee'
+  // Exported field: 'node-meeting-field_committee'.
   $fields['node-meeting-field_committee'] = array(
     'field_config' => array(
       'active' => '1',
@@ -952,6 +972,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -1004,7 +1025,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_date'
+  // Exported field: 'node-meeting-field_date'.
   $fields['node-meeting-field_date'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1014,6 +1035,7 @@ function os2dagsorden_content_types_field_default_fields() {
       'field_name' => 'field_date',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'date',
       'settings' => array(
         'cache_count' => '4',
@@ -1086,7 +1108,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_hex'
+  // Exported field: 'node-meeting-field_hex'.
   $fields['node-meeting-field_hex'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1107,6 +1129,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '6',
@@ -1154,7 +1177,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_location'
+  // Exported field: 'node-meeting-field_location'.
   $fields['node-meeting-field_location'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1175,6 +1198,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -1227,7 +1251,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_acadre_id'
+  // Exported field: 'node-meeting-field_meeting_acadre_id'.
   $fields['node-meeting-field_meeting_acadre_id'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1237,6 +1261,7 @@ function os2dagsorden_content_types_field_default_fields() {
       'field_name' => 'field_meeting_acadre_id',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -1282,7 +1307,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_acadre_version'
+  // Exported field: 'node-meeting-field_meeting_acadre_version'.
   $fields['node-meeting-field_meeting_acadre_version'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1303,6 +1328,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '255',
@@ -1349,7 +1375,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_category'
+  // Exported field: 'node-meeting-field_meeting_category'.
   $fields['node-meeting-field_meeting_category'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1363,6 +1389,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'value',
         ),
       ),
+      'locked' => '0',
       'module' => 'list',
       'settings' => array(
         'allowed_values' => array(
@@ -1415,7 +1442,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_description'
+  // Exported field: 'node-meeting-field_meeting_description'.
   $fields['node-meeting-field_meeting_description'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1436,6 +1463,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -1487,7 +1515,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_description_add'
+  // Exported field: 'node-meeting-field_meeting_description_add'.
   $fields['node-meeting-field_meeting_description_add'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1508,6 +1536,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -1558,7 +1587,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_description_add_c'
+  // Exported field: 'node-meeting-field_meeting_description_add_c'.
   $fields['node-meeting-field_meeting_description_add_c'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1579,6 +1608,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -1629,7 +1659,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_description_closed'
+  // Exported field: 'node-meeting-field_meeting_description_closed'.
   $fields['node-meeting-field_meeting_description_closed'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1650,6 +1680,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -1700,7 +1731,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_id'
+  // Exported field: 'node-meeting-field_meeting_id'.
   $fields['node-meeting-field_meeting_id'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1710,6 +1741,7 @@ function os2dagsorden_content_types_field_default_fields() {
       'field_name' => 'field_meeting_id',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -1761,7 +1793,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_participants'
+  // Exported field: 'node-meeting-field_meeting_participants'.
   $fields['node-meeting-field_meeting_participants'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1782,6 +1814,7 @@ function os2dagsorden_content_types_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '0',
@@ -1827,7 +1860,7 @@ function os2dagsorden_content_types_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_search_meta_date'
+  // Exported field: 'node-meeting-field_meeting_search_meta_date'.
   $fields['node-meeting-field_meeting_search_meta_date'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1837,6 +1870,7 @@ function os2dagsorden_content_types_field_default_fields() {
       'field_name' => 'field_meeting_search_meta_date',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'computed_field',
       'settings' => array(
         'code' => '//removing any previous meta-data
@@ -1941,7 +1975,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_status'
+  // Exported field: 'node-meeting-field_meeting_status'.
   $fields['node-meeting-field_meeting_status'] = array(
     'field_config' => array(
       'active' => '1',
@@ -1962,6 +1996,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '255',
@@ -2009,7 +2044,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'node-meeting-field_meeting_sysid'
+  // Exported field: 'node-meeting-field_meeting_sysid'.
   $fields['node-meeting-field_meeting_sysid'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2019,6 +2054,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
       'field_name' => 'field_meeting_sysid',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -2070,7 +2106,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'node-meeting-field_ref_bullet_points'
+  // Exported field: 'node-meeting-field_ref_bullet_points'.
   $fields['node-meeting-field_ref_bullet_points'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2091,6 +2127,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'target_id',
         ),
       ),
+      'locked' => '0',
       'module' => 'entityreference',
       'settings' => array(
         'handler' => 'base',
@@ -2165,7 +2202,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'node-meeting-field_title_short'
+  // Exported field: 'node-meeting-field_title_short'.
   $fields['node-meeting-field_title_short'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2186,6 +2223,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '50',
@@ -2233,7 +2271,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'node-page-body'
+  // Exported field: 'node-page-body'.
   $fields['node-page-body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2256,6 +2294,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '0',
@@ -2305,7 +2344,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'node-speaker_paper-body'
+  // Exported field: 'node-speaker_paper-body'.
   $fields['node-speaker_paper-body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2328,6 +2367,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '0',
@@ -2378,7 +2418,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'node-speaker_paper-field_ref_bullet_point'
+  // Exported field: 'node-speaker_paper-field_ref_bullet_point'.
   $fields['node-speaker_paper-field_ref_bullet_point'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2402,6 +2442,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'target_id',
         ),
       ),
+      'locked' => '0',
       'module' => 'entityreference',
       'settings' => array(
         'handler' => 'base',
@@ -2470,7 +2511,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-committee-field_acadre_name'
+  // Exported field: 'taxonomy_term-committee-field_acadre_name'.
   $fields['taxonomy_term-committee-field_acadre_name'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2491,6 +2532,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '50',
@@ -2532,7 +2574,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-committee-field_committee_abbr'
+  // Exported field: 'taxonomy_term-committee-field_committee_abbr'.
   $fields['taxonomy_term-committee-field_committee_abbr'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2553,6 +2595,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '50',
@@ -2594,7 +2637,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-committee-field_committee_acadre_id'
+  // Exported field: 'taxonomy_term-committee-field_committee_acadre_id'.
   $fields['taxonomy_term-committee-field_committee_acadre_id'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2604,6 +2647,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
       'field_name' => 'field_committee_acadre_id',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -2649,7 +2693,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-committee-field_date_valid'
+  // Exported field: 'taxonomy_term-committee-field_date_valid'.
   $fields['taxonomy_term-committee-field_date_valid'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2659,6 +2703,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
       'field_name' => 'field_date_valid',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'date',
       'settings' => array(
         'cache_count' => '4',
@@ -2725,7 +2770,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-committee-field_id'
+  // Exported field: 'taxonomy_term-committee-field_id'.
   $fields['taxonomy_term-committee-field_id'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2735,6 +2780,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
       'field_name' => 'field_id',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -2780,7 +2826,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-committee-field_name_short'
+  // Exported field: 'taxonomy_term-committee-field_name_short'.
   $fields['taxonomy_term-committee-field_name_short'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2801,6 +2847,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '50',
@@ -2842,7 +2889,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-user_position-field_priority'
+  // Exported field: 'taxonomy_term-user_position-field_priority'.
   $fields['taxonomy_term-user_position-field_priority'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2852,6 +2899,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
       'field_name' => 'field_priority',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -2897,7 +2945,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-user_position-field_user_pos_committee'
+  // Exported field: 'taxonomy_term-user_position-field_user_pos_committee'.
   $fields['taxonomy_term-user_position-field_user_pos_committee'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2918,6 +2966,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -2961,7 +3010,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-user_position-field_user_pos_id'
+  // Exported field: 'taxonomy_term-user_position-field_user_pos_id'.
   $fields['taxonomy_term-user_position-field_user_pos_id'] = array(
     'field_config' => array(
       'active' => '1',
@@ -2971,6 +3020,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
       'field_name' => 'field_user_pos_id',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -3010,7 +3060,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'taxonomy_term-user_position-field_user_pos_valid'
+  // Exported field: 'taxonomy_term-user_position-field_user_pos_valid'.
   $fields['taxonomy_term-user_position-field_user_pos_valid'] = array(
     'field_config' => array(
       'active' => '1',
@@ -3020,6 +3070,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
       'field_name' => 'field_user_pos_valid',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'date',
       'settings' => array(
         'cache_count' => '4',
@@ -3086,7 +3137,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'user-user-field_follows_committee'
+  // Exported field: 'user-user-field_follows_committee'.
   $fields['user-user-field_follows_committee'] = array(
     'field_config' => array(
       'active' => '1',
@@ -3107,6 +3158,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -3150,7 +3202,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'user-user-field_follows_committee_plus'
+  // Exported field: 'user-user-field_follows_committee_plus'.
   $fields['user-user-field_follows_committee_plus'] = array(
     'field_config' => array(
       'active' => '1',
@@ -3171,6 +3223,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -3214,7 +3267,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'user-user-field_user_committee'
+  // Exported field: 'user-user-field_user_committee'.
   $fields['user-user-field_user_committee'] = array(
     'field_config' => array(
       'active' => '1',
@@ -3235,6 +3288,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(
@@ -3278,7 +3332,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'user-user-field_user_full_name'
+  // Exported field: 'user-user-field_user_full_name'.
   $fields['user-user-field_user_full_name'] = array(
     'field_config' => array(
       'active' => '1',
@@ -3299,6 +3353,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '255',
@@ -3340,7 +3395,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'user-user-field_user_id'
+  // Exported field: 'user-user-field_user_id'.
   $fields['user-user-field_user_id'] = array(
     'field_config' => array(
       'active' => '1',
@@ -3350,6 +3405,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
       'field_name' => 'field_user_id',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(),
       'translatable' => '0',
@@ -3399,7 +3455,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'user-user-field_user_meetings_category'
+  // Exported field: 'user-user-field_user_meetings_category'.
   $fields['user-user-field_user_meetings_category'] = array(
     'field_config' => array(
       'active' => '1',
@@ -3413,6 +3469,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'value',
         ),
       ),
+      'locked' => '0',
       'module' => 'list',
       'settings' => array(
         'allowed_values' => array(
@@ -3455,7 +3512,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
-  // Exported field: 'user-user-field_user_positions'
+  // Exported field: 'user-user-field_user_positions'.
   $fields['user-user-field_user_positions'] = array(
     'field_config' => array(
       'active' => '1',
@@ -3476,6 +3533,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
           0 => 'tid',
         ),
       ),
+      'locked' => '0',
       'module' => 'taxonomy',
       'settings' => array(
         'allowed_values' => array(

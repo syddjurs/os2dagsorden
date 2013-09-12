@@ -24,7 +24,7 @@ function os2dagsorden_content_types_node_info() {
       'base' => 'node_content',
       'description' => '',
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Titel'),
       'help' => '',
     ),
     'bullet_point_attachment' => array(
@@ -32,7 +32,7 @@ function os2dagsorden_content_types_node_info() {
       'base' => 'node_content',
       'description' => t('is an attachment to bullet point'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Titel'),
       'help' => '',
     ),
     'meeting' => array(
@@ -40,15 +40,15 @@ function os2dagsorden_content_types_node_info() {
       'base' => 'node_content',
       'description' => '',
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Titel'),
       'help' => '',
     ),
     'page' => array(
-      'name' => t('Page'),
+      'name' => t('Side'),
       'base' => 'node_content',
       'description' => '',
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Titel'),
       'help' => '',
     ),
     'speaker_paper' => array(

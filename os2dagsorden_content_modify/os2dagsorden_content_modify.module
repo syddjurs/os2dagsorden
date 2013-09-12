@@ -13,7 +13,7 @@ function os2dagsorden_content_modify_menu() {
     'description' => 'Module that supports manual creation or editing of the committee',
     'page callback' => '_os2dagsorden_content_modify_committee',
     'access arguments' => array('administer os2web'),
-    'type' => MENU_NORMAL_ITEM | MENU_DEFAULT_LOCAL_TASK,
+    'type' => MENU_NORMAL_ITEM,
   );
   
   $items['admin/config/os2dagsorden/create_user_position'] = array(
@@ -21,7 +21,7 @@ function os2dagsorden_content_modify_menu() {
     'description' => 'Module that supports manual creation or editing of the user position',
     'page callback' => '_os2dagsorden_content_modify_user_position',
     'access arguments' => array('administer os2web'),
-    'type' => MENU_NORMAL_ITEM | MENU_DEFAULT_LOCAL_TASK,
+    'type' => MENU_NORMAL_ITEM,
   );
   
   $items['admin/config/os2dagsorden/attach_user_position'] = array(
@@ -29,7 +29,7 @@ function os2dagsorden_content_modify_menu() {
     'description' => 'Module that supports assigning/removing roles from the users',
     'page callback' => '_os2dagsorden_content_modify_users',
     'access arguments' => array('administer os2web'),
-    'type' => MENU_NORMAL_ITEM | MENU_DEFAULT_LOCAL_TASK,
+    'type' => MENU_NORMAL_ITEM,
   );
   
   $items['user/%/simple_edit'] = array(
