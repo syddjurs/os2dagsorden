@@ -10,7 +10,7 @@ function os2dagsorden_acadre_meeting_reimport_fields_filter_criteria($meeting_id
   $skip_meeting = TRUE;
   
   $node = node_load($meeting_id);
-  if (isset($node->field_meeting_acadre_version['und']))
+  if (isset($node->field_meeting_acadre_version['und'])){
 	  foreach($node->field_meeting_acadre_version['und'] as $acadre_version){
 	  	$has_files = glob($import_dir . "/*" . $acadre_version['value']);
 	    if (is_array($has_files) && array_pop(glob($import_dir . "/*" . $acadre_version['value']))){
