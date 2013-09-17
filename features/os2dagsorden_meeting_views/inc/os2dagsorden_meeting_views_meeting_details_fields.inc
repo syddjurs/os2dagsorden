@@ -145,8 +145,8 @@ function os2dagsorden_meeting_views_meeting_details_fields_bullet_point_title($t
 
   //logic for touch devices
   if (os2dagsorden_access_helper_is_touch()){
-    if (mb_strlen($title) > 75)
-      $title = mb_substr($title, 0, 72) . '...';
+    if (mb_strlen($title) > 70)
+      $title = mb_substr($title, 0, 67) . '...';
   } else {//desktop device
     if (mb_strlen($title) > 95)
       $title = mb_substr($title, 0, 92) . '...';
@@ -225,8 +225,8 @@ function os2dagsorden_meeting_views_meeting_details_fields_bullet_point_attachme
 	
 	//logic for touch devices
 	if (os2dagsorden_access_helper_is_touch()){
-	  if (mb_strlen($attachment->title) > 70)
-	    $title = mb_substr($attachment->title, 0, 67) . '...';
+	  if (mb_strlen($attachment->title) > 60)
+	    $title = mb_substr($attachment->title, 0, 57) . '...';
 	  else
 	    $title = $attachment->title;
 	} else {//desktop device
