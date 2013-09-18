@@ -179,7 +179,7 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
 	case '1':
 	  $meeting['type'] = 'Dasgorden';
 	  break;
-	case '3':
+	case '2':
 	  $meeting['type'] = 'Referat';
 	  break;
       }
