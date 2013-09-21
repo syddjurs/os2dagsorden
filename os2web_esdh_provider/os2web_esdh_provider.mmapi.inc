@@ -117,7 +117,7 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
 
       //adding description
       if (!empty($meeting['full_doc'])){
-	if(_os2web_esdh_provider_similar_file_exists($meeting['full_doc'])){
+	if(_os2web_esdh_provider_similar_file_exists($meeting['full_doc']['uri'])){
 	  $description = _os2web_esdh_provider_import_file($meeting['full_doc']);
 	  $description->description = $meeting_id['id'];
 	  $description = file_save($description);

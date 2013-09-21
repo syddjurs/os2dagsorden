@@ -201,11 +201,10 @@ function _os2web_edoc_esdh_mm_import_meeting_agenda(&$meeting, $agenda_xml) {
   $agenda = $meeting;
   // Only add the agenda if its PDF exists.
   if (file_exists(drupal_realpath($meeting['uri'] . $meeting['pdf']))) {
-    //$agenda['full_doc'] = array(
-    //  'uri' => $meeting['uri'] . $meeting['meeting_pdf'],
-    //  'title' => $meeting['committee'],
-    //);
-    $agenda['full_doc'] = $meeting['uri'] . $meeting['meeting_pdf'];
+    $agenda['full_doc'] = array(
+      'uri' => $meeting['uri'] . $meeting['meeting_pdf'],
+      'title' => $meeting['committee'],
+    );
     // Import all agenda items.
     $agenda_bullet = $agenda_xml;
     foreach ($agenda_bullet->MeetingAgendaItem as $agenda_item) {
