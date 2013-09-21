@@ -123,6 +123,21 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#description' => t('This decides whether a certain type of bullet point attachment - bilag will be expanded (activated) when functionality "Expand whole bullet point" is executed.'),
   );
   
+  //show or not show meeting category in the calendar
+  $form['os2dagsorden_show_meeting_category_settings'] = array(
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#title' => t('Show/not show meeting category in the calendar view'),
+  );
+  $options2 = array('true' => t('Show'), 'false' => t('Do not show'));
+  $form['os2dagsorden_show_meeting_category_settings']['os2dagsorden_show_meeting_category'] = array(
+    '#type' => 'radios',
+    '#title' => t('Show meeting cetegories'),
+    '#default_value' => variable_get('os2dagsorden_show_meeting_category'),
+    '#options' => $options2,
+    '#description' => t('This decides whether a meeting title in the calendar view will be prefixed with the meeting category (<b>[P]</b>olitical/<b>[O]</b>rganization)'),
+  );
+  
   //Meeting import settings
   $form['os2dagsorden_meeting_import'] = array(
       '#type' => 'fieldset',
