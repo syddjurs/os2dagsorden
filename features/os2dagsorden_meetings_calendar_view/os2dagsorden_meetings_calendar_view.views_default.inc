@@ -34,6 +34,7 @@ function os2dagsorden_meetings_calendar_view_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
   $handler->display->display_options['pager']['type'] = 'date_views_pager';
   $handler->display->display_options['pager']['options']['date_id'] = 'month';
   $handler->display->display_options['style_plugin'] = 'calendar_style';
@@ -43,7 +44,7 @@ function os2dagsorden_meetings_calendar_view_views_default_views() {
   $handler->display->display_options['style_options']['theme_style'] = '1';
   $handler->display->display_options['style_options']['max_items'] = '0';
   $handler->display->display_options['row_plugin'] = 'calendar_entity';
-  /* Header: breadcrumb override */
+  /* Overskrift: breadcrumb override */
   $handler->display->display_options['header']['php']['id'] = 'php';
   $handler->display->display_options['header']['php']['table'] = 'views';
   $handler->display->display_options['header']['php']['field'] = 'php';
@@ -51,7 +52,7 @@ function os2dagsorden_meetings_calendar_view_views_default_views() {
   $handler->display->display_options['header']['php']['php_output'] = '<?php 
 os2dagsorden_meetings_calendar_view_breadcrumb();
 ?>';
-  /* Field: meeting hex color - hidden */
+  /* Felt: meeting hex color - hidden */
   $handler->display->display_options['fields']['field_hex']['id'] = 'field_hex';
   $handler->display->display_options['fields']['field_hex']['table'] = 'field_data_field_hex';
   $handler->display->display_options['fields']['field_hex']['field'] = 'field_hex';
@@ -59,14 +60,14 @@ os2dagsorden_meetings_calendar_view_breadcrumb();
   $handler->display->display_options['fields']['field_hex']['label'] = '';
   $handler->display->display_options['fields']['field_hex']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_hex']['element_label_colon'] = FALSE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Field: Content: Date */
+  /* Felt: Indhold: Date */
   $handler->display->display_options['fields']['field_date_1']['id'] = 'field_date_1';
   $handler->display->display_options['fields']['field_date_1']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date_1']['field'] = 'field_date';
@@ -80,7 +81,7 @@ os2dagsorden_meetings_calendar_view_breadcrumb();
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: title - php */
+  /* Felt: title - php */
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
@@ -95,29 +96,30 @@ os2dagsorden_meetings_calendar_view_fields_title($data);
 ?>';
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Sort criterion: Content: Date -  start date (field_date) */
+  /* Sort criterion: Indhold: Date -  start date (field_date) */
   $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['sorts']['field_date_value']['field'] = 'field_date_value';
-  /* Contextual filter: Content: Date -  start date (field_date) */
+  /* Contextual filter: Indhold: Date -  start date (field_date) */
   $handler->display->display_options['arguments']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['arguments']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['arguments']['field_date_value']['field'] = 'field_date_value';
   $handler->display->display_options['arguments']['field_date_value']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_date_value']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_date_value']['default_argument_type'] = 'raw';
   $handler->display->display_options['arguments']['field_date_value']['default_argument_skip_url'] = TRUE;
   $handler->display->display_options['arguments']['field_date_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_date_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_date_value']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['field_date_value']['specify_validation'] = TRUE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Indhold: Udgivet */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 0;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filter criterion: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -153,7 +155,7 @@ os2dagsorden_meetings_calendar_view_fields_title($data);
   $handler->display->display_options['row_options']['colors']['legend'] = 'type';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Header: breadcrumb override */
+  /* Overskrift: breadcrumb override */
   $handler->display->display_options['header']['php']['id'] = 'php';
   $handler->display->display_options['header']['php']['table'] = 'views';
   $handler->display->display_options['header']['php']['field'] = 'php';
@@ -162,7 +164,7 @@ os2dagsorden_meetings_calendar_view_fields_title($data);
 os2dagsorden_meetings_calendar_view_breadcrumb();
 ?>';
   $handler->display->display_options['defaults']['footer'] = FALSE;
-  /* Footer: iCal export */
+  /* Sidefod: iCal export */
   $handler->display->display_options['footer']['php']['id'] = 'php';
   $handler->display->display_options['footer']['php']['table'] = 'views';
   $handler->display->display_options['footer']['php']['field'] = 'php';
@@ -181,7 +183,7 @@ $date = date(\'Y-m\');
 ?>
 ';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: meeting hex color - hidden */
+  /* Felt: meeting hex color - hidden */
   $handler->display->display_options['fields']['field_hex']['id'] = 'field_hex';
   $handler->display->display_options['fields']['field_hex']['table'] = 'field_data_field_hex';
   $handler->display->display_options['fields']['field_hex']['field'] = 'field_hex';
@@ -189,14 +191,14 @@ $date = date(\'Y-m\');
   $handler->display->display_options['fields']['field_hex']['label'] = '';
   $handler->display->display_options['fields']['field_hex']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_hex']['element_label_colon'] = FALSE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Field: Content: Date */
+  /* Felt: Indhold: Date */
   $handler->display->display_options['fields']['field_date_1']['id'] = 'field_date_1';
   $handler->display->display_options['fields']['field_date_1']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date_1']['field'] = 'field_date';
@@ -210,7 +212,7 @@ $date = date(\'Y-m\');
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: title - php */
+  /* Felt: title - php */
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
@@ -226,27 +228,29 @@ os2dagsorden_meetings_calendar_view_fields_title($data);
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Date: Date (node) */
+  /* Contextual filter: Dato: Date (node) */
   $handler->display->display_options['arguments']['date_argument']['id'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['table'] = 'node';
   $handler->display->display_options['arguments']['date_argument']['field'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['date_argument']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['date_argument']['default_argument_type'] = 'php';
   $handler->display->display_options['arguments']['date_argument']['default_argument_options']['code'] = 'return os2dagsorden_meetings_calendar_view_fields_month_date_contextual_filter(); ';
+  $handler->display->display_options['arguments']['date_argument']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['date_argument']['add_delta'] = 'yes';
   $handler->display->display_options['arguments']['date_argument']['date_fields'] = array(
     'field_data_field_date.field_date_value' => 'field_data_field_date.field_date_value',
   );
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Indhold: Udgivet */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 0;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filter criterion: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -289,11 +293,12 @@ os2dagsorden_meetings_calendar_view_fields_title($data);
   $handler->display->display_options['row_plugin'] = 'calendar_entity';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Date: Date (node) */
+  /* Contextual filter: Dato: Date (node) */
   $handler->display->display_options['arguments']['date_argument']['id'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['table'] = 'node';
   $handler->display->display_options['arguments']['date_argument']['field'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['date_argument']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['date_argument']['default_argument_type'] = 'date';
   $handler->display->display_options['arguments']['date_argument']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['date_argument']['granularity'] = 'week';
@@ -325,14 +330,16 @@ os2dagsorden_meetings_calendar_view_fields_title($data);
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['footer'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Date: Date (node) */
+  /* Contextual filter: Dato: Date (node) */
   $handler->display->display_options['arguments']['date_argument']['id'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['table'] = 'node';
   $handler->display->display_options['arguments']['date_argument']['field'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['default_action'] = 'default';
   $handler->display->display_options['arguments']['date_argument']['exception']['value'] = 'day';
+  $handler->display->display_options['arguments']['date_argument']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['date_argument']['default_argument_type'] = 'php';
   $handler->display->display_options['arguments']['date_argument']['default_argument_options']['code'] = 'return os2dagsorden_meetings_calendar_view_fields_day_date_contextual_filter();';
+  $handler->display->display_options['arguments']['date_argument']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['date_argument']['granularity'] = 'day';
   $handler->display->display_options['arguments']['date_argument']['date_fields'] = array(
     'field_data_field_date.field_date_value' => 'field_data_field_date.field_date_value',
@@ -367,11 +374,12 @@ os2dagsorden_meetings_calendar_view_fields_title($data);
   $handler->display->display_options['row_plugin'] = 'calendar_entity';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Date: Date (node) */
+  /* Contextual filter: Dato: Date (node) */
   $handler->display->display_options['arguments']['date_argument']['id'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['table'] = 'node';
   $handler->display->display_options['arguments']['date_argument']['field'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['date_argument']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['date_argument']['default_argument_type'] = 'date';
   $handler->display->display_options['arguments']['date_argument']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['date_argument']['granularity'] = 'year';
@@ -413,7 +421,7 @@ os2dagsorden_meetings_calendar_view_fields_title($data);
   );
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Header: help text */
+  /* Overskrift: help text */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
@@ -424,7 +432,7 @@ os2dagsorden_meetings_calendar_view_block_help_text();
 ?>';
   $handler->display->display_options['header']['area']['format'] = 'php_code';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Date */
+  /* Felt: Indhold: Date */
   $handler->display->display_options['fields']['field_date_1']['id'] = 'field_date_1';
   $handler->display->display_options['fields']['field_date_1']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date_1']['field'] = 'field_date';
@@ -438,7 +446,7 @@ os2dagsorden_meetings_calendar_view_block_help_text();
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -449,7 +457,7 @@ os2dagsorden_meetings_calendar_view_block_help_text();
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -457,13 +465,15 @@ os2dagsorden_meetings_calendar_view_block_help_text();
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Date: Date (node) */
+  /* Contextual filter: Dato: Date (node) */
   $handler->display->display_options['arguments']['date_argument']['id'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['table'] = 'node';
   $handler->display->display_options['arguments']['date_argument']['field'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['date_argument']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['date_argument']['default_argument_type'] = 'php';
   $handler->display->display_options['arguments']['date_argument']['default_argument_options']['code'] = 'return os2dagsorden_meetings_calendar_view_fields_block_date_contextual_filter();';
+  $handler->display->display_options['arguments']['date_argument']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['date_argument']['add_delta'] = 'yes';
   $handler->display->display_options['arguments']['date_argument']['date_fields'] = array(
     'field_data_field_date.field_date_value' => 'field_data_field_date.field_date_value',
@@ -485,14 +495,14 @@ os2dagsorden_meetings_calendar_view_block_help_text();
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Indhold: Udgivet */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 0;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Date: Date (node) */
+  /* Filter criterion: Dato: Date (node) */
   $handler->display->display_options['filters']['date_filter']['id'] = 'date_filter';
   $handler->display->display_options['filters']['date_filter']['table'] = 'node';
   $handler->display->display_options['filters']['date_filter']['field'] = 'date_filter';
@@ -507,12 +517,12 @@ os2dagsorden_meetings_calendar_view_block_help_text();
     t('Kalender'),
     t('more'),
     t('Apply'),
-    t('Reset'),
+    t('Gendan'),
     t('Sort by'),
     t('Asc'),
     t('Desc'),
     t('yyy'),
-    t('All'),
+    t('Alle'),
     t('Måned'),
     t('Week'),
     t('Dag'),
