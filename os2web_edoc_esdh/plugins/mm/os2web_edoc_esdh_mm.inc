@@ -154,6 +154,7 @@ function os2web_edoc_esdh_mm_import_meeting($meeting) {
 	  'uri' => strstr($file , 'eDocAgendaPublishing.xml', TRUE),
 	  'meeting_date' => $meeting_date,
 	  'meeting_date_start' => $meeting_date,
+          'meeting_date_finish' => $meeting_date,
 	  'meeting_type' => $meeting_type,
 	  'type' => $meeting_type,
 	  'meeting_state' => $meeting_state,
