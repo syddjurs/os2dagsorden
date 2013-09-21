@@ -131,9 +131,9 @@ function os2web_edoc_esdh_mm_import_meeting($meeting) {
 	}
 
 	// Fix dates.
-	//$date_obj = date_create($meeting_date);
+	$date_obj = date_create($meeting_date);
 	//date_timezone_set($date_obj, timezone_open('UTC'));
-	//$meeting_date = date_format($date_obj, 'Y-m-d H:i');
+	$meeting_date = date_format($date_obj, 'Y-m-d H:i');
 	
 	// Changing the meeting state to match ESDH Provider module
 	if($meeting_type == "Referat endeligt godkendt") {
