@@ -304,6 +304,7 @@ function _os2web_edoc_esdh_mm_import_meeting_agenda_item($meeting, $xml) {
 	'title' => trim((string) $bullet_xml->Title),
 	'sysid' => 'bilag_' . $bullet_id,
 	'access' => TRUE,
+        'filetype' => '.pdf',
       );
     }
     
