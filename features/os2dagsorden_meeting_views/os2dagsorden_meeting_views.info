@@ -20,6 +20,7 @@ dependencies[] = simplify
 dependencies[] = strongarm
 dependencies[] = views
 dependencies[] = views_php
+features[ckeditor_profile][] = CKEditor Global Profile
 features[ckeditor_profile][] = Syddjurs_full
 features[ctools][] = strongarm:strongarm:1
 features[ctools][] = views:views_default:3.0

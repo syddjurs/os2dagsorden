@@ -377,6 +377,7 @@ function os2dagsorden_meeting_views_strongarm() {
   $strongarm->value = array(
     'link' => 0,
     'corner' => 0,
+    'block' => 0,
   );
   $export['print_pdf_link_pos'] = $strongarm;
 
@@ -426,7 +427,7 @@ function os2dagsorden_meeting_views_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'print_pdf_pdf_tool';
-  $strongarm->value = 'sites/all/modules/print/dompdf/dompdf_config.inc.php';
+  $strongarm->value = 'profiles/os2dagsorden/libraries/dompdf/dompdf_config.inc.php';
   $export['print_pdf_pdf_tool'] = $strongarm;
 
   $strongarm = new stdClass();
