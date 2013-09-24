@@ -27,4 +27,3 @@ features[variable][] = date_format_month_only
 features[variable][] = date_format_short
 features[variable][] = date_format_time_only
 features[views_view][] = events
-ews_view][] = "events"

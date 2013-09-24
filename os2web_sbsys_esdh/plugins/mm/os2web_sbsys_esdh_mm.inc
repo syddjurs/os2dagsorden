@@ -129,11 +129,11 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
 
       // Fix dates.
       $date_obj = date_create($meeting_date_when);
-      date_timezone_set($date_obj, timezone_open('UTC'));
+      //date_timezone_set($date_obj, timezone_open('UTC'));
       $meeting_date_when = date_format($date_obj, 'Y-m-d H:i');
 
       $date_obj1 = date_create($meeting_date_until);
-      date_timezone_set($date_obj1, timezone_open('UTC'));
+      //date_timezone_set($date_obj1, timezone_open('UTC'));
       $meeting_date_until = date_format($date_obj1, 'Y-m-d H:i');
 
       //Members
@@ -179,7 +179,7 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
 	case '1':
 	  $meeting['type'] = 'Dasgorden';
 	  break;
-	case '3':
+	case '2':
 	  $meeting['type'] = 'Referat';
 	  break;
       }

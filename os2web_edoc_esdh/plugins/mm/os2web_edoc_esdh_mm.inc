@@ -132,7 +132,7 @@ function os2web_edoc_esdh_mm_import_meeting($meeting) {
 
 	// Fix dates.
 	$date_obj = date_create($meeting_date);
-	date_timezone_set($date_obj, timezone_open('UTC'));
+	//date_timezone_set($date_obj, timezone_open('UTC'));
 	$meeting_date = date_format($date_obj, 'Y-m-d H:i');
 	
 	// Changing the meeting state to match ESDH Provider module
@@ -154,6 +154,7 @@ function os2web_edoc_esdh_mm_import_meeting($meeting) {
 	  'uri' => strstr($file , 'eDocAgendaPublishing.xml', TRUE),
 	  'meeting_date' => $meeting_date,
 	  'meeting_date_start' => $meeting_date,
+          'meeting_date_finish' => $meeting_date,
 	  'meeting_type' => $meeting_type,
 	  'type' => $meeting_type,
 	  'meeting_state' => $meeting_state,
@@ -303,6 +304,7 @@ function _os2web_edoc_esdh_mm_import_meeting_agenda_item($meeting, $xml) {
 	'title' => trim((string) $bullet_xml->Title),
 	'sysid' => 'bilag_' . $bullet_id,
 	'access' => TRUE,
+        'filetype' => '.pdf',
       );
     }
     

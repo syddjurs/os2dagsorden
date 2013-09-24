@@ -24,7 +24,10 @@ function os2dagsorden_meetings_calendar_view_fields_title($data){
 
   $meeting_category = substr(strtoupper($data->_field_data['nid']['entity']->field_meeting_category['und'][0]['value']), 0, 1);
 
-  echo '<font color="' . $data->_field_data['nid']['entity']->field_hex['und'][0]['value'] . '">' . '['. $meeting_category . '] ' . $title . '</font>';
+  if (variable_get('os2dagsorden_show_meeting_category', 'true')  === 'true')
+    echo '<font color="' . $data->_field_data['nid']['entity']->field_hex['und'][0]['value'] . '">' . '['. $meeting_category . '] ' . $title . '</font>';
+  else
+    echo '<font color="' . $data->_field_data['nid']['entity']->field_hex['und'][0]['value'] . '">' . $title . '</font>';
 }
 
 function os2dagsorden_meetings_calendar_view_fields_filter_by_meeting_category($meeting_id){
