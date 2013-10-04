@@ -228,7 +228,7 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
   }
   
   if (isset($file)){
-    shell_exec('/opt/local/bin/pdf2htmlEX ' . $file_path_real . '  --dest-dir ' . $dest_dir_real . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM);
+    shell_exec('LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH pdf2htmlEX ' . escapeshellarg($file_path_real) . '  --dest-dir ' . escapeshellarg($dest_dir_real) . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM);
     
     $file_name_no_ext = explode('.', $file->filename);
     $assumed_path1 = $dest_dir_real . '/' . $file_name_no_ext[0] . '.html';//filename.html
