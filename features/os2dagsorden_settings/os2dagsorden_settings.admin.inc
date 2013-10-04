@@ -153,6 +153,13 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     Jørgen Andersen, Nich Bendtsen, Poul Møller, ...<br/><br/>HTML tags (such as &lt;br/&gt;) can be used.'),
   );
   
+  $form['os2dagsorden_meeting_import']['pdf2html_rendering_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Path for HTML files to be rendered'),
+    '#default_value' => variable_get('pdf2html_rendering_path', ''),
+    '#description' => t('Relative path for HTML files to be rendered by os2dagsorden_pdf2htmlEX module. If empty, the path with the original PDF files will be used.<br/><b>Important!</b> You will need to create the path yourself.'),
+  );
+  
   //hidden agenda
   $form['os2dagsorden_hidden_agenda_committee'] = array(
     '#type' => 'textfield',

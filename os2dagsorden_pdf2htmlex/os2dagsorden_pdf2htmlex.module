@@ -116,7 +116,8 @@ function os2dagsorden_pdf2htmlex_cron() {
 	$filename = array_pop($file_path_real);
 	$acadre_dir = array_pop($file_path_real);
 	
-	$path = 'private://' . $acadre_dir . '/' . $filename ;
+	//$path = 'private://' . $acadre_dir . '/' . $filename ;
+	$path = $record['created_filepath'];
 	
 	$fid = db_select('file_managed', 'fm')
                         ->fields('fm', array('fid'))
@@ -172,7 +173,13 @@ function _os2dagsorden_pdf2htmlex_calc_page_amount($html){
   libxml_clear_errors();
   
   $finder = new DomXPath($doc);
-  $nodes = $finder->query('//div[@id="pdf-main"]/div');    
+  //pdf2html older version (~ v0.6)
+  $nodes = $finder->query('//div[@id="pdf-main"]/div');
+
+  //pdf2html newer version (~ v0.10)
+  if ($nodes->length == 0){
+    $nodes = $finder->query('//div[@id="page-container"]/div');
+  }
   
   $pages = 0;
   foreach ($nodes as $node) {
@@ -213,10 +220,15 @@ function os2dagsorden_pdf2htmlex_convert($fid, $did) {
   $file_path_real = drupal_realpath($file->uri);//with file name
   $file_path_real_arr = explode('/', $file_path_real);
   array_pop($file_path_real_arr);
-  $dest_dir_real = implode('/', $file_path_real_arr);//without file name
+  
+  if (variable_get('pdf2html_rendering_path') && file_exists(drupal_realpath(variable_get('pdf2html_rendering_path')))){//is set
+    $dest_dir_real = drupal_realpath(variable_get('pdf2html_rendering_path'));
+  } else {
+    $dest_dir_real = implode('/', $file_path_real_arr);//without file name
+  }
   
   if (isset($file)){
-    shell_exec('pdf2htmlEX ' . $file_path_real . '  --dest-dir ' . $dest_dir_real . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM);
+    shell_exec('/opt/local/bin/pdf2htmlEX ' . $file_path_real . '  --dest-dir ' . $dest_dir_real . ' --zoom ' . DEFAULT_PDF_HTML_ZOOM);
     
     $file_name_no_ext = explode('.', $file->filename);
     $assumed_path1 = $dest_dir_real . '/' . $file_name_no_ext[0] . '.html';//filename.html
@@ -317,8 +329,15 @@ function os2dagsorden_pdf2htmlex_print_first_page($html, $meeting_id, $bullet_po
     libxml_clear_errors();
     
     $finder = new DomXPath($doc);
-    $nodes = $finder->query('//div[@id="pdf-main"]/div');    
     
+    //pdf2html older version (~ v0.6)
+    $nodes = $finder->query('//div[@id="pdf-main"]/div');
+    
+    //pdf2html newer version (~ v0.10)
+    if ($nodes->length == 0){
+	$nodes = $finder->query('//div[@id="page-container"]/div');
+    }
+   
     $i = 1;
     foreach ($nodes as $node) {
       if ($i > 1)//keeping the first page
@@ -360,7 +379,14 @@ function os2dagsorden_pdf2htmlex_hide_unused_pages($html, $startPage, $endPage){
     libxml_clear_errors();
     
     $finder = new DomXPath($doc);
-    $nodes = $finder->query('//div[@id="pdf-main"]/div');    
+
+    //pdf2html older version (~ v0.6)
+    $nodes = $finder->query('//div[@id="pdf-main"]/div');
+    
+    //pdf2html newer version (~ v0.10)
+    if ($nodes->length == 0){
+	$nodes = $finder->query('//div[@id="page-container"]/div');
+    } 
     
     $i = 1;
     foreach ($nodes as $node) {
