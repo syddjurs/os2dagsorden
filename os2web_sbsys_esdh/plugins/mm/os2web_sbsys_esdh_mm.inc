@@ -114,6 +114,19 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
       $meeting_name = (string) $meeting_name[0];
       $meeting_uri = (string) $meeting_uri[0];
       $acadre_version = (string) $acadre_version[0][ID];
+      $meeting_type = $manifest->xpath('/Publication/PublicationTypeAsValue');
+      switch (((string) $meeting_type[0])){
+        case '0':
+          $meeting_type = 'Kladde';
+          return FALSE;
+          break;
+        case '1':
+          $meeting_type = 'Dagsorden';
+          break;
+        case '2':
+          $meeting_type = 'Referat';
+          break;
+      }
       
       $directory_name = dirname(drupal_realpath($file));
       // Check if the committee is allowed to publish.
@@ -163,6 +176,7 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
         'committee_group_id' => $committee_group_id,
         'title' => $meeting_name,
         'uri' => strstr($file , $meeting_uri, TRUE),
+        'type' => $meeting_type,
         'meeting_date_start' => $meeting_date_when,
         'meeting_date_finish' => $meeting_date_until,
         'location' => $meeting_where,
