@@ -167,6 +167,9 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
 	}
       }
       
+      //Fixing meeting name
+      $meeting_name = str_ireplace(array("dagsorden", "referat"), "", $meeting_name);
+      
       $meeting = array(
         'sys_id' => $sys_id,
         'meeting_id' => $sys_id,
