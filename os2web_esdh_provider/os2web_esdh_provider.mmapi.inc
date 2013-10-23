@@ -362,7 +362,9 @@ function _os2web_esdh_provider_import_bullets($bullets) {
     }
 
     $node->title = $bullet['title'];
-
+    if ($node->title > 250)
+      $node->title = substr($node->title, 0, 250);
+      
     // Let's add standard body field
     $content_ind_start = strpos($bullet['body'], '<div class=Section1>');
 
@@ -449,7 +451,9 @@ function _os2web_esdh_provider_add_enclosure_bullet($enclosure, $file) {
     }
 
     $node->title = 'Bilag: ' . $enclosure['title'];
-
+    if ($node->title > 250)
+      $node->title = substr($node->title, 0, 250);
+       
     $node->field_bpa_file[$node->language][] = (array) $file;
     if ($enclosure['access'] === 'False')
       $node->field_bpa_closed[$node->language][0]['value'] = 1;
