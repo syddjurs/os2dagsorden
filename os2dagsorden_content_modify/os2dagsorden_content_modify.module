@@ -235,7 +235,11 @@ function os2dagsorden_content_modify_user_edit_form($form, $form_state, $uid){
   );
   
   if ($uid) {
-    $form_state['uid'] = $uid;//saving for usage in the submit function
+    //saving for usage in the submit function
+    $form['uid'] = array(
+      '#type' => 'value',
+      '#value' => $uid,
+    );
     $user = user_load($uid);
     
     //filling the fields
@@ -301,7 +305,7 @@ function os2dagsorden_content_modify_user_edit_form($form, $form_state, $uid){
   
   $form[] = array(
       '#markup' => '</div>',
-  ); 
+  );
   
   return $form;
 }
@@ -320,7 +324,7 @@ function os2dagsorden_content_modify_user_submit($form, $form_state){
   //input extraction
   extract($input);
 
-  $user = user_load($form_state['uid']);
+  $user = user_load($form_state['values']['uid']);
   $user->field_user_full_name['und'][0]['value'] = $full_name;
   
   //unsetting follows committees
