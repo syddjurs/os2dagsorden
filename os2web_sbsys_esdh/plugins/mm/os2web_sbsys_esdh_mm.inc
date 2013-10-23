@@ -114,6 +114,19 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
       $meeting_name = (string) $meeting_name[0];
       $meeting_uri = (string) $meeting_uri[0];
       $acadre_version = (string) $acadre_version[0][ID];
+      $meeting_type = $manifest->xpath('/Publication/PublicationTypeAsValue');
+      switch (((string) $meeting_type[0])){
+        case '0':
+          $meeting_type = 'Kladde';
+          return FALSE;
+          break;
+        case '1':
+          $meeting_type = 'Dagsorden';
+          break;
+        case '2':
+          $meeting_type = 'Referat';
+          break;
+      }
       
       $directory_name = dirname(drupal_realpath($file));
       // Check if the committee is allowed to publish.
@@ -146,10 +159,16 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
 	if ($member->ParticipationStatusAsValue == '1' || $member->ParticipationStatusAsValue == '4') {
 	      $participants[] = (string) $member->Name . " - " . $member->ParticipationStatusAsText . $member->ParticipationNote;
 	}
+        else if($member->ParticipationStatusAsValue == '0'){
+          $participants[] = (string) $member->Name . $member->ParticipationNote;
+        }
 	else { 
 	  $participants_cancellation[] = (string) $member->Name . " - " . $member->ParticipationStatusAsText . $member->ParticipationNote;
 	}
       }
+      
+      //Fixing meeting name
+      $meeting_name = str_ireplace(array("dagsorden", "referat"), "", $meeting_name);
       
       $meeting = array(
         'sys_id' => $sys_id,
@@ -160,6 +179,7 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
         'committee_group_id' => $committee_group_id,
         'title' => $meeting_name,
         'uri' => strstr($file , $meeting_uri, TRUE),
+        'type' => $meeting_type,
         'meeting_date_start' => $meeting_date_when,
         'meeting_date_finish' => $meeting_date_until,
         'location' => $meeting_where,
@@ -168,22 +188,24 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
         'participants_cancellation' => $participants_cancellation,
       );
       
-      $meeting_agendas = $manifest->xpath("/Publication/Agendas/Agenda/Items");
-      $meeting_type = $manifest->xpath('/Publication/PublicationTypeAsValue');
-      $meeting_pdf = $manifest->xpath('/Meeting/MeetingAgendaTypes/MeetingAgendaType/PDFDocument');
-      $meeting['state'] = (string) $meeting_state[0];
-      switch (((string) $meeting_type[0])){
-	case '0':
-	  $meeting['type'] = 'Kladde';
-	  break;
-	case '1':
-	  $meeting['type'] = 'Dasgorden';
-	  break;
-	case '2':
-	  $meeting['type'] = 'Referat';
-	  break;
+      /*stan@bellcom.dk 06.10 - importing multiple agendas*/
+      $meeting_agendas = array();
+      foreach($manifest->xpath("/Publication/Agendas/Agenda") as $agenda_instance){
+        if (!$meeting_agendas){
+          $meeting_agendas = $agenda_instance->xpath("Items");
+        }
+        else {
+          foreach($agenda_instance->xpath("Items/Item") as $items_child){
+            $toDom = dom_import_simplexml($meeting_agendas[0]);
+            $fromDom = dom_import_simplexml($items_child);
+            $toDom->appendChild($toDom->ownerDocument->importNode($fromDom, true));
+          }
+        }
       }
+      
+      $meeting_pdf = $manifest->xpath('/Meeting/MeetingAgendaTypes/MeetingAgendaType/PDFDocument');
       $meeting['pdf'] = (string) $meeting_pdf[0];
+      $meeting['state'] = (string) $meeting_state[0];
       if (empty($meeting_agendas)) {
         watchdog('SBsys MM', 'Empty list of import items in %file.', array('%file' => $file), WATCHDOG_WARNING);
       }
@@ -227,8 +249,10 @@ function _os2web_sbsys_esdh_mm_import_meeting_agenda(&$meeting, $agenda_xml) {
 //     );
     // Import all agenda items.
     $agenda_bullet = $agenda_xml;
+    $meeting['current_item_nr'] = 1;
     foreach ($agenda_bullet as $agenda_item) {
       if (($item = _os2web_sbsys_esdh_mm_import_meeting_agenda_item($meeting, $agenda_item)) !== FALSE) {
+        $meeting['current_item_nr']++;
         $agenda['items'][] = $item;
       }
     }
@@ -260,11 +284,13 @@ function _os2web_sbsys_esdh_mm_import_meeting_agenda_item($meeting, $xml) {
   $xml_item_bullet = $xml->Fields;
   $xml_item['name'] = (string) $xml->Caption;
   $xml_item['document_type'] = (string) $xml->IsPublic;
-
+  $xml_item_participants = $xml->Members;
+  
   $item = array(
-    'id' => $xml_item['number'],
+    'id' => $meeting['current_item_nr'],
     'sysid' => (string) $xml['ID'],
-    'title' => 'Punkt ' . $xml_item['number'] . ' ' . $xml_item['name'],
+    //'title' => 'Punkt ' . $xml_item['number'] . ' ' . $xml_item['name'],06.10 stan@bellcom.dk commented to support multiple agendas
+    'title' => 'Punkt ' . $meeting['current_item_nr'] . ' ' . $xml_item['name'],
     'access' => $xml_item['document_type'],
     'bullets' => array(),
     'enclosures' => array(),
@@ -310,6 +336,22 @@ function _os2web_sbsys_esdh_mm_import_meeting_agenda_item($meeting, $xml) {
 	);
       }
     }
+  }
+  
+  //Process members that did not participate in the bullet discussion
+  $non_participants = '';
+  foreach ($xml_item_participants->ItemMember as $participant){
+    if (((string) $participant->ParticipationStatusAsValue) === '4'){
+      $non_participants .= (string) $participant->Name . "<br/>";
+    }
+  }
+  
+  if (!empty($non_participants)){
+    //Add members that did not participate in the bullet discussion as a last bullet point
+    $item['bullets'][] = array(
+      'title' => 'Afbud / Fraværende',
+      'body' => $non_participants,
+    );
   }
   
   $item += os2web_esdh_provider_default_item();
