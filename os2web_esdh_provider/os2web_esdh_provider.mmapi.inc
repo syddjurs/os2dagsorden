@@ -362,7 +362,7 @@ function _os2web_esdh_provider_import_bullets($bullets) {
     }
 
     $node->title = $bullet['title'];
-    if ($node->title > 250)
+    if (strlen($node->title) > 250)
       $node->title = substr($node->title, 0, 250);
       
     // Let's add standard body field
