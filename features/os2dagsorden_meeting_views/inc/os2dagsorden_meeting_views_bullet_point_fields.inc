@@ -118,8 +118,8 @@ function os2dagsorden_meeting_views_bullet_point_fields_attachments_and_content(
 	else
 	  $title = $attachment->title;
       } else {//desktop device
-	if (mb_strlen($attachment->title) > 115)
-	  $title = mb_substr($attachment->title, 0, 112) . '...';
+	if (mb_strlen($attachment->title) > 105)
+	  $title = mb_substr($attachment->title, 0, 102) . '...';
 	else
 	  $title = $attachment->title;
       }
