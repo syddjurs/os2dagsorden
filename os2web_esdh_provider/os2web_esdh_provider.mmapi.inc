@@ -79,6 +79,9 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
       }
       
       $node->title = $meeting['title'];
+      if (strlen($node->title) > 250)
+	$node->title = substr($node->title, 0, 250);
+      
       $node->field_meeting_acadre_version[LANGUAGE_NONE][]['value'] = $meeting['acadre_version'];//adding the acarde version of the meeting
       if (!empty($meeting['meeting_id']))
 	$node->field_meeting_sysid[LANGUAGE_NONE][0]['value'] = $meeting['meeting_id'];
@@ -252,8 +255,11 @@ function _os2web_esdh_provider_import_items($items) {
     if (!stripos($item['agenda_type'], 'tillæg') && stripos($item['agenda_type'], 'tillæg') !== 0)
       $node->title = $item['title'];
     else
-     $node->title = 'Tillægsdagsorden: ' . $item['title'];
-     
+      $node->title = 'Tillægsdagsorden: ' . $item['title'];
+    
+    if (strlen($node->title) > 250)
+      $node->title = substr($node->title, 0, 250);
+      
     if ($item['caseno']){
       $node->title .= ' (' . $item['caseno'] . ')';
     }
