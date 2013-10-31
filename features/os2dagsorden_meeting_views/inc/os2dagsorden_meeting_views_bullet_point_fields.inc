@@ -51,6 +51,65 @@ function os2dagsorden_meeting_views_bullet_point_fields_indicator_bullet_point_h
   os2dagsorden_meeting_views_common_bullet_point_has_notes($bp_id);
 }
 
+function os2dagsorden_meeting_views_bullet_point_fields_title_nagivation_buttons($bp_id){
+  $q = explode("/", $_GET['q']);
+
+  $meeting_id =  $q[1];
+  $meeting = node_load($meeting_id);
+  
+  $bullet_point = node_load($bp_id);
+  
+  $previous_bullet_point = null;
+  $next_bullet_point = null;
+  foreach ($meeting->field_ref_bullet_points['und'] as $new_bp) {
+    if (intval($bp_id) != intval($new_bp['target_id'])) {
+      $new_bullet_point = node_load($new_bp['target_id']);
+      //checking if the ordinal number of new bullet point is BELOW the current bulet point ordinal number
+      //at the same time, checking if user has an access to that bullet point
+      if ($new_bullet_point->field_bul_point_number['und'][0]['value'] < $bullet_point->field_bul_point_number['und'][0]['value'] && os2dagsorden_access_helper_check_user_can_see_bullet_point($meeting_id,$new_bp['target_id'])){
+	  //checking if there is no pointer to previous bullet point
+	  //or the ordinal number of the new bullet point is higher than the ordinal number of current previous bullet point
+	  if (!$previous_bullet_point || $new_bullet_point->field_bul_point_number['und'][0]['value'] > $previous_bullet_point->field_bul_point_number['und'][0]['value']){
+	    $previous_bullet_point = $new_bullet_point;
+	  }
+      }
+      //checking if the ordinal number of new bullet point is ABOVE the current bulet point ordinal number
+      //at the same time, checking if user has an access to that bullet point
+      else if ($new_bullet_point->field_bul_point_number['und'][0]['value'] > $bullet_point->field_bul_point_number['und'][0]['value'] && os2dagsorden_access_helper_check_user_can_see_bullet_point($meeting_id,$new_bp['target_id'])) {
+	  //checking if there is no pointer to next bullet point
+	  //or the ordinal number of the new bullet point is higher than the ordinal number of current next bullet point
+	  if (!$next_bullet_point || $new_bullet_point->field_bul_point_number['und'][0]['value'] < $next_bullet_point->field_bul_point_number['und'][0]['value']){
+	      $next_bullet_point = $new_bullet_point;
+	  }
+      }
+      
+      //check if everything is set already, then break the loop
+      if ($previous_bullet_point && $next_bullet_point &&
+	  $previous_bullet_point->field_bul_point_number['und'][0]['value']+1 ==
+	  $bullet_point->field_bul_point_number['und'][0]['value']
+	  &&
+	  $next_bullet_point->field_bul_point_number['und'][0]['value']-1 ==
+	  $bullet_point->field_bul_point_number['und'][0]['value']
+	  )
+	  break;
+    }
+  }
+  
+  global $base_url;
+  
+  if ($previous_bullet_point)
+    print '<a href="' . $base_url . '/meeting/' . $meeting_id . '/bullet-point/' . $previous_bullet_point->nid . '" class="form-submit nav-button left"><</a>';
+  if ($next_bullet_point)
+    print '<a href="' . $base_url . '/meeting/' . $meeting_id . '/bullet-point/' . $next_bullet_point->nid . '" class="form-submit nav-button right">></a>';
+  
+  if ($bullet_point->field_bul_point_closed['und'][0][value] == 1)
+    print '<div class="indicator-unlocked"></div>';
+  if ($bullet_point->field_bul_point_personal['und'][0][value] == 1)
+    print '<div class="indicator-personal"></div>';
+    
+  print $bullet_point->title;
+}
+
 function os2dagsorden_meeting_views_bullet_point_fields_attachments_and_content($meeting_id, $bp_id){
   global $base_url;
   $bullet_point = node_load($bp_id);
