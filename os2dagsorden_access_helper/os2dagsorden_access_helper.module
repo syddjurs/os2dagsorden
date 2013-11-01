@@ -669,8 +669,9 @@ function os2dagsorden_access_helper_set_meeting_status_and_save($node, $status) 
 	    }
 	}
     }
-     
-    if ($send_notification){
+    $days_since_meeting_date = (time() - strtotime($node->field_date['und'][0]['value']))/60/60/24;
+    
+    if ($send_notification && $days_since_meeting_date < variable_get('os2dagsorden_send_timespan_of_notification', ACADRE_MM_DEFAULT_TIMESPAN_OF_NOTIFICATION)){
       //send the email to involved people
       //medlem
       $query = new EntityFieldQuery();
