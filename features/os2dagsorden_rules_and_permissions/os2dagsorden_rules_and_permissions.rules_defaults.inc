@@ -24,11 +24,6 @@ function os2dagsorden_rules_and_permissions_default_rules_configuration() {
               }
             }
           }
-        },
-        { "NOT user_has_role" : {
-            "account" : [ "site:current-user" ],
-            "roles" : { "value" : { "3" : "3" } }
-          }
         }
       ],
       "DO" : [ { "redirect" : { "url" : "\\u003Cfront\\u003E" } } ]
