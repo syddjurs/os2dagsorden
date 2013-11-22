@@ -144,7 +144,6 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
       '#collapsible' => TRUE,
       '#title' => t('General meeting import settings'),
   );
-  
   $form['os2dagsorden_meeting_import']['participants_delimeter'] = array(
     '#type' => 'textfield',
     '#title' => t('Participants delimeter sign'),
@@ -152,12 +151,27 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#description' => t('Sign with which the participants of the meeting will be separated. Is used in the meeting view.<br/> E.g. if delimeter is <b>coma (,)</b> the list would look like:<br/>
     Jørgen Andersen, Nich Bendtsen, Poul Møller, ...<br/><br/>HTML tags (such as &lt;br/&gt;) can be used.'),
   );
-  
   $form['os2dagsorden_meeting_import']['pdf2html_rendering_path'] = array(
     '#type' => 'textfield',
     '#title' => t('Path for HTML files to be rendered'),
     '#default_value' => variable_get('pdf2html_rendering_path', ''),
     '#description' => t('Relative path for HTML files to be rendered by os2dagsorden_pdf2htmlEX module. If empty, the path with the original PDF files will be used.<br/><b>Important!</b> You will need to create the path yourself.'),
+  );
+  $form['os2dagsorden_meeting_import']['os2dagsorden_send_notification_committee'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Send notification of committees',
+    '#maxlength' => 200,
+    '#description' => 'Comma-separated list of committees ID changing status of which should send an email notification.',
+    '#default_value' => variable_get('os2dagsorden_send_notification_committee', ''),
+  );
+  $form['os2dagsorden_meeting_import']['os2dagsorden_send_timespan_of_notification'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Meeting should be not older than:',
+    '#maxlength' => 200,
+    '#field_suffix' => 'Days',
+    '#size' => 10,
+    '#description' => 'If meeting is not older than the set amount of day, notification is sent. <br/>Otherwise notification process is skipped',
+    '#default_value' => variable_get('os2dagsorden_send_timespan_of_notification', 10),
   );
   
   //hidden agenda
