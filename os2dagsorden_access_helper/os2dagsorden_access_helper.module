@@ -800,10 +800,11 @@ function os2dagsorden_access_helper_show_byradet_menu(){
 }
 
 function os2dagsorden_access_helper_get_user(){
-  if (!isset($GLOBALS['full_user'])){
-    global $user;
-    $GLOBALS['full_user'] = user_load($user->uid);
-  }
-  
-  return $GLOBALS['full_user'];
+      global $user;
+    if (!isset($GLOBALS['full_user']) && $user->uid)
+	$GLOBALS['full_user'] = user_load($user->uid);
+    if (!$user->uid)
+	$GLOBALS['full_user'] = null;
+    
+    return $GLOBALS['full_user'];
 }
