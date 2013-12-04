@@ -125,9 +125,12 @@ function os2dagsorden_meeting_views_bullet_point_fields_attachments_and_content(
       }
       if ($attachment->field_bpa_closed['und'][0]['value'] == 1)
 	  print '<div class="indicator-unlocked"></div>';
+
+      if (!empty($attachment->field_bpa_file_html['und'][0]))
+	  $link = $base_url . '/meeting/' . $meeting_id . '/bullet-point/' . $bp_id . '/bullet-point-attachment/' . $attachment->nid;
+      else
+	  $link = file_create_url($attachment->field_bpa_file['und'][0]['uri']);
 	  
-      $link = $base_url . '/meeting/' . $meeting_id . '/bullet-point/' . $bp_id . '/bullet-point-attachment/' . $attachment->nid;
-      
       if (os2dagsorden_access_helper_check_user_can_see_bullet_point_attachment($meeting_id, $bp_id, $attachment->nid)){
 	print '<div id="' . $attachment->nid . '" class="indicator-has-no-notes"></div><a href="' . $link . '" target="_blank" class="first-child last-child">' . $title . '</a>';
 
