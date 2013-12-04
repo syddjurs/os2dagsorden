@@ -81,7 +81,6 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
   
   if(module_exists('os2dagsorden_importer')){
     $conf = ultimate_cron_get_settings("os2dagsorden_importer_cron");
-    print_r($conf);
     $form['os2dagsorden_cron_job_freq']['os2dagsorden_importer_cron'] = array(
         '#type' => 'select',
         '#options' => $options,
