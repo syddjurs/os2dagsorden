@@ -130,7 +130,7 @@ function os2dagsorden_access_helper_meeting_has_speaker_paper($meeting_id) {
  */
 function os2dagsorden_access_helper_file_download ($uri){
   $path = explode('/', $uri);
-  $filename = $path[3];
+  $filename = array_pop($path);
   $result = db_query("SELECT f.* FROM {file_managed} f WHERE filename = :filename", array('filename' => $filename));
   foreach ($result as $file) {
     //find meeting by file->fid
