@@ -127,33 +127,37 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
       '#collapsible' => TRUE,
       '#title' => t('Meeting view settings'),
   );
-	$form['os2dagsorden_meeting_view_settings']['os2dagsorden_expand_all_bullets'] = array(
+  
+  //meeting view settings
+  $form['os2dagsorden_meeting_view_settings']['os2dagsorden_expand_all_bullets'] = array(
     '#type' => 'checkbox',
     '#title' => t('Expand all bullets on agenda'),
-		'#description'=>t('This decides whether a  all bullet points will be expanded'),
+    '#description'=>t('This decides whether a  all bullet points will be expanded'),
     '#default_value' => variable_get('os2dagsorden_expand_all_bullets', false),
   );
-  //expand or not expand bilag on bullet point expand
-  $form['os2dagsorden_expand_attachment_settings'] = array(
-      '#type' => 'fieldset',
-      '#collapsible' => TRUE,
-      '#title' => t('Expand/not expand Bilag on bullet point expanding'),
-  );
   $options = array('true' => t('Expand'), 'false' => t('Not expand (but keep it that way if the bilag has been expanded before)'));
-  $form['os2dagsorden_expand_attachment_settings']['os2dagsorden_expand_attachment'] = array(
+  $form['os2dagsorden_meeting_view_settings']['os2dagsorden_expand_attachment'] = array(
     '#type' => 'radios',
     '#title' => t('Expand attachment'),
     '#default_value' => variable_get('os2dagsorden_expand_attachment'),
     '#options' => $options,
     '#description' => t('This decides whether a certain type of bullet point attachment - bilag will be expanded (activated) when functionality "Expand whole bullet point" is executed.'),
   );
-  	// frontpage layout settings
+  $form['os2dagsorden_meeting_view_settings']['os2dagsorden_group_closed_bullet_points'] = array(
+    '#type' => 'radios',
+    '#title' => t('Group closed closed bullet points as a separate block'),
+    '#default_value' => variable_get('os2dagsorden_group_closed_bullet_points', 'false'),
+    '#options' => array('true' => t('Group separately'), 'false' => t('Put inline')),
+    '#description' => t('This decides whether closed bullet points will be grouped separately as a additional block called "Lukket dagsorden", or put inline together the rest of the bullet points.'),
+  );
+  
+  // frontpage layout settings
   $form['os2dagsorden_frontpage_layout_settings'] = array(
      '#type' => 'fieldset',
      '#collapsible' => TRUE,
      '#title' => t('Frontpage layout and settings'),
   );
-	$options3 = array('false' => t('Expand'), 'true' => t('Colapse') );
+  $options3 = array('false' => t('Expand'), 'true' => t('Colapse') );
   $form['os2dagsorden_frontpage_layout_settings']['os2dagsorden_colapse_menu'] = array(
     '#type' => 'radios',
     '#title' => t('Colapse/ekspand menu'),

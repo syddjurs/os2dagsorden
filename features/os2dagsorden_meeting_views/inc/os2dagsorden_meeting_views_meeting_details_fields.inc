@@ -286,3 +286,34 @@ function os2dagsorden_meeting_views_meeting_details_fields_speaker_paper_link($m
   }
 }
 /////////////////////////////////////////DAGSORDEN fields END /////////////////////////////////////////
+
+/////////////////////////////////////////DAGSORDEN filter fields START /////////////////////////////////////////
+function os2dagsorden_meeting_views_meeting_details_fields_filter_bullet_point($nid, $filter_opened){
+  if (variable_get('os2dagsorden_group_closed_bullet_points', 'false') === 'false'){//put inline
+    //accept every type
+    return FALSE;
+  } else {//put separately
+    $bullet_point = node_load($nid);
+    
+    if ($filter_opened){//accept opened
+      if ($bullet_point->field_bul_point_closed['und'][0]['value'] == 0)
+	return FALSE;
+      else
+	return TRUE;
+    } else {//accept closed
+      if ($bullet_point->field_bul_point_closed['und'][0]['value'] == 1)
+	return FALSE;
+      else
+	return TRUE;
+    }
+  }
+}
+/////////////////////////////////////////DAGSORDEN filter fields END /////////////////////////////////////////
+
+/////////////////////////////////////////LUKKET DAGSORDEN fields START /////////////////////////////////////////
+function os2dagsorden_meeting_views_meeting_details_lukket_dagsorden_access(){
+  if (os2dagsorden_meeting_views_meeting_details_dagsorden_access()){
+    return variable_get('os2dagsorden_group_closed_bullet_points', 'false') === 'true';
+  }
+}
+/////////////////////////////////////////LUKKET DAGSORDEN fields END /////////////////////////////////////////
