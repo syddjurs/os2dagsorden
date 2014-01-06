@@ -157,13 +157,13 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
      '#collapsible' => TRUE,
      '#title' => t('Frontpage layout and settings'),
   );
-  $options3 = array('false' => t('Expand'), 'true' => t('Colapse') );
-  $form['os2dagsorden_frontpage_layout_settings']['os2dagsorden_colapse_menu'] = array(
+  $options3 = array('false' => t('Expand'), 'true' => t('Collapse') );
+  $form['os2dagsorden_frontpage_layout_settings']['os2dagsorden_collapse_menu'] = array(
     '#type' => 'radios',
-    '#title' => t('Colapse/ekspand menu'),
-    '#default_value' => variable_get('os2dagsorden_colapse_menu', true),
+    '#title' => t('Collapse/expand menu'),
+    '#default_value' => variable_get('os2dagsorden_collapse_menu', true),
     '#options' => $options3,
-    '#description' => t('This decides whether a side menu expanden/collapsed.'),
+    '#description' => t('This decides whether a side menu expanded/collapsed.'),
   );
   //show or not show meeting category in the calendar
   $form['os2dagsorden_show_meeting_category_settings'] = array(
