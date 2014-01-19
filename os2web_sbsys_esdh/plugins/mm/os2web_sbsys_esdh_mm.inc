@@ -333,6 +333,7 @@ function _os2web_sbsys_esdh_mm_import_meeting_agenda_item($meeting, $xml) {
 	  'title' => trim((string) $enclosure->Name),
 	  'access' => ((string)$enclosure->IsProtected) === 'True'? 'False': 'True',//inverting the value
 	  'sysid' => (string) $enclosure['ID'],
+          'filetype' => '.pdf',//hardcoding the file extension, as we are sure only PDF is used as the enclosure
 	);
       }
     }
