@@ -150,6 +150,20 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#options' => array('true' => t('Group separately'), 'false' => t('Put inline')),
     '#description' => t('This decides whether closed bullet points will be grouped separately as a additional block called "Lukket dagsorden", or put inline together the rest of the bullet points.'),
   );
+
+  //show latest meetings in my committee or all committees
+  $form['os2dagsorden_latest_meetings_view_settings'] = array(
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#title' => t('Latest 8 meetings all/my committees view settings'),
+  );
+  $form['os2dagsorden_latest_meetings_view_settings']['os2dagsorden_latest_meetings_view_mode'] = array(
+    '#type' => 'radios',
+    '#title' => t('Switch beetween all/my committees meetings'),
+    '#options' => array('all' => t('Show meetings from all committees'), 'mine' => t('Show meetings from my committees only')),
+    '#default_value' => variable_get('os2dagsorden_latest_meetings_view_mode', 'all'),
+    '#description' => t('This decides whether the front page view will show 8 latest meeting from all committees or only from user committees (member of, follows, follows+)'),
+  );
   
   // frontpage layout settings
   $form['os2dagsorden_frontpage_layout_settings'] = array(

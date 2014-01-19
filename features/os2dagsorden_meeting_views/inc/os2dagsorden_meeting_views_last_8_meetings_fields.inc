@@ -11,6 +11,38 @@ function os2dagsorden_meeting_views_last_8_meetings_help_text(){
 }
 /////////////////////////////////////////header END /////////////////////////////////////////
 
+/////////////////////////////////////////BLOCK ALL MEETING START/////////////////////////////////////////
+function os2dagsorden_meeting_views_last_8_meetings_block_all_meetings_access(){
+  if (!os2dagsorden_access_helper_get_user()){
+    return FALSE;
+  }
+
+  if (variable_get('os2dagsorden_latest_meetings_view_mode', 'all') == 'all')
+    return TRUE;
+  else {//check if 'Mine' display returns no results - if that is the case, return 'All' display anyways
+    $view = views_get_view_result(seneste_8_m_der_i_de_st_ende_politiske_udvalg_, 'block_1');
+    $result = count($view);
+    if (!$result) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+/////////////////////////////////////////BLOCK ALL MEETING  END/////////////////////////////////////////
+
+/////////////////////////////////////////BLOCK MY MEETINGS START/////////////////////////////////////////
+function os2dagsorden_meeting_views_last_8_meetings_block_my_meetings_access(){
+  if (!os2dagsorden_access_helper_get_user()){
+    return FALSE;
+  }
+
+  if (variable_get('os2dagsorden_latest_meetings_view_mode', 'all') == 'mine')
+    return TRUE;
+  else
+    return FALSE;
+}
+/////////////////////////////////////////BLOCK MY MEETINGS END/////////////////////////////////////////
+
 /////////////////////////////////////////PAGE START/////////////////////////////////////////
 function os2dagsorden_meeting_views_last_8_meetings_fields_meeting_has_sp($meeting_id){
   os2dagsorden_meeting_views_common_meeting_has_sp_else_empty($meeting_id);
