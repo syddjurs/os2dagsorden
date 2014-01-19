@@ -238,7 +238,10 @@ function os2dagsorden_meeting_views_meeting_details_fields_bullet_point_attachme
 	if ($attachment->field_bpa_closed['und'][0]['value'] == 1)
 	  print '<div class="indicator-unlocked"></div>';
 	  
-	$link = $base_url . '/meeting/' . $meeting_id . '/bullet-point/' . $bp_id . '/bullet-point-attachment/' . $attachment->nid;
+	if (!empty($attachment->field_bpa_file_html['und'][0]))
+	  $link = $base_url . '/meeting/' . $meeting_id . '/bullet-point/' . $bp_id . '/bullet-point-attachment/' . $attachment->nid;
+	else
+	  $link = file_create_url($attachment->field_bpa_file['und'][0]['uri']);
 	  
 	if (os2dagsorden_access_helper_check_user_can_see_bullet_point_attachment($meeting_id, $bp_id, $attachment->nid)){
 	  print '<div id="' . $attachment->nid . '" class="indicator-has-no-notes"></div><a href="' . $link . '" target="_blank" class="first-child last-child">' . $title . '</a>';
@@ -283,3 +286,34 @@ function os2dagsorden_meeting_views_meeting_details_fields_speaker_paper_link($m
   }
 }
 /////////////////////////////////////////DAGSORDEN fields END /////////////////////////////////////////
+
+/////////////////////////////////////////DAGSORDEN filter fields START /////////////////////////////////////////
+function os2dagsorden_meeting_views_meeting_details_fields_filter_bullet_point($nid, $filter_opened){
+  if (variable_get('os2dagsorden_group_closed_bullet_points', 'false') === 'false'){//put inline
+    //accept every type
+    return FALSE;
+  } else {//put separately
+    $bullet_point = node_load($nid);
+    
+    if ($filter_opened){//accept opened
+      if ($bullet_point->field_bul_point_closed['und'][0]['value'] == 0)
+	return FALSE;
+      else
+	return TRUE;
+    } else {//accept closed
+      if ($bullet_point->field_bul_point_closed['und'][0]['value'] == 1)
+	return FALSE;
+      else
+	return TRUE;
+    }
+  }
+}
+/////////////////////////////////////////DAGSORDEN filter fields END /////////////////////////////////////////
+
+/////////////////////////////////////////LUKKET DAGSORDEN fields START /////////////////////////////////////////
+function os2dagsorden_meeting_views_meeting_details_lukket_dagsorden_access(){
+  if (os2dagsorden_meeting_views_meeting_details_dagsorden_access()){
+    return variable_get('os2dagsorden_group_closed_bullet_points', 'false') === 'true';
+  }
+}
+/////////////////////////////////////////LUKKET DAGSORDEN fields END /////////////////////////////////////////

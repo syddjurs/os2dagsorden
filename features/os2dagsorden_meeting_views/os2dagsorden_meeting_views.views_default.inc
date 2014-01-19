@@ -114,7 +114,7 @@ function os2dagsorden_meeting_views_views_default_views() {
       'empty_column' => 0,
     ),
   );
-  /* Overskrift: help text */
+  /* Header: help text */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
@@ -124,26 +124,26 @@ function os2dagsorden_meeting_views_views_default_views() {
 os2dagsorden_meeting_views_coming_meetings_help_text();
 ?>';
   $handler->display->display_options['header']['area']['format'] = 'php_code';
-  /* Relationship: Indhold: Committee (field_committee) */
+  /* Relationship: Content: Committee (field_committee) */
   $handler->display->display_options['relationships']['field_committee_tid']['id'] = 'field_committee_tid';
   $handler->display->display_options['relationships']['field_committee_tid']['table'] = 'field_data_field_committee';
   $handler->display->display_options['relationships']['field_committee_tid']['field'] = 'field_committee_tid';
-  /* Relationship: Ord i ordforråd: Bruger using Is part of Committee */
+  /* Relationship: Taxonomy term: User using Is part of Committee */
   $handler->display->display_options['relationships']['reverse_field_user_committee_user']['id'] = 'reverse_field_user_committee_user';
   $handler->display->display_options['relationships']['reverse_field_user_committee_user']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['relationships']['reverse_field_user_committee_user']['field'] = 'reverse_field_user_committee_user';
   $handler->display->display_options['relationships']['reverse_field_user_committee_user']['relationship'] = 'field_committee_tid';
-  /* Relationship: Ord i ordforråd: Bruger using Follows committees */
+  /* Relationship: Taxonomy term: User using Follows committees */
   $handler->display->display_options['relationships']['reverse_field_follows_committee_user']['id'] = 'reverse_field_follows_committee_user';
   $handler->display->display_options['relationships']['reverse_field_follows_committee_user']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['relationships']['reverse_field_follows_committee_user']['field'] = 'reverse_field_follows_committee_user';
   $handler->display->display_options['relationships']['reverse_field_follows_committee_user']['relationship'] = 'field_committee_tid';
-  /* Relationship: Ord i ordforråd: Bruger using Follows committees+ */
+  /* Relationship: Taxonomy term: User using Follows committees+ */
   $handler->display->display_options['relationships']['reverse_field_follows_committee_plus_user']['id'] = 'reverse_field_follows_committee_plus_user';
   $handler->display->display_options['relationships']['reverse_field_follows_committee_plus_user']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['relationships']['reverse_field_follows_committee_plus_user']['field'] = 'reverse_field_follows_committee_plus_user';
   $handler->display->display_options['relationships']['reverse_field_follows_committee_plus_user']['relationship'] = 'field_committee_tid';
-  /* Felt: nid hidden */
+  /* Field: nid hidden */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -151,7 +151,7 @@ os2dagsorden_meeting_views_coming_meetings_help_text();
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Felt: Indhold: Status */
+  /* Field: Content: Status */
   $handler->display->display_options['fields']['field_meeting_status']['id'] = 'field_meeting_status';
   $handler->display->display_options['fields']['field_meeting_status']['table'] = 'field_data_field_meeting_status';
   $handler->display->display_options['fields']['field_meeting_status']['field'] = 'field_meeting_status';
@@ -159,7 +159,7 @@ os2dagsorden_meeting_views_coming_meetings_help_text();
   $handler->display->display_options['fields']['field_meeting_status']['alter']['path'] = 'meeting/[nid]';
   $handler->display->display_options['fields']['field_meeting_status']['empty'] = '&nbsp;';
   $handler->display->display_options['fields']['field_meeting_status']['hide_alter_empty'] = FALSE;
-  /* Felt: indicator - has speaker paper */
+  /* Field: indicator - has speaker paper */
   $handler->display->display_options['fields']['php_1']['id'] = 'php_1';
   $handler->display->display_options['fields']['php_1']['table'] = 'views';
   $handler->display->display_options['fields']['php_1']['field'] = 'php';
@@ -168,11 +168,11 @@ os2dagsorden_meeting_views_coming_meetings_help_text();
   $handler->display->display_options['fields']['php_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['php_1']['use_php_setup'] = 0;
   $handler->display->display_options['fields']['php_1']['php_output'] = '<?php
-os2dagsorden_meeting_views_coming_meetings_fields_meeting_has_sp($row_nid);
+os2dagsorden_meeting_views_coming_meetings_fields_meeting_has_sp($row->nid);
 ?>';
   $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
-  /* Felt: indicator - has notes */
+  /* Field: indicator - has notes */
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
@@ -185,7 +185,7 @@ os2dagsorden_meeting_views_coming_meetings_fields_meeting_has_notes($row->nid);
 ?>';
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Felt: title - php */
+  /* Field: title - php */
   $handler->display->display_options['fields']['php_2']['id'] = 'php_2';
   $handler->display->display_options['fields']['php_2']['table'] = 'views';
   $handler->display->display_options['fields']['php_2']['field'] = 'php';
@@ -200,7 +200,7 @@ os2dagsorden_meeting_views_coming_meetings_fields_meeting_title($data);
 ?>';
   $handler->display->display_options['fields']['php_2']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_2']['php_click_sortable'] = '';
-  /* Felt: Indhold: Date */
+  /* Field: Content: Date */
   $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
   $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
@@ -216,7 +216,7 @@ os2dagsorden_meeting_views_coming_meetings_fields_meeting_title($data);
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Felt: Indhold: Lokation */
+  /* Field: Content: Lokation */
   $handler->display->display_options['fields']['field_location']['id'] = 'field_location';
   $handler->display->display_options['fields']['field_location']['table'] = 'field_data_field_location';
   $handler->display->display_options['fields']['field_location']['field'] = 'field_location';
@@ -229,7 +229,7 @@ os2dagsorden_meeting_views_coming_meetings_fields_meeting_title($data);
   $handler->display->display_options['fields']['field_location']['empty'] = '&nbsp;';
   $handler->display->display_options['fields']['field_location']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['field_location']['type'] = 'taxonomy_term_reference_plain';
-  /* Felt: Indhold: Committee */
+  /* Field: Content: Committee */
   $handler->display->display_options['fields']['field_committee']['id'] = 'field_committee';
   $handler->display->display_options['fields']['field_committee']['table'] = 'field_data_field_committee';
   $handler->display->display_options['fields']['field_committee']['field'] = 'field_committee';
@@ -243,7 +243,7 @@ os2dagsorden_meeting_views_coming_meetings_fields_meeting_title($data);
   $handler->display->display_options['fields']['field_committee']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_committee']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['field_committee']['type'] = 'taxonomy_term_reference_plain';
-  /* Felt: Ord i ordforråd: Name Short */
+  /* Field: Taxonomy term: Name Short */
   $handler->display->display_options['fields']['field_name_short']['id'] = 'field_name_short';
   $handler->display->display_options['fields']['field_name_short']['table'] = 'field_data_field_name_short';
   $handler->display->display_options['fields']['field_name_short']['field'] = 'field_name_short';
@@ -254,7 +254,7 @@ os2dagsorden_meeting_views_coming_meetings_fields_meeting_title($data);
   $handler->display->display_options['fields']['field_name_short']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_name_short']['empty'] = '[field_committee]';
   $handler->display->display_options['fields']['field_name_short']['type'] = 'text_plain';
-  /* Sort criterion: Indhold: Date -  start date (field_date) */
+  /* Sort criterion: Content: Date -  start date (field_date) */
   $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['sorts']['field_date_value']['field'] = 'field_date_value';
@@ -263,14 +263,14 @@ os2dagsorden_meeting_views_coming_meetings_fields_meeting_title($data);
     1 => 'AND',
     2 => 'OR',
   );
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -278,28 +278,28 @@ os2dagsorden_meeting_views_coming_meetings_fields_meeting_title($data);
     'meeting' => 'meeting',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filter criterion: Indhold: Date -  start date (field_date) */
+  /* Filter criterion: Content: Date -  start date (field_date) */
   $handler->display->display_options['filters']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['filters']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['filters']['field_date_value']['field'] = 'field_date_value';
   $handler->display->display_options['filters']['field_date_value']['operator'] = '>=';
   $handler->display->display_options['filters']['field_date_value']['group'] = 1;
   $handler->display->display_options['filters']['field_date_value']['default_date'] = 'today';
-  /* Filter criterion: Bruger: Current */
+  /* Filter criterion: User: Current */
   $handler->display->display_options['filters']['uid_current']['id'] = 'uid_current';
   $handler->display->display_options['filters']['uid_current']['table'] = 'users';
   $handler->display->display_options['filters']['uid_current']['field'] = 'uid_current';
   $handler->display->display_options['filters']['uid_current']['relationship'] = 'reverse_field_user_committee_user';
   $handler->display->display_options['filters']['uid_current']['value'] = '1';
   $handler->display->display_options['filters']['uid_current']['group'] = 2;
-  /* Filter criterion: Bruger: Current */
+  /* Filter criterion: User: Current */
   $handler->display->display_options['filters']['uid_current_1']['id'] = 'uid_current_1';
   $handler->display->display_options['filters']['uid_current_1']['table'] = 'users';
   $handler->display->display_options['filters']['uid_current_1']['field'] = 'uid_current';
   $handler->display->display_options['filters']['uid_current_1']['relationship'] = 'reverse_field_follows_committee_user';
   $handler->display->display_options['filters']['uid_current_1']['value'] = '1';
   $handler->display->display_options['filters']['uid_current_1']['group'] = 2;
-  /* Filter criterion: Bruger: Current */
+  /* Filter criterion: User: Current */
   $handler->display->display_options['filters']['uid_current_2']['id'] = 'uid_current_2';
   $handler->display->display_options['filters']['uid_current_2']['table'] = 'users';
   $handler->display->display_options['filters']['uid_current_2']['field'] = 'uid_current';
@@ -381,7 +381,6 @@ os2dagsorden_meeting_views_coming_meetings_help_text();
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'table';
-  $handler->display->display_options['style_options']['row_class'] = 'table-plain-text';
   $handler->display->display_options['style_options']['columns'] = array(
     'nid' => 'nid',
     'php_1' => 'title',
@@ -447,7 +446,7 @@ os2dagsorden_meeting_views_coming_meetings_help_text();
       'empty_column' => 0,
     ),
   );
-  /* Overskrift: breadcrumb override */
+  /* Header: breadcrumb override */
   $handler->display->display_options['header']['php']['id'] = 'php';
   $handler->display->display_options['header']['php']['table'] = 'views';
   $handler->display->display_options['header']['php']['field'] = 'php';
@@ -456,7 +455,7 @@ os2dagsorden_meeting_views_coming_meetings_help_text();
   $handler->display->display_options['header']['php']['php_output'] = '<?php
 os2dagsorden_meeting_views_meeting_details_breadcrumb();
 ?>';
-  /* Overskrift: agenda edit button */
+  /* Header: agenda edit button */
   $handler->display->display_options['header']['php_2']['id'] = 'php_2';
   $handler->display->display_options['header']['php_2']['table'] = 'views';
   $handler->display->display_options['header']['php_2']['field'] = 'php';
@@ -464,7 +463,7 @@ os2dagsorden_meeting_views_meeting_details_breadcrumb();
   $handler->display->display_options['header']['php_2']['php_output'] = '<?php
 os2dagsorden_meeting_views_meeting_details_agenda_and_edit_button();
 ?>';
-  /* Overskrift: description download */
+  /* Header: description download */
   $handler->display->display_options['header']['php_1']['id'] = 'php_1';
   $handler->display->display_options['header']['php_1']['table'] = 'views';
   $handler->display->display_options['header']['php_1']['field'] = 'php';
@@ -484,11 +483,11 @@ os2dagsorden_meeting_views_meeting_details_description_download();
   $handler->display->display_options['relationships']['field_ref_attachment_target_id']['field'] = 'field_ref_attachment_target_id';
   $handler->display->display_options['relationships']['field_ref_attachment_target_id']['relationship'] = 'field_ref_bullet_points_target_id';
   $handler->display->display_options['relationships']['field_ref_attachment_target_id']['label'] = 'bullet point attachments';
-  /* Relationship: Indhold: Forfatter */
+  /* Relationship: Content: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
-  /* Felt: Meeting id - hidden */
+  /* Field: Meeting id - hidden */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -496,7 +495,7 @@ os2dagsorden_meeting_views_meeting_details_description_download();
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Felt: print all speaker papers */
+  /* Field: print all speaker papers */
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
@@ -509,17 +508,17 @@ os2dagsorden_meeting_views_meeting_details_description_download();
 ?>';
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Sort criterion: Indhold: Number (field_bul_point_number) */
+  /* Sort criterion: Content: Number (field_bul_point_number) */
   $handler->display->display_options['sorts']['field_bul_point_number_value']['id'] = 'field_bul_point_number_value';
   $handler->display->display_options['sorts']['field_bul_point_number_value']['table'] = 'field_data_field_bul_point_number';
   $handler->display->display_options['sorts']['field_bul_point_number_value']['field'] = 'field_bul_point_number_value';
   $handler->display->display_options['sorts']['field_bul_point_number_value']['relationship'] = 'field_ref_bullet_points_target_id';
-  /* Sort criterion: Indhold: Titel */
+  /* Sort criterion: Content: Title */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
   $handler->display->display_options['sorts']['title']['relationship'] = 'field_ref_bullet_points_target_id';
-  /* Contextual filter: Indhold: Nid */
+  /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';
   $handler->display->display_options['arguments']['nid']['field'] = 'nid';
@@ -535,20 +534,24 @@ os2dagsorden_meeting_views_meeting_details_description_download();
   $handler->display->display_options['arguments']['nid']['validate_options']['types'] = array(
     'meeting' => 'meeting',
   );
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'meeting' => 'meeting',
   );
+  /* Filter criterion: Global: PHP */
+  $handler->display->display_options['filters']['php']['id'] = 'php';
+  $handler->display->display_options['filters']['php']['table'] = 'views';
+  $handler->display->display_options['filters']['php']['field'] = 'php';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -562,19 +565,19 @@ os2dagsorden_meeting_views_meeting_details_description_download();
     2 => '2',
   );
   $handler->display->display_options['defaults']['relationships'] = FALSE;
-  /* Relationship: Indhold: Committee (field_committee) */
+  /* Relationship: Content: Committee (field_committee) */
   $handler->display->display_options['relationships']['field_committee_tid']['id'] = 'field_committee_tid';
   $handler->display->display_options['relationships']['field_committee_tid']['table'] = 'field_data_field_committee';
   $handler->display->display_options['relationships']['field_committee_tid']['field'] = 'field_committee_tid';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Felt: Indhold: Nid */
+  /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Felt: indicator - has speaker paper */
+  /* Field: indicator - has speaker paper */
   $handler->display->display_options['fields']['php_1']['id'] = 'php_1';
   $handler->display->display_options['fields']['php_1']['table'] = 'views';
   $handler->display->display_options['fields']['php_1']['field'] = 'php';
@@ -587,7 +590,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_sp($row-
 ?>';
   $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
-  /* Felt: indicator - has notes */
+  /* Field: indicator - has notes */
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
@@ -600,7 +603,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
 ?>';
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Felt: Indhold: Titel */
+  /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -608,7 +611,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Felt: Indhold: Date */
+  /* Field: Content: Date */
   $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
   $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
@@ -620,7 +623,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Felt: Indhold: Date */
+  /* Field: Content: Date */
   $handler->display->display_options['fields']['field_date_1']['id'] = 'field_date_1';
   $handler->display->display_options['fields']['field_date_1']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date_1']['field'] = 'field_date';
@@ -632,7 +635,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Felt: Indhold: Committee */
+  /* Field: Content: Committee */
   $handler->display->display_options['fields']['field_committee']['id'] = 'field_committee';
   $handler->display->display_options['fields']['field_committee']['table'] = 'field_data_field_committee';
   $handler->display->display_options['fields']['field_committee']['field'] = 'field_committee';
@@ -643,7 +646,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['field_committee']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['field_committee']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_committee']['type'] = 'taxonomy_term_reference_plain';
-  /* Felt: Ord i ordforråd: Name Short */
+  /* Field: Taxonomy term: Name Short */
   $handler->display->display_options['fields']['field_name_short']['id'] = 'field_name_short';
   $handler->display->display_options['fields']['field_name_short']['table'] = 'field_data_field_name_short';
   $handler->display->display_options['fields']['field_name_short']['field'] = 'field_name_short';
@@ -652,14 +655,14 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['field_name_short']['empty'] = '[field_committee]';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -711,7 +714,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['defaults']['header'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Felt: Meeting id - hidden */
+  /* Field: Meeting id - hidden */
   $handler->display->display_options['fields']['nid_1']['id'] = 'nid_1';
   $handler->display->display_options['fields']['nid_1']['table'] = 'node';
   $handler->display->display_options['fields']['nid_1']['field'] = 'nid';
@@ -719,7 +722,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['nid_1']['label'] = '';
   $handler->display->display_options['fields']['nid_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid_1']['element_label_colon'] = FALSE;
-  /* Felt: Indhold: Lokation */
+  /* Field: Content: Lokation */
   $handler->display->display_options['fields']['field_location']['id'] = 'field_location';
   $handler->display->display_options['fields']['field_location']['table'] = 'field_data_field_location';
   $handler->display->display_options['fields']['field_location']['field'] = 'field_location';
@@ -727,14 +730,14 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['field_location']['type'] = 'taxonomy_term_reference_plain';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -759,7 +762,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['defaults']['header'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Felt: Meeting id - hidden */
+  /* Field: Meeting id - hidden */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -767,7 +770,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Felt: Indhold: Participants */
+  /* Field: Content: Participants */
   $handler->display->display_options['fields']['field_meeting_participants']['id'] = 'field_meeting_participants';
   $handler->display->display_options['fields']['field_meeting_participants']['table'] = 'field_data_field_meeting_participants';
   $handler->display->display_options['fields']['field_meeting_participants']['field'] = 'field_meeting_participants';
@@ -776,14 +779,14 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['field_meeting_participants']['hide_empty'] = TRUE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -912,7 +915,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Overskrift: Global: Text area */
+  /* Header: Global: Text area */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
@@ -939,7 +942,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['relationships']['field_ref_attachment_target_id']['relationship'] = 'field_ref_bullet_points_target_id';
   $handler->display->display_options['relationships']['field_ref_attachment_target_id']['label'] = 'bullet point attachment';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Felt: Meeting id - hidden */
+  /* Field: Meeting id - hidden */
   $handler->display->display_options['fields']['nid_1']['id'] = 'nid_1';
   $handler->display->display_options['fields']['nid_1']['table'] = 'node';
   $handler->display->display_options['fields']['nid_1']['field'] = 'nid';
@@ -947,7 +950,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['nid_1']['label'] = '';
   $handler->display->display_options['fields']['nid_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid_1']['element_label_colon'] = FALSE;
-  /* Felt: Bullet point id - hidden */
+  /* Field: Bullet point id - hidden */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -956,7 +959,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Felt: hide show container */
+  /* Field: hide show container */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
@@ -964,7 +967,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['nothing']['label'] = '';
   $handler->display->display_options['fields']['nothing']['element_class'] = 'hide_show_button_container';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
-  /* Felt: closed indicator */
+  /* Field: closed indicator */
   $handler->display->display_options['fields']['field_bul_point_closed']['id'] = 'field_bul_point_closed';
   $handler->display->display_options['fields']['field_bul_point_closed']['table'] = 'field_data_field_bul_point_closed';
   $handler->display->display_options['fields']['field_bul_point_closed']['field'] = 'field_bul_point_closed';
@@ -976,7 +979,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['field_bul_point_closed']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_bul_point_closed']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_bul_point_closed']['type'] = 'list_key';
-  /* Felt: Personal indicator */
+  /* Field: Personal indicator */
   $handler->display->display_options['fields']['field_bul_point_personal']['id'] = 'field_bul_point_personal';
   $handler->display->display_options['fields']['field_bul_point_personal']['table'] = 'field_data_field_bul_point_personal';
   $handler->display->display_options['fields']['field_bul_point_personal']['field'] = 'field_bul_point_personal';
@@ -988,7 +991,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has_notes($r
   $handler->display->display_options['fields']['field_bul_point_personal']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_bul_point_personal']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_bul_point_personal']['type'] = 'list_key';
-  /* Felt: indicator - bullet point has speaker paper */
+  /* Field: indicator - bullet point has speaker paper */
   $handler->display->display_options['fields']['php_1']['id'] = 'php_1';
   $handler->display->display_options['fields']['php_1']['table'] = 'views';
   $handler->display->display_options['fields']['php_1']['field'] = 'php';
@@ -1001,7 +1004,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_bullet_point_has_sp(
 ?>';
   $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
-  /* Felt: indicator - bullet point has notes */
+  /* Field: indicator - bullet point has notes */
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
@@ -1017,7 +1020,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_bullet_point_has_not
 ?>';
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Felt: bullet point title [hidden], for speaker paper link */
+  /* Field: bullet point title [hidden], for speaker paper link */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -1027,7 +1030,7 @@ os2dagsorden_meeting_views_meeting_details_fields_indicator_bullet_point_has_not
   $handler->display->display_options['fields']['title']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Felt: Bullet point title - php */
+  /* Field: Bullet point title - php */
   $handler->display->display_options['fields']['php_4']['id'] = 'php_4';
   $handler->display->display_options['fields']['php_4']['table'] = 'views';
   $handler->display->display_options['fields']['php_4']['field'] = 'php';
@@ -1044,7 +1047,7 @@ os2dagsorden_meeting_views_meeting_details_fields_bullet_point_title($title, $me
 ?>';
   $handler->display->display_options['fields']['php_4']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_4']['php_click_sortable'] = '';
-  /* Felt: bullet point attachments with text */
+  /* Field: bullet point attachments with text */
   $handler->display->display_options['fields']['php_3']['id'] = 'php_3';
   $handler->display->display_options['fields']['php_3']['table'] = 'views';
   $handler->display->display_options['fields']['php_3']['field'] = 'php';
@@ -1060,7 +1063,7 @@ os2dagsorden_meeting_views_meeting_details_fields_bullet_point_attachments_with_
 ?>';
   $handler->display->display_options['fields']['php_3']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_3']['php_click_sortable'] = '';
-  /* Felt: speaker paper link */
+  /* Field: speaker paper link */
   $handler->display->display_options['fields']['php_2']['id'] = 'php_2';
   $handler->display->display_options['fields']['php_2']['table'] = 'views';
   $handler->display->display_options['fields']['php_2']['field'] = 'php';
@@ -1080,20 +1083,322 @@ os2dagsorden_meeting_views_meeting_details_fields_speaker_paper_link($meeting_id
   $handler->display->display_options['fields']['php_2']['php_click_sortable'] = '';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'meeting' => 'meeting',
   );
+  /* Filter criterion: Filter on closed/open bullet points, depending on current settings */
+  $handler->display->display_options['filters']['php']['id'] = 'php';
+  $handler->display->display_options['filters']['php']['table'] = 'views';
+  $handler->display->display_options['filters']['php']['field'] = 'php';
+  $handler->display->display_options['filters']['php']['ui_name'] = 'Filter on closed/open bullet points, depending on current settings';
+  $handler->display->display_options['filters']['php']['use_php_setup'] = 0;
+  $handler->display->display_options['filters']['php']['php_filter'] = 'return os2dagsorden_meeting_views_meeting_details_fields_filter_bullet_point($row->nid, true);';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+  );
+  $handler->display->display_options['attachment_position'] = 'after';
+
+  /* Display: Lukket Dagsorden */
+  $handler = $view->new_display('attachment', 'Lukket Dagsorden', 'attachment_4');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Lukket Dagsorden';
+  $handler->display->display_options['defaults']['css_class'] = FALSE;
+  $handler->display->display_options['css_class'] = 'bullet-point-attachments';
+  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'php';
+  $handler->display->display_options['access']['php_access'] = 'return os2dagsorden_meeting_views_meeting_details_lukket_dagsorden_access();';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '0';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'nid' => 'nid',
+    'nid_1' => 'nid_1',
+    'nothing' => 'nothing',
+    'field_bul_point_closed' => 'php_3',
+    'field_bul_point_personal' => 'php_3',
+    'php_1' => 'php_3',
+    'php_2' => 'php_3',
+    'title' => 'title',
+    'php_3' => 'php_3',
+    'php_4' => 'php_3',
+    'php_5' => 'php_5',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_bul_point_closed' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_bul_point_personal' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'php_1' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'php_2' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'php_3' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'php_4' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'php_5' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['content'] = '<h3>Lukket Dagsorden:</h3>';
+  $handler->display->display_options['header']['area']['format'] = 'full_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: bullet point */
+  $handler->display->display_options['relationships']['field_ref_bullet_points_target_id']['id'] = 'field_ref_bullet_points_target_id';
+  $handler->display->display_options['relationships']['field_ref_bullet_points_target_id']['table'] = 'field_data_field_ref_bullet_points';
+  $handler->display->display_options['relationships']['field_ref_bullet_points_target_id']['field'] = 'field_ref_bullet_points_target_id';
+  $handler->display->display_options['relationships']['field_ref_bullet_points_target_id']['ui_name'] = 'bullet point';
+  $handler->display->display_options['relationships']['field_ref_bullet_points_target_id']['required'] = TRUE;
+  /* Relationship: bullet point speaking paper */
+  $handler->display->display_options['relationships']['reverse_field_ref_bullet_points_node']['id'] = 'reverse_field_ref_bullet_points_node';
+  $handler->display->display_options['relationships']['reverse_field_ref_bullet_points_node']['table'] = 'node';
+  $handler->display->display_options['relationships']['reverse_field_ref_bullet_points_node']['field'] = 'reverse_field_ref_bullet_points_node';
+  $handler->display->display_options['relationships']['reverse_field_ref_bullet_points_node']['relationship'] = 'field_ref_bullet_points_target_id';
+  $handler->display->display_options['relationships']['reverse_field_ref_bullet_points_node']['ui_name'] = 'bullet point speaking paper';
+  $handler->display->display_options['relationships']['reverse_field_ref_bullet_points_node']['label'] = 'bullet point speaking paper';
+  /* Relationship: Entity Reference: Referenced Entity */
+  $handler->display->display_options['relationships']['field_ref_attachment_target_id']['id'] = 'field_ref_attachment_target_id';
+  $handler->display->display_options['relationships']['field_ref_attachment_target_id']['table'] = 'field_data_field_ref_attachment';
+  $handler->display->display_options['relationships']['field_ref_attachment_target_id']['field'] = 'field_ref_attachment_target_id';
+  $handler->display->display_options['relationships']['field_ref_attachment_target_id']['relationship'] = 'field_ref_bullet_points_target_id';
+  $handler->display->display_options['relationships']['field_ref_attachment_target_id']['label'] = 'bullet point attachment';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Meeting id - hidden */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['ui_name'] = 'Meeting id - hidden';
+  $handler->display->display_options['fields']['nid']['label'] = '';
+  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
+  /* Field: Bullet point id - hidden */
+  $handler->display->display_options['fields']['nid_1']['id'] = 'nid_1';
+  $handler->display->display_options['fields']['nid_1']['table'] = 'node';
+  $handler->display->display_options['fields']['nid_1']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid_1']['relationship'] = 'field_ref_bullet_points_target_id';
+  $handler->display->display_options['fields']['nid_1']['ui_name'] = 'Bullet point id - hidden';
+  $handler->display->display_options['fields']['nid_1']['label'] = '';
+  $handler->display->display_options['fields']['nid_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid_1']['element_label_colon'] = FALSE;
+  /* Field: hide show container */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['ui_name'] = 'hide show container';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['element_class'] = 'hide_show_button_container';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Field: closed indicator */
+  $handler->display->display_options['fields']['field_bul_point_closed']['id'] = 'field_bul_point_closed';
+  $handler->display->display_options['fields']['field_bul_point_closed']['table'] = 'field_data_field_bul_point_closed';
+  $handler->display->display_options['fields']['field_bul_point_closed']['field'] = 'field_bul_point_closed';
+  $handler->display->display_options['fields']['field_bul_point_closed']['relationship'] = 'field_ref_bullet_points_target_id';
+  $handler->display->display_options['fields']['field_bul_point_closed']['ui_name'] = 'closed indicator';
+  $handler->display->display_options['fields']['field_bul_point_closed']['label'] = '';
+  $handler->display->display_options['fields']['field_bul_point_closed']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_bul_point_closed']['alter']['text'] = '<div class="indicator-unlocked"></div>';
+  $handler->display->display_options['fields']['field_bul_point_closed']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_bul_point_closed']['empty_zero'] = TRUE;
+  $handler->display->display_options['fields']['field_bul_point_closed']['type'] = 'list_key';
+  /* Field: Personal indicator */
+  $handler->display->display_options['fields']['field_bul_point_personal']['id'] = 'field_bul_point_personal';
+  $handler->display->display_options['fields']['field_bul_point_personal']['table'] = 'field_data_field_bul_point_personal';
+  $handler->display->display_options['fields']['field_bul_point_personal']['field'] = 'field_bul_point_personal';
+  $handler->display->display_options['fields']['field_bul_point_personal']['relationship'] = 'field_ref_bullet_points_target_id';
+  $handler->display->display_options['fields']['field_bul_point_personal']['ui_name'] = 'Personal indicator';
+  $handler->display->display_options['fields']['field_bul_point_personal']['label'] = '';
+  $handler->display->display_options['fields']['field_bul_point_personal']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_bul_point_personal']['alter']['text'] = '<div class="indicator-personal"></div>';
+  $handler->display->display_options['fields']['field_bul_point_personal']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_bul_point_personal']['empty_zero'] = TRUE;
+  $handler->display->display_options['fields']['field_bul_point_personal']['type'] = 'list_key';
+  /* Field: indicator - bullet point has speaker paper */
+  $handler->display->display_options['fields']['php_1']['id'] = 'php_1';
+  $handler->display->display_options['fields']['php_1']['table'] = 'views';
+  $handler->display->display_options['fields']['php_1']['field'] = 'php';
+  $handler->display->display_options['fields']['php_1']['ui_name'] = 'indicator - bullet point has speaker paper';
+  $handler->display->display_options['fields']['php_1']['label'] = '';
+  $handler->display->display_options['fields']['php_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['php_1']['use_php_setup'] = 0;
+  $handler->display->display_options['fields']['php_1']['php_output'] = '<?php
+os2dagsorden_meeting_views_meeting_details_fields_indicator_bullet_point_has_sp($row->nid);
+?>';
+  $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
+  $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
+  /* Field: indicator - bullet point has notes */
+  $handler->display->display_options['fields']['php_2']['id'] = 'php_2';
+  $handler->display->display_options['fields']['php_2']['table'] = 'views';
+  $handler->display->display_options['fields']['php_2']['field'] = 'php';
+  $handler->display->display_options['fields']['php_2']['ui_name'] = 'indicator - bullet point has notes';
+  $handler->display->display_options['fields']['php_2']['label'] = '';
+  $handler->display->display_options['fields']['php_2']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['php_2']['use_php_setup'] = 0;
+  $handler->display->display_options['fields']['php_2']['php_output'] = '<?php
+$is_closed = $data->_field_data[\'node_field_data_field_ref_bullet_points_nid\'][\'entity\']->field_bul_point_closed[\'und\'][0][\'value\'];
+$is_personal = $data->_field_data[\'node_field_data_field_ref_bullet_points_nid\'][\'entity\']->field_bul_point_personal[\'und\'][0][\'value\'];
+
+os2dagsorden_meeting_views_meeting_details_fields_indicator_bullet_point_has_notes($row->nid, $is_closed, $is_personal);
+?>';
+  $handler->display->display_options['fields']['php_2']['use_php_click_sortable'] = '0';
+  $handler->display->display_options['fields']['php_2']['php_click_sortable'] = '';
+  /* Field: bullet point title [hidden], for speaker paper link */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['relationship'] = 'field_ref_bullet_points_target_id';
+  $handler->display->display_options['fields']['title']['ui_name'] = 'bullet point title [hidden], for speaker paper link';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Bullet point title - php */
+  $handler->display->display_options['fields']['php_3']['id'] = 'php_3';
+  $handler->display->display_options['fields']['php_3']['table'] = 'views';
+  $handler->display->display_options['fields']['php_3']['field'] = 'php';
+  $handler->display->display_options['fields']['php_3']['ui_name'] = 'Bullet point title - php';
+  $handler->display->display_options['fields']['php_3']['label'] = '';
+  $handler->display->display_options['fields']['php_3']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['php_3']['use_php_setup'] = 0;
+  $handler->display->display_options['fields']['php_3']['php_output'] = '<?php
+$title = $data->_field_data[\'node_field_data_field_ref_bullet_points_nid\'][\'entity\']->title;
+$meeting_id = $row->nid;
+$bp_id = $row->nid_1;
+
+os2dagsorden_meeting_views_meeting_details_fields_bullet_point_title($title, $meeting_id, $bp_id);
+?>';
+  $handler->display->display_options['fields']['php_3']['use_php_click_sortable'] = '0';
+  $handler->display->display_options['fields']['php_3']['php_click_sortable'] = '';
+  /* Field: bullet point attachments with text */
+  $handler->display->display_options['fields']['php_4']['id'] = 'php_4';
+  $handler->display->display_options['fields']['php_4']['table'] = 'views';
+  $handler->display->display_options['fields']['php_4']['field'] = 'php';
+  $handler->display->display_options['fields']['php_4']['ui_name'] = 'bullet point attachments with text';
+  $handler->display->display_options['fields']['php_4']['label'] = '';
+  $handler->display->display_options['fields']['php_4']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['php_4']['use_php_setup'] = 0;
+  $handler->display->display_options['fields']['php_4']['php_output'] = '<?php
+$meeting_id = $row->nid;
+$bp_id = $row->nid_1;
+
+os2dagsorden_meeting_views_meeting_details_fields_bullet_point_attachments_with_text($meeting_id, $bp_id);
+?>';
+  $handler->display->display_options['fields']['php_4']['use_php_click_sortable'] = '0';
+  $handler->display->display_options['fields']['php_4']['php_click_sortable'] = '';
+  /* Field: speaker paper link */
+  $handler->display->display_options['fields']['php_5']['id'] = 'php_5';
+  $handler->display->display_options['fields']['php_5']['table'] = 'views';
+  $handler->display->display_options['fields']['php_5']['field'] = 'php';
+  $handler->display->display_options['fields']['php_5']['ui_name'] = 'speaker paper link';
+  $handler->display->display_options['fields']['php_5']['label'] = '';
+  $handler->display->display_options['fields']['php_5']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['php_5']['use_php_setup'] = 0;
+  $handler->display->display_options['fields']['php_5']['php_output'] = '<?php
+$meeting_id = $row->nid;
+$bp_id = $row->nid_1;
+$bp_title = $row->title;
+
+os2dagsorden_meeting_views_meeting_details_fields_speaker_paper_link($meeting_id, $bp_id, $bp_title);
+?>';
+  $handler->display->display_options['fields']['php_5']['use_php_click_sortable'] = '0';
+  $handler->display->display_options['fields']['php_5']['php_click_sortable'] = '';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'meeting' => 'meeting',
+  );
+  /* Filter criterion: Filter on closed/open bullet points, depending on current settings */
+  $handler->display->display_options['filters']['php']['id'] = 'php';
+  $handler->display->display_options['filters']['php']['table'] = 'views';
+  $handler->display->display_options['filters']['php']['field'] = 'php';
+  $handler->display->display_options['filters']['php']['ui_name'] = 'Filter on closed/open bullet points, depending on current settings';
+  $handler->display->display_options['filters']['php']['use_php_setup'] = 0;
+  $handler->display->display_options['filters']['php']['php_filter'] = 'return os2dagsorden_meeting_views_meeting_details_fields_filter_bullet_point($row->nid_1, false);
+';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
@@ -1115,7 +1420,7 @@ os2dagsorden_meeting_views_meeting_details_fields_speaker_paper_link($meeting_id
     t('Page'),
     t('Mødedetaljer'),
     t('term from field_committee'),
-    t('Titel'),
+    t('Title'),
     t('Startdato'),
     t('Slutdato'),
     t('Udvalg'),
@@ -1125,11 +1430,13 @@ os2dagsorden_meeting_views_meeting_details_fields_speaker_paper_link($meeting_id
     t('Print alle talepapirer'),
     t('Dagsorden'),
     t('<h3>Dagsorden:</h3>'),
-    t('Indhold entity referenced from field_ref_bullet_points'),
+    t('Content entity referenced from field_ref_bullet_points'),
     t('bullet point speaking paper'),
     t('bullet point attachment'),
     t('<div class="indicator-unlocked"></div>'),
     t('<div class="indicator-personal"></div>'),
+    t('Lukket Dagsorden'),
+    t('<h3>Lukket Dagsorden:</h3>'),
   );
   $export['meeting_details'] = $view;
 
@@ -1264,7 +1571,7 @@ os2dagsorden_meeting_views_meeting_details_fields_speaker_paper_link($meeting_id
       'empty_column' => 0,
     ),
   );
-  /* Overskrift: help text */
+  /* Header: help text */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
@@ -1274,7 +1581,7 @@ os2dagsorden_meeting_views_meeting_details_fields_speaker_paper_link($meeting_id
 os2dagsorden_meeting_views_meetings_search_help_text();
 ?>';
   $handler->display->display_options['header']['area']['format'] = 'php_code';
-  /* Overskrift: breadcrumb override */
+  /* Header: breadcrumb override */
   $handler->display->display_options['header']['php']['id'] = 'php';
   $handler->display->display_options['header']['php']['table'] = 'views';
   $handler->display->display_options['header']['php']['field'] = 'php';
@@ -1289,18 +1596,18 @@ os2dagsorden_meeting_views_meetings_search_breadcrumb();
   $handler->display->display_options['empty']['area']['field'] = 'area';
   $handler->display->display_options['empty']['area']['content'] = 'Ingen møder er fundet';
   $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
-  /* Relationship: Indhold: Committee (field_committee) */
+  /* Relationship: Content: Committee (field_committee) */
   $handler->display->display_options['relationships']['field_committee_tid']['id'] = 'field_committee_tid';
   $handler->display->display_options['relationships']['field_committee_tid']['table'] = 'field_data_field_committee';
   $handler->display->display_options['relationships']['field_committee_tid']['field'] = 'field_committee_tid';
-  /* Felt: Indhold: Nid */
+  /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Felt: bullet_point_id - php */
+  /* Field: bullet_point_id - php */
   $handler->display->display_options['fields']['php_4']['id'] = 'php_4';
   $handler->display->display_options['fields']['php_4']['table'] = 'views';
   $handler->display->display_options['fields']['php_4']['field'] = 'php';
@@ -1320,7 +1627,7 @@ os2dagsorden_meeting_views_meetings_search_fields_bp_id($meta_data);
 ?>';
   $handler->display->display_options['fields']['php_4']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_4']['php_click_sortable'] = '';
-  /* Felt: bpa_id - php */
+  /* Field: bpa_id - php */
   $handler->display->display_options['fields']['php_5']['id'] = 'php_5';
   $handler->display->display_options['fields']['php_5']['table'] = 'views';
   $handler->display->display_options['fields']['php_5']['field'] = 'php';
@@ -1336,7 +1643,7 @@ os2dagsorden_meeting_views_meetings_search_fields_bpa_id($meta_data);
 ?>';
   $handler->display->display_options['fields']['php_5']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_5']['php_click_sortable'] = '';
-  /* Felt: indicator - has speaker paper */
+  /* Field: indicator - has speaker paper */
   $handler->display->display_options['fields']['php_1']['id'] = 'php_1';
   $handler->display->display_options['fields']['php_1']['table'] = 'views';
   $handler->display->display_options['fields']['php_1']['field'] = 'php';
@@ -1349,7 +1656,7 @@ os2dagsorden_meeting_views_meetings_search_fields_meeting_has_sp($row->nid);
 ?>';
   $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
-  /* Felt: indicator - has notes */
+  /* Field: indicator - has notes */
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
@@ -1362,7 +1669,7 @@ os2dagsorden_meeting_views_meetings_search_fields_meeting_has_notes($row->nid);
 ?>';
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Felt: title - php */
+  /* Field: title - php */
   $handler->display->display_options['fields']['php_2']['id'] = 'php_2';
   $handler->display->display_options['fields']['php_2']['table'] = 'views';
   $handler->display->display_options['fields']['php_2']['field'] = 'php';
@@ -1377,7 +1684,7 @@ os2dagsorden_meeting_views_meetings_search_fields_meeting_title($data);
 ?>';
   $handler->display->display_options['fields']['php_2']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_2']['php_click_sortable'] = '';
-  /* Felt: Indhold: Date */
+  /* Field: Content: Date */
   $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
   $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
@@ -1393,7 +1700,7 @@ os2dagsorden_meeting_views_meetings_search_fields_meeting_title($data);
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Felt: Indhold: Committee */
+  /* Field: Content: Committee */
   $handler->display->display_options['fields']['field_committee']['id'] = 'field_committee';
   $handler->display->display_options['fields']['field_committee']['table'] = 'field_data_field_committee';
   $handler->display->display_options['fields']['field_committee']['field'] = 'field_committee';
@@ -1408,7 +1715,7 @@ os2dagsorden_meeting_views_meetings_search_fields_meeting_title($data);
   $handler->display->display_options['fields']['field_committee']['empty'] = '&nbsp;';
   $handler->display->display_options['fields']['field_committee']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['field_committee']['type'] = 'taxonomy_term_reference_plain';
-  /* Felt: Ord i ordforråd: Name Short */
+  /* Field: Taxonomy term: Name Short */
   $handler->display->display_options['fields']['field_name_short']['id'] = 'field_name_short';
   $handler->display->display_options['fields']['field_name_short']['table'] = 'field_data_field_name_short';
   $handler->display->display_options['fields']['field_name_short']['field'] = 'field_name_short';
@@ -1418,7 +1725,7 @@ os2dagsorden_meeting_views_meetings_search_fields_meeting_title($data);
   $handler->display->display_options['fields']['field_name_short']['alter']['path'] = 'meeting/[nid][php_4][php_5]';
   $handler->display->display_options['fields']['field_name_short']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_name_short']['empty'] = '[field_committee]';
-  /* Felt: Placering - php */
+  /* Field: Placering - php */
   $handler->display->display_options['fields']['php_3']['id'] = 'php_3';
   $handler->display->display_options['fields']['php_3']['table'] = 'views';
   $handler->display->display_options['fields']['php_3']['field'] = 'php';
@@ -1436,25 +1743,25 @@ os2dagsorden_meeting_views_meetings_search_fields_placering($meta_data);
 ?>';
   $handler->display->display_options['fields']['php_3']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_3']['php_click_sortable'] = '';
-  /* Sort criterion: Indhold: Date -  start date (field_date) */
+  /* Sort criterion: Content: Date -  start date (field_date) */
   $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['sorts']['field_date_value']['field'] = 'field_date_value';
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'meeting' => 'meeting',
   );
-  /* Filter criterion: Indhold: Date -  start date (field_date) */
+  /* Filter criterion: Content: Date -  start date (field_date) */
   $handler->display->display_options['filters']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['filters']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['filters']['field_date_value']['field'] = 'field_date_value';
@@ -1473,14 +1780,14 @@ os2dagsorden_meeting_views_meetings_search_fields_placering($meta_data);
   $handler->display->display_options['exposed_block'] = TRUE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -1488,7 +1795,7 @@ os2dagsorden_meeting_views_meetings_search_fields_placering($meta_data);
     'meeting' => 'meeting',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filter criterion: Indhold: Date -  start date (field_date) */
+  /* Filter criterion: Content: Date -  start date (field_date) */
   $handler->display->display_options['filters']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['filters']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['filters']['field_date_value']['field'] = 'field_date_value';
@@ -1510,7 +1817,7 @@ os2dagsorden_meeting_views_meetings_search_fields_placering($meta_data);
   $handler->display->display_options['filters']['field_date_value']['form_type'] = 'date_popup';
   $handler->display->display_options['filters']['field_date_value']['default_date'] = 'now';
   $handler->display->display_options['filters']['field_date_value']['year_range'] = '2011:+1';
-  /* Filter criterion: Indhold: Date -  start date (field_date) */
+  /* Filter criterion: Content: Date -  start date (field_date) */
   $handler->display->display_options['filters']['field_date_value_1']['id'] = 'field_date_value_1';
   $handler->display->display_options['filters']['field_date_value_1']['table'] = 'field_data_field_date';
   $handler->display->display_options['filters']['field_date_value_1']['field'] = 'field_date_value';
@@ -1540,7 +1847,7 @@ os2dagsorden_meeting_views_meetings_search_fields_placering($meta_data);
   $handler->display->display_options['filters']['field_date_value_1']['form_type'] = 'date_popup';
   $handler->display->display_options['filters']['field_date_value_1']['default_date'] = 'now + 1 month';
   $handler->display->display_options['filters']['field_date_value_1']['year_range'] = '2011:+1';
-  /* Filter criterion: Indhold: Committee (field_committee) */
+  /* Filter criterion: Content: Committee (field_committee) */
   $handler->display->display_options['filters']['field_committee_tid']['id'] = 'field_committee_tid';
   $handler->display->display_options['filters']['field_committee_tid']['table'] = 'field_data_field_committee';
   $handler->display->display_options['filters']['field_committee_tid']['field'] = 'field_committee_tid';
@@ -1561,7 +1868,7 @@ os2dagsorden_meeting_views_meetings_search_fields_placering($meta_data);
   $handler->display->display_options['filters']['field_committee_tid']['reduce_duplicates'] = TRUE;
   $handler->display->display_options['filters']['field_committee_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_committee_tid']['vocabulary'] = 'committee';
-  /* Filter criterion: Indhold: Search meta data (field_meeting_search_meta_date) */
+  /* Filter criterion: Content: Search meta data (field_meeting_search_meta_date) */
   $handler->display->display_options['filters']['field_meeting_search_meta_date_value']['id'] = 'field_meeting_search_meta_date_value';
   $handler->display->display_options['filters']['field_meeting_search_meta_date_value']['table'] = 'field_data_field_meeting_search_meta_date';
   $handler->display->display_options['filters']['field_meeting_search_meta_date_value']['field'] = 'field_meeting_search_meta_date_value';
@@ -1715,7 +2022,7 @@ os2dagsorden_meeting_views_meetings_search_help_text();
       'empty_column' => 0,
     ),
   );
-  /* Overskrift: help button */
+  /* Header: help button */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
@@ -1725,23 +2032,23 @@ os2dagsorden_meeting_views_meetings_search_help_text();
 os2dagsorden_meeting_views_last_8_meetings_help_text();
 ?>';
   $handler->display->display_options['header']['area']['format'] = 'php_code';
-  /* Relationship: Indhold: Committee (field_committee) */
+  /* Relationship: Content: Committee (field_committee) */
   $handler->display->display_options['relationships']['field_committee_tid']['id'] = 'field_committee_tid';
   $handler->display->display_options['relationships']['field_committee_tid']['table'] = 'field_data_field_committee';
   $handler->display->display_options['relationships']['field_committee_tid']['field'] = 'field_committee_tid';
-  /* Relationship: Ord i ordforråd: Bruger using Is part of Committee */
+  /* Relationship: Taxonomy term: User using Is part of Committee */
   $handler->display->display_options['relationships']['reverse_field_user_committee_user']['id'] = 'reverse_field_user_committee_user';
   $handler->display->display_options['relationships']['reverse_field_user_committee_user']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['relationships']['reverse_field_user_committee_user']['field'] = 'reverse_field_user_committee_user';
   $handler->display->display_options['relationships']['reverse_field_user_committee_user']['relationship'] = 'field_committee_tid';
-  /* Felt: Indhold: Nid */
+  /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Felt: Indhold: Status */
+  /* Field: Content: Status */
   $handler->display->display_options['fields']['field_meeting_status']['id'] = 'field_meeting_status';
   $handler->display->display_options['fields']['field_meeting_status']['table'] = 'field_data_field_meeting_status';
   $handler->display->display_options['fields']['field_meeting_status']['field'] = 'field_meeting_status';
@@ -1749,7 +2056,7 @@ os2dagsorden_meeting_views_last_8_meetings_help_text();
   $handler->display->display_options['fields']['field_meeting_status']['alter']['path'] = 'meeting/[nid]';
   $handler->display->display_options['fields']['field_meeting_status']['empty'] = '&nbsp;';
   $handler->display->display_options['fields']['field_meeting_status']['hide_alter_empty'] = FALSE;
-  /* Felt: indicator - has speaker paper */
+  /* Field: indicator - has speaker paper */
   $handler->display->display_options['fields']['php_1']['id'] = 'php_1';
   $handler->display->display_options['fields']['php_1']['table'] = 'views';
   $handler->display->display_options['fields']['php_1']['field'] = 'php';
@@ -1762,7 +2069,7 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_has_sp($row->nid);
 ?>';
   $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
-  /* Felt: indicator - has notes */
+  /* Field: indicator - has notes */
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
@@ -1775,7 +2082,7 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_has_notes($row->nid);
 ?>';
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Felt: title - php */
+  /* Field: title - php */
   $handler->display->display_options['fields']['php_2']['id'] = 'php_2';
   $handler->display->display_options['fields']['php_2']['table'] = 'views';
   $handler->display->display_options['fields']['php_2']['field'] = 'php';
@@ -1791,7 +2098,7 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_title($data);
 ?>';
   $handler->display->display_options['fields']['php_2']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php_2']['php_click_sortable'] = '';
-  /* Felt: Indhold: Date */
+  /* Field: Content: Date */
   $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
   $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
@@ -1806,7 +2113,7 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_title($data);
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Felt: Indhold: Lokation */
+  /* Field: Content: Lokation */
   $handler->display->display_options['fields']['field_location']['id'] = 'field_location';
   $handler->display->display_options['fields']['field_location']['table'] = 'field_data_field_location';
   $handler->display->display_options['fields']['field_location']['field'] = 'field_location';
@@ -1818,7 +2125,7 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_title($data);
   $handler->display->display_options['fields']['field_location']['empty'] = '&nbsp;';
   $handler->display->display_options['fields']['field_location']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['field_location']['type'] = 'taxonomy_term_reference_plain';
-  /* Felt: Indhold: Committee */
+  /* Field: Content: Committee */
   $handler->display->display_options['fields']['field_committee']['id'] = 'field_committee';
   $handler->display->display_options['fields']['field_committee']['table'] = 'field_data_field_committee';
   $handler->display->display_options['fields']['field_committee']['field'] = 'field_committee';
@@ -1832,7 +2139,7 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_title($data);
   $handler->display->display_options['fields']['field_committee']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_committee']['empty'] = '&nbsp;';
   $handler->display->display_options['fields']['field_committee']['type'] = 'taxonomy_term_reference_plain';
-  /* Felt: Ord i ordforråd: Name Short */
+  /* Field: Taxonomy term: Name Short */
   $handler->display->display_options['fields']['field_name_short']['id'] = 'field_name_short';
   $handler->display->display_options['fields']['field_name_short']['table'] = 'field_data_field_name_short';
   $handler->display->display_options['fields']['field_name_short']['field'] = 'field_name_short';
@@ -1846,26 +2153,26 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_title($data);
   $handler->display->display_options['fields']['field_name_short']['settings'] = array(
     'trim_length' => '600',
   );
-  /* Sort criterion: Indhold: Date -  start date (field_date) */
+  /* Sort criterion: Content: Date -  start date (field_date) */
   $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['sorts']['field_date_value']['field'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['order'] = 'DESC';
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'meeting' => 'meeting',
   );
-  /* Filter criterion: Indhold: Date -  start date (field_date) */
+  /* Filter criterion: Content: Date -  start date (field_date) */
   $handler->display->display_options['filters']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['filters']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['filters']['field_date_value']['field'] = 'field_date_value';
@@ -2011,7 +2318,7 @@ os2dagsorden_meeting_views_last_8_meetings_help_text();
     'edit_node' => 'edit_node',
     'delete_node' => 'delete_node',
   );
-  /* Overskrift: breadcrumb override */
+  /* Header: breadcrumb override */
   $handler->display->display_options['header']['php']['id'] = 'php';
   $handler->display->display_options['header']['php']['table'] = 'views';
   $handler->display->display_options['header']['php']['field'] = 'php';
@@ -2019,7 +2326,7 @@ os2dagsorden_meeting_views_last_8_meetings_help_text();
   $handler->display->display_options['header']['php']['php_output'] = '<?php 
 os2dagsorden_meeting_views_bullet_point_breadcrumb();
 ?>';
-  /* Overskrift: print and send to friend buttons */
+  /* Header: print and send to friend buttons */
   $handler->display->display_options['header']['php_1']['id'] = 'php_1';
   $handler->display->display_options['header']['php_1']['table'] = 'views';
   $handler->display->display_options['header']['php_1']['field'] = 'php';
@@ -2043,13 +2350,13 @@ print \'<a href="\' . $base_url . \'?q=node/add/speaker-paper&edit[field_ref_bul
   $handler->display->display_options['relationships']['reverse_field_ref_bullet_point_node']['id'] = 'reverse_field_ref_bullet_point_node';
   $handler->display->display_options['relationships']['reverse_field_ref_bullet_point_node']['table'] = 'node';
   $handler->display->display_options['relationships']['reverse_field_ref_bullet_point_node']['field'] = 'reverse_field_ref_bullet_point_node';
-  /* Relationship: Indhold: Forfatter */
+  /* Relationship: Content: Author */
   $handler->display->display_options['relationships']['uid_1']['id'] = 'uid_1';
   $handler->display->display_options['relationships']['uid_1']['table'] = 'node';
   $handler->display->display_options['relationships']['uid_1']['field'] = 'uid';
   $handler->display->display_options['relationships']['uid_1']['relationship'] = 'reverse_field_ref_bullet_point_node';
   $handler->display->display_options['relationships']['uid_1']['label'] = 'speaker paper creator';
-  /* Felt: Indhold: Titel */
+  /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -2058,7 +2365,7 @@ print \'<a href="\' . $base_url . \'?q=node/add/speaker-paper&edit[field_ref_bul
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Felt: Indhold: Ref Attachment */
+  /* Field: Content: Ref Attachment */
   $handler->display->display_options['fields']['field_ref_attachment']['id'] = 'field_ref_attachment';
   $handler->display->display_options['fields']['field_ref_attachment']['table'] = 'field_data_field_ref_attachment';
   $handler->display->display_options['fields']['field_ref_attachment']['field'] = 'field_ref_attachment';
@@ -2069,26 +2376,26 @@ print \'<a href="\' . $base_url . \'?q=node/add/speaker-paper&edit[field_ref_bul
   );
   $handler->display->display_options['fields']['field_ref_attachment']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_ref_attachment']['multi_type'] = 'ul';
-  /* Felt: Indhold: Titel */
+  /* Field: Content: Title */
   $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
   $handler->display->display_options['fields']['title_1']['table'] = 'node';
   $handler->display->display_options['fields']['title_1']['field'] = 'title';
   $handler->display->display_options['fields']['title_1']['relationship'] = 'field_ref_speaker_paper_target_id';
   $handler->display->display_options['fields']['title_1']['label'] = '';
   $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
-  /* Felt: Indhold: Body */
+  /* Field: Content: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['relationship'] = 'field_ref_speaker_paper_target_id';
   $handler->display->display_options['fields']['body']['label'] = '';
   $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-  /* Sort criterion: Indhold: Post date */
+  /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Contextual filter: Indhold: Nid */
+  /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid_1']['id'] = 'nid_1';
   $handler->display->display_options['arguments']['nid_1']['table'] = 'node';
   $handler->display->display_options['arguments']['nid_1']['field'] = 'nid';
@@ -2099,21 +2406,21 @@ print \'<a href="\' . $base_url . \'?q=node/add/speaker-paper&edit[field_ref_bul
   $handler->display->display_options['arguments']['nid_1']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['nid_1']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid_1']['summary_options']['items_per_page'] = '25';
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'bullet_point' => 'bullet_point',
   );
-  /* Filter criterion: Bruger: Current */
+  /* Filter criterion: User: Current */
   $handler->display->display_options['filters']['uid_current']['id'] = 'uid_current';
   $handler->display->display_options['filters']['uid_current']['table'] = 'users';
   $handler->display->display_options['filters']['uid_current']['field'] = 'uid_current';
@@ -2194,7 +2501,7 @@ print \'<a href="\' . $base_url . \'?q=node/add/speaker-paper&edit[field_ref_bul
   $handler->display->display_options['defaults']['empty'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Felt: bullet point id */
+  /* Field: bullet point id */
   $handler->display->display_options['fields']['nid_1']['id'] = 'nid_1';
   $handler->display->display_options['fields']['nid_1']['table'] = 'node';
   $handler->display->display_options['fields']['nid_1']['field'] = 'nid';
@@ -2202,7 +2509,30 @@ print \'<a href="\' . $base_url . \'?q=node/add/speaker-paper&edit[field_ref_bul
   $handler->display->display_options['fields']['nid_1']['label'] = '';
   $handler->display->display_options['fields']['nid_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid_1']['element_label_colon'] = FALSE;
-  /* Felt: Indhold: Titel */
+
+  /* Field: closed indicator */
+  $handler->display->display_options['fields']['field_bul_point_closed']['id'] = 'field_bul_point_closed';
+  $handler->display->display_options['fields']['field_bul_point_closed']['table'] = 'field_data_field_bul_point_closed';
+  $handler->display->display_options['fields']['field_bul_point_closed']['field'] = 'field_bul_point_closed';
+  $handler->display->display_options['fields']['field_bul_point_closed']['ui_name'] = 'closed indicator';
+  $handler->display->display_options['fields']['field_bul_point_closed']['label'] = '';
+  $handler->display->display_options['fields']['field_bul_point_closed']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_bul_point_closed']['alter']['text'] = '<div class="indicator-unlocked"></div>';
+  $handler->display->display_options['fields']['field_bul_point_closed']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_bul_point_closed']['empty_zero'] = TRUE;
+  $handler->display->display_options['fields']['field_bul_point_closed']['type'] = 'list_key';
+  /* Field: Personal indicator */
+  $handler->display->display_options['fields']['field_bul_point_personal']['id'] = 'field_bul_point_personal';
+  $handler->display->display_options['fields']['field_bul_point_personal']['table'] = 'field_data_field_bul_point_personal';
+  $handler->display->display_options['fields']['field_bul_point_personal']['field'] = 'field_bul_point_personal';
+  $handler->display->display_options['fields']['field_bul_point_personal']['ui_name'] = 'Personal indicator';
+  $handler->display->display_options['fields']['field_bul_point_personal']['label'] = '';
+  $handler->display->display_options['fields']['field_bul_point_personal']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_bul_point_personal']['alter']['text'] = '<div class="indicator-personal"></div>';
+  $handler->display->display_options['fields']['field_bul_point_personal']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_bul_point_personal']['empty_zero'] = TRUE;
+  $handler->display->display_options['fields']['field_bul_point_personal']['type'] = 'list_key';
+  /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -2246,13 +2576,13 @@ os2dagsorden_meeting_views_bullet_point_fields_indicator_bullet_point_has_notes(
 ?>';
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Felt: Indhold: Body */
+  /* Field: Content: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['label'] = '';
   $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-  /* Felt: attachments and attachments&#039; content */
+  /* Field: attachments and attachments&#039; content */
   $handler->display->display_options['fields']['php_2']['id'] = 'php_2';
   $handler->display->display_options['fields']['php_2']['table'] = 'views';
   $handler->display->display_options['fields']['php_2']['field'] = 'php';
@@ -2271,14 +2601,14 @@ os2dagsorden_meeting_views_bullet_point_fields_attachments_and_content($meeting_
   $handler->display->display_options['fields']['php_2']['php_click_sortable'] = '';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -2306,7 +2636,7 @@ print \'<a href="\' . $base_url . \'?q=node/add/speaker-paper&edit[field_ref_bul
   $handler->display->display_options['empty']['area']['format'] = 'php_code';
   $handler->display->display_options['empty']['area']['tokenize'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Felt: Indhold: Titel */
+  /* Field: Content: Title */
   $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
   $handler->display->display_options['fields']['title_1']['table'] = 'node';
   $handler->display->display_options['fields']['title_1']['field'] = 'title';
@@ -2321,7 +2651,7 @@ print \'<a href="\' . $base_url . \'?q=node/add/speaker-paper&edit[field_ref_bul
   $handler->display->display_options['fields']['title_1']['element_wrapper_type'] = 'div';
   $handler->display->display_options['fields']['title_1']['element_wrapper_class'] = 'view-header';
   $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
-  /* Felt: Print Link */
+  /* Field: Print Link */
   $handler->display->display_options['fields']['php']['id'] = 'php';
   $handler->display->display_options['fields']['php']['table'] = 'views';
   $handler->display->display_options['fields']['php']['field'] = 'php';
@@ -2337,21 +2667,21 @@ os2dagsorden_meeting_views_bullet_point_fields_print_link($bp_id, $sp_id);
 ?>';
   $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
   $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Felt: Indhold: Edit link */
+  /* Field: Content: Edit link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['relationship'] = 'reverse_field_ref_bullet_point_node';
   $handler->display->display_options['fields']['edit_node']['label'] = '';
   $handler->display->display_options['fields']['edit_node']['element_label_colon'] = FALSE;
-  /* Felt: Indhold: Delete link */
+  /* Field: Content: Delete link */
   $handler->display->display_options['fields']['delete_node']['id'] = 'delete_node';
   $handler->display->display_options['fields']['delete_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['delete_node']['field'] = 'delete_node';
   $handler->display->display_options['fields']['delete_node']['relationship'] = 'reverse_field_ref_bullet_point_node';
   $handler->display->display_options['fields']['delete_node']['label'] = '';
   $handler->display->display_options['fields']['delete_node']['element_label_colon'] = FALSE;
-  /* Felt: Indhold: Body */
+  /* Field: Content: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
@@ -2382,7 +2712,7 @@ $q = $_GET[\'q\'];
 print \'<a href="\' . $base_url . \'?q=node/add/speaker-paper&edit[field_ref_bullet_point][und][0][target_id]=\' . [title_1] . \' (\' . %1 . \')&destination=\' . $q . \'">Opret et nye talepapir</a>\';
 ?>
 '),
-    t('Indhold referencing Indhold from field_ref_bullet_point'),
+    t('Content referencing Content from field_ref_bullet_point'),
     t('speaker paper creator'),
     t('Alle'),
     t('Page'),

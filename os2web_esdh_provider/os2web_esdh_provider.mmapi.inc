@@ -400,7 +400,8 @@ function _os2web_esdh_provider_import_bullets($bullets) {
 function _os2web_esdh_provider_import_file($file_meta) {
   $filename = $file_meta['title'];
   $uri = $file_meta['uri'];
-
+  if (module_exists('os2dagsorden_file_conversion_manager'))
+       _os2dagsorden_file_conversion_manager_copy_file_to_convertion_dir($uri);
   $fid = db_select('file_managed', 'fm')
 		  ->fields('fm', array('fid'))
 		  ->condition('uri', $uri)

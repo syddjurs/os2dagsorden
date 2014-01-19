@@ -24,39 +24,41 @@ define('OS2DAGSORDEN_HIDDEN_AGENGA_COMMITTEE', '28');
  * @return settings form.
  */
 function os2dagsorden_settings_settings_form($form, $form_state) {
-  // SOFD Integration settings
-  $form['os2dagsorden_pws_sofd_group'] = array(
-      '#type' => 'fieldset',
-      '#collapsible' => TRUE,
-      '#title' => t('SOFD Integration settings'),
-  );
-  $form['os2dagsorden_pws_sofd_group']['os2dagsorden_pws_use_local_copy'] = array(
-      '#type' => 'checkbox',
-      '#default_value' => variable_get('os2dagsorden_pws_use_local_copy'),
-      '#title' => t('Use local XML files'), 
-      '#description' => variable_get('os2dagsorden_pws_use_local_copy') ? 'Diselect and click save to enable the fields below' : 'Selecting and clicking save will disable the textfields below'
-  );
-  $form['os2dagsorden_pws_sofd_group']['os2dagsorden_pws_v_meetings_url'] = array(
-      '#type' => 'textfield',
-      '#default_value' => variable_get('os2dagsorden_pws_v_meetings_url'),
-      '#title' => t('Meeting (planned meetings) view url:'),
-      '#maxlength' => 256, 
-      '#disabled' => variable_get('os2dagsorden_pws_use_local_copy'),
-  );
-  $form['os2dagsorden_pws_sofd_group']['os2dagsorden_pws_v_meetinggroups_url'] = array(
-      '#type' => 'textfield',
-      '#default_value' => variable_get('os2dagsorden_pws_v_meetinggroups_url'),
-      '#title' => t('Meeting groups (is member of/follows/follows+) view url:'),
-      '#maxlength' => 256, 
-      '#disabled' => variable_get('os2dagsorden_pws_use_local_copy'),
-  );
-  $form['os2dagsorden_pws_sofd_group']['os2dagsorden_pws_v_acadregroups_url'] = array(
-      '#type' => 'textfield',
-      '#default_value' => variable_get('os2dagsorden_pws_v_acadregroups_url'),
-      '#title' => t('Acadre groups (committees) url:'),
-      '#maxlength' => 256, 
-      '#disabled' => variable_get('os2dagsorden_pws_use_local_copy'),
-  );
+    // SOFD Integration settings
+    if(module_exists('os2dagsorden_importer')){
+        $form['os2dagsorden_pws_sofd_group'] = array(
+            '#type' => 'fieldset',
+            '#collapsible' => TRUE,
+            '#title' => t('SOFD Integration settings'),
+        );
+        $form['os2dagsorden_pws_sofd_group']['os2dagsorden_pws_use_local_copy'] = array(
+            '#type' => 'checkbox',
+            '#default_value' => variable_get('os2dagsorden_pws_use_local_copy'),
+            '#title' => t('Use local XML files'), 
+            '#description' => variable_get('os2dagsorden_pws_use_local_copy') ? 'Diselect and click save to enable the fields below' : 'Selecting and clicking save will disable the textfields below'
+        );
+        $form['os2dagsorden_pws_sofd_group']['os2dagsorden_pws_v_meetings_url'] = array(
+            '#type' => 'textfield',
+            '#default_value' => variable_get('os2dagsorden_pws_v_meetings_url'),
+            '#title' => t('Meeting (planned meetings) view url:'),
+            '#maxlength' => 256, 
+            '#disabled' => variable_get('os2dagsorden_pws_use_local_copy'),
+        );
+        $form['os2dagsorden_pws_sofd_group']['os2dagsorden_pws_v_meetinggroups_url'] = array(
+            '#type' => 'textfield',
+            '#default_value' => variable_get('os2dagsorden_pws_v_meetinggroups_url'),
+            '#title' => t('Meeting groups (is member of/follows/follows+) view url:'),
+            '#maxlength' => 256, 
+            '#disabled' => variable_get('os2dagsorden_pws_use_local_copy'),
+        );
+        $form['os2dagsorden_pws_sofd_group']['os2dagsorden_pws_v_acadregroups_url'] = array(
+            '#type' => 'textfield',
+            '#default_value' => variable_get('os2dagsorden_pws_v_acadregroups_url'),
+            '#title' => t('Acadre groups (committees) url:'),
+            '#maxlength' => 256, 
+            '#disabled' => variable_get('os2dagsorden_pws_use_local_copy'),
+        );
+    }
   
   //cron frequencies
   $form['os2dagsorden_cron_job_freq'] = array(
@@ -66,6 +68,7 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
   );
   
   $options = array(
+    'disabled' => 'Disabled',
     '*/5 * * * *' => 'Every 5 min',
     '*/15 * * * *' => 'Every 15 min',
     '*/30 * * * *' => 'Every 30 min',
@@ -75,38 +78,81 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '0 */5 * * *' => 'Every 5 hours',
     '0 */10 * * *' => 'Every 10 hours',
   );
-  $conf = ultimate_cron_get_settings("os2dagsorden_importer_cron");
-  $form['os2dagsorden_cron_job_freq']['os2dagsorden_importer_cron'] = array(
-      '#type' => 'select',
-      '#options' => $options,
-      '#default_value' => isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE),
-      '#title' => t('Frequency of SOFD import cron job'),
-  );
+  
+  if(module_exists('os2dagsorden_importer')){
+    $conf = ultimate_cron_get_settings("os2dagsorden_importer_cron");
+    $form['os2dagsorden_cron_job_freq']['os2dagsorden_importer_cron'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#default_value' => ($conf['enabled'] != '1')? 'disabled' ://disabling, else
+                                (isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)),
+        '#title' => t('Frequency of SOFD import cron job'),
+    );
+  }
   
   $conf = ultimate_cron_get_settings("os2web_esdh_provider_cron");
   $form['os2dagsorden_cron_job_freq']['os2web_esdh_provider_cron'] = array(
       '#type' => 'select',
       '#options' => $options,
-      '#default_value' => isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE),
-      '#title' => t('Frequency of Acadre import cron job'),
+      '#default_value' =>  ($conf['enabled'] != '1')? 'disabled' ://disabling, else
+                                (isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)),
+      '#title' => t('Frequency of meeting import cron job'),
   );
   
-  $conf = ultimate_cron_get_settings("os2dagsorden_pdf2htmlex_cron");
-  $form['os2dagsorden_cron_job_freq']['os2dagsorden_pdf2htmlex_cron'] = array(
-      '#type' => 'select',
-      '#options' => $options,
-      '#default_value' => isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE),
-      '#title' => t('Frequency of PDF to HTML conversion cron job'), 
-  );
+  if(module_exists('os2dagsorden_pdf2htmlex')){
+    $conf = ultimate_cron_get_settings("os2dagsorden_pdf2htmlex_cron");
+    $form['os2dagsorden_cron_job_freq']['os2dagsorden_pdf2htmlex_cron'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#default_value' =>  ($conf['enabled'] != '1')? 'disabled' ://disabling, else
+                                (isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)),
+        '#title' => t('Frequency of PDF to HTML conversion cron job'), 
+    );
+  }
   
-  $conf = ultimate_cron_get_settings("os2dagsorden_adlib_api_cron");
-  $form['os2dagsorden_cron_job_freq']['os2dagsorden_adlib_api_cron'] = array(
-      '#type' => 'select',
-      '#options' => $options,
-      '#default_value' => isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE),
-      '#title' => t('Frequency of Adlib (* to PDF) conversion cron job'), 
-  );
+  if(module_exists('os2dagsorden_adlib_api')){
+    $conf = ultimate_cron_get_settings("os2dagsorden_adlib_api_cron");
+    $form['os2dagsorden_cron_job_freq']['os2dagsorden_adlib_api_cron'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#default_value' =>  ($conf['enabled'] != '1')? 'disabled' ://disabling, else
+                                (isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)),
+        '#title' => t('Frequency of Adlib (* to PDF) conversion cron job'), 
+    );
+  }
   $form['#submit'][] = 'os2dagsorden_settings_cron_job_submit';
+
+  
+  
+  //Meetig view settings
+  $form['os2dagsorden_meeting_view_settings'] = array(
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#title' => t('Meeting view settings'),
+  );
+  
+  //meeting view settings
+  $form['os2dagsorden_meeting_view_settings']['os2dagsorden_expand_all_bullets'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Expand all bullets on agenda'),
+    '#description'=>t('This decides whether a  all bullet points will be expanded'),
+    '#default_value' => variable_get('os2dagsorden_expand_all_bullets', false),
+  );
+  $options = array('true' => t('Expand'), 'false' => t('Not expand (but keep it that way if the bilag has been expanded before)'));
+  $form['os2dagsorden_meeting_view_settings']['os2dagsorden_expand_attachment'] = array(
+    '#type' => 'radios',
+    '#title' => t('Expand attachment'),
+    '#default_value' => variable_get('os2dagsorden_expand_attachment'),
+    '#options' => $options,
+    '#description' => t('This decides whether a certain type of bullet point attachment - bilag will be expanded (activated) when functionality "Expand whole bullet point" is executed.'),
+  );
+  $form['os2dagsorden_meeting_view_settings']['os2dagsorden_group_closed_bullet_points'] = array(
+    '#type' => 'radios',
+    '#title' => t('Group closed closed bullet points as a separate block'),
+    '#default_value' => variable_get('os2dagsorden_group_closed_bullet_points', 'false'),
+    '#options' => array('true' => t('Group separately'), 'false' => t('Put inline')),
+    '#description' => t('This decides whether closed bullet points will be grouped separately as a additional block called "Lukket dagsorden", or put inline together the rest of the bullet points.'),
+  );
 
   //show latest meetings in my committee or all committees
   $form['os2dagsorden_latest_meetings_view_settings'] = array(
@@ -122,21 +168,20 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#description' => t('This decides whether the front page view will show 8 latest meeting from all committees or only from user committees (member of, follows, follows+)'),
   );
   
-  //expand or not expand bilag on bullet point expand
-  $form['os2dagsorden_expand_attachment_settings'] = array(
-      '#type' => 'fieldset',
-      '#collapsible' => TRUE,
-      '#title' => t('Expand/not expand Bilag on bullet point expanding'),
+  // frontpage layout settings
+  $form['os2dagsorden_frontpage_layout_settings'] = array(
+     '#type' => 'fieldset',
+     '#collapsible' => TRUE,
+     '#title' => t('Frontpage layout and settings'),
   );
-  $options = array('true' => t('Expand'), 'false' => t('Not expand (but keep it that way if the bilag has been expanded before)'));
-  $form['os2dagsorden_expand_attachment_settings']['os2dagsorden_expand_attachment'] = array(
+  $options3 = array('false' => t('Expand'), 'true' => t('Collapse') );
+  $form['os2dagsorden_frontpage_layout_settings']['os2dagsorden_collapse_menu'] = array(
     '#type' => 'radios',
-    '#title' => t('Expand attachment'),
-    '#default_value' => variable_get('os2dagsorden_expand_attachment'),
-    '#options' => $options,
-    '#description' => t('This decides whether a certain type of bullet point attachment - bilag will be expanded (activated) when functionality "Expand whole bullet point" is executed.'),
+    '#title' => t('Collapse/expand menu'),
+    '#default_value' => variable_get('os2dagsorden_collapse_menu', true),
+    '#options' => $options3,
+    '#description' => t('This decides whether a side menu expanded/collapsed.'),
   );
-  
   //show or not show meeting category in the calendar
   $form['os2dagsorden_show_meeting_category_settings'] = array(
       '#type' => 'fieldset',
@@ -158,7 +203,6 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
       '#collapsible' => TRUE,
       '#title' => t('General meeting import settings'),
   );
-  
   $form['os2dagsorden_meeting_import']['participants_delimeter'] = array(
     '#type' => 'textfield',
     '#title' => t('Participants delimeter sign'),
@@ -166,14 +210,49 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#description' => t('Sign with which the participants of the meeting will be separated. Is used in the meeting view.<br/> E.g. if delimeter is <b>coma (,)</b> the list would look like:<br/>
     Jørgen Andersen, Nich Bendtsen, Poul Møller, ...<br/><br/>HTML tags (such as &lt;br/&gt;) can be used.'),
   );
-  
   $form['os2dagsorden_meeting_import']['pdf2html_rendering_path'] = array(
     '#type' => 'textfield',
     '#title' => t('Path for HTML files to be rendered'),
     '#default_value' => variable_get('pdf2html_rendering_path', ''),
     '#description' => t('Relative path for HTML files to be rendered by os2dagsorden_pdf2htmlEX module. If empty, the path with the original PDF files will be used.<br/><b>Important!</b> You will need to create the path yourself.'),
   );
-  
+  $form['os2dagsorden_meeting_import']['os2dagsorden_send_notification_committee'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Send notification of committees',
+    '#maxlength' => 200,
+    '#description' => 'Comma-separated list of committees ID changing status of which should send an email notification.',
+    '#default_value' => variable_get('os2dagsorden_send_notification_committee', ''),
+  );
+  $form['os2dagsorden_meeting_import']['os2dagsorden_send_timespan_of_notification'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Meeting should be not older than:',
+    '#maxlength' => 200,
+    '#field_suffix' => 'Days',
+    '#size' => 10,
+    '#description' => 'If meeting is not older than the set amount of day, notification is sent. <br/>Otherwise notification process is skipped',
+    '#default_value' => variable_get('os2dagsorden_send_timespan_of_notification', 10),
+  );
+  if (module_exists('os2dagsorden_file_conversion_manager')){
+  $form['os2dagsorden_file_import'] = array(
+    '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+    '#title' => t('* > PDF converting configuration'),
+  );
+ $form['os2dagsorden_file_import']['os2web_copied_filetype'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Type of files to be converted when importing:'),
+    '#maxlength' => 200,
+    '#description' => t('Comma-separated list of file types. Example: xls,doc,docx,xlsx'),
+    '#default_value' => variable_get('os2web_copied_filetype', ''),
+  );
+  $form['os2dagsorden_file_import']['os2web_convertion_dir'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Directory to send the files for converting:'),
+    '#maxlength' => 200,
+    '#description' => t('This is the path where files copy for converting'),
+    '#default_value' => variable_get('os2web_convertion_dir', ''),
+);
+  } 
   //hidden agenda
   $form['os2dagsorden_hidden_agenda_committee'] = array(
     '#type' => 'textfield',
@@ -199,27 +278,45 @@ function os2dagsorden_settings_cron_job_submit($form, &$form_state){
   
   //os2dagsorden_importer_cron
   $conf = _ultimate_cron_default_settings();
-  if (!empty($input['os2dagsorden_importer_cron']) && $input['os2dagsorden_importer_cron'] !== variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE))
-    $conf['rules'][0] = $input['os2dagsorden_importer_cron'];
-  else
+  if (!empty($input['os2dagsorden_importer_cron']) && $input['os2dagsorden_importer_cron'] !== variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)){
+    if ($input['os2dagsorden_importer_cron'] != 'disabled'){
+        $conf['rules'][0] = $input['os2dagsorden_importer_cron'];
+        $conf['enabled'] = 1;
+    } else {
+        $conf['enabled'] = '';
+        unset($conf['rules']);
+    }
+  } else
     unset($conf['rules']);
   $conf['service_group'] = "";
   ultimate_cron_set_settings('os2dagsorden_importer_cron', $conf);
   
   //os2web_esdh_provider_cron
   $conf = _ultimate_cron_default_settings();
-  if (!empty($input['os2web_esdh_provider_cron']) && $input['os2web_esdh_provider_cron'] !== variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE))
-    $conf['rules'][0] = $input['os2web_esdh_provider_cron'];
-  else
+  if (!empty($input['os2web_esdh_provider_cron']) && $input['os2web_esdh_provider_cron'] !== variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)){
+    if ($input['os2web_esdh_provider_cron'] != 'disabled'){
+        $conf['rules'][0] = $input['os2web_esdh_provider_cron'];
+        $conf['enabled'] = 1;
+    } else{
+        $conf['enabled'] = '';
+        unset($conf['rules']);
+    }
+  } else
     unset($conf['rules']);
   $conf['service_group'] = "";
   ultimate_cron_set_settings('os2web_esdh_provider_cron', $conf);
   
   //os2dagsorden_pdf2htmlex_cron
   $conf = _ultimate_cron_default_settings();
-  if (!empty($input['os2dagsorden_pdf2htmlex_cron']) && $input['os2dagsorden_pdf2htmlex_cron'] !== variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE))
-    $conf['rules'][0] = $input['os2dagsorden_pdf2htmlex_cron'];
-  else
+  if (!empty($input['os2dagsorden_pdf2htmlex_cron']) && $input['os2dagsorden_pdf2htmlex_cron'] !== variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)){
+    if ($input['os2dagsorden_pdf2htmlex_cron'] != 'disabled'){
+        $conf['rules'][0] = $input['os2dagsorden_pdf2htmlex_cron'];
+        $conf['enabled'] = 1;
+    } else {
+        $conf['enabled'] = '';
+        unset($conf['rules']);
+    }
+  } else
     unset($conf['rules']);
   $conf['service_group'] = "";
   ultimate_cron_set_settings('os2dagsorden_pdf2htmlex_cron', $conf);
@@ -227,7 +324,13 @@ function os2dagsorden_settings_cron_job_submit($form, &$form_state){
   //os2dagsorden_adlib_api_cron
   $conf = _ultimate_cron_default_settings();
   if (!empty($input['os2dagsorden_adlib_api_cron']) && $input['os2dagsorden_adlib_api_cron'] !== variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE))
-    $conf['rules'][0] = $input['os2dagsorden_adlib_api_cron'];
+    if ($input['os2dagsorden_adlib_api_cron'] != 'disabled'){
+        $conf['rules'][0] = $input['os2dagsorden_adlib_api_cron'];
+        $conf['enabled'] = 1;
+    } else {
+        $conf['enabled'] = '';
+        unset($conf['rules']);
+    }
   else
     unset($conf['rules']);
   $conf['service_group'] = "";
