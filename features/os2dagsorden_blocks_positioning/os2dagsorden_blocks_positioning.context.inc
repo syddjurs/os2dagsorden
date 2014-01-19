@@ -225,6 +225,12 @@ function os2dagsorden_blocks_positioning_context_default_contexts() {
           'region' => 'content',
           'weight' => '-20',
         ),
+        'views-0293ca2a3a9d3ff12dd399cf7b0b4333' => array(
+          'module' => 'views',
+          'delta' => '0293ca2a3a9d3ff12dd399cf7b0b4333',
+          'region' => 'content',
+          'weight' => '-10',
+        ),
       ),
     ),
   );
