@@ -13,6 +13,10 @@ function os2dagsorden_meeting_views_last_8_meetings_help_text(){
 
 /////////////////////////////////////////BLOCK ALL MEETING START/////////////////////////////////////////
 function os2dagsorden_meeting_views_last_8_meetings_block_all_meetings_access(){
+  if (!os2dagsorden_access_helper_get_user()){
+    return FALSE;
+  }
+
   if (variable_get('os2dagsorden_latest_meetings_view_mode', 'all') == 'all')
     return TRUE;
   else {//check if 'Mine' display returns no results - if that is the case, return 'All' display anyways
@@ -27,7 +31,11 @@ function os2dagsorden_meeting_views_last_8_meetings_block_all_meetings_access(){
 /////////////////////////////////////////BLOCK ALL MEETING  END/////////////////////////////////////////
 
 /////////////////////////////////////////BLOCK MY MEETINGS START/////////////////////////////////////////
-function os2dagsorden_meeting_views_last_8_meetings_block_my_meeting_access(){
+function os2dagsorden_meeting_views_last_8_meetings_block_my_meetings_access(){
+  if (!os2dagsorden_access_helper_get_user()){
+    return FALSE;
+  }
+
   if (variable_get('os2dagsorden_latest_meetings_view_mode', 'all') == 'mine')
     return TRUE;
   else
