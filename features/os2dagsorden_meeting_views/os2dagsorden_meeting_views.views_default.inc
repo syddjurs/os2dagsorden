@@ -2038,11 +2038,6 @@ os2dagsorden_meeting_views_last_8_meetings_help_text();
   $handler->display->display_options['relationships']['field_committee_tid']['id'] = 'field_committee_tid';
   $handler->display->display_options['relationships']['field_committee_tid']['table'] = 'field_data_field_committee';
   $handler->display->display_options['relationships']['field_committee_tid']['field'] = 'field_committee_tid';
-  /* Relationship: Taxonomy term: User using Is part of Committee */
-  $handler->display->display_options['relationships']['reverse_field_user_committee_user']['id'] = 'reverse_field_user_committee_user';
-  $handler->display->display_options['relationships']['reverse_field_user_committee_user']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['relationships']['reverse_field_user_committee_user']['field'] = 'reverse_field_user_committee_user';
-  $handler->display->display_options['relationships']['reverse_field_user_committee_user']['relationship'] = 'field_committee_tid';
   /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
@@ -2201,23 +2196,6 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_title($data);
   $handler->display->display_options['relationships']['field_committee_tid']['id'] = 'field_committee_tid';
   $handler->display->display_options['relationships']['field_committee_tid']['table'] = 'field_data_field_committee';
   $handler->display->display_options['relationships']['field_committee_tid']['field'] = 'field_committee_tid';
-  /* Relationship: Taxonomy term: User using Is part of Committee */
-  $handler->display->display_options['relationships']['reverse_field_user_committee_user']['id'] = 'reverse_field_user_committee_user';
-  $handler->display->display_options['relationships']['reverse_field_user_committee_user']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['relationships']['reverse_field_user_committee_user']['field'] = 'reverse_field_user_committee_user';
-  $handler->display->display_options['relationships']['reverse_field_user_committee_user']['relationship'] = 'field_committee_tid';
-  /* Relationship: Taxonomy term: User using Follows committees */
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_user']['id'] = 'reverse_field_follows_committee_user';
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_user']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_user']['field'] = 'reverse_field_follows_committee_user';
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_user']['relationship'] = 'field_committee_tid';
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_user']['label'] = 'field_user_follows_committee';
-  /* Relationship: Taxonomy term: User using Follows committees+ */
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_plus_user']['id'] = 'reverse_field_follows_committee_plus_user';
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_plus_user']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_plus_user']['field'] = 'reverse_field_follows_committee_plus_user';
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_plus_user']['relationship'] = 'field_committee_tid';
-  $handler->display->display_options['relationships']['reverse_field_follows_committee_plus_user']['label'] = 'field_user_follows_committee_plus';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['filter_groups']['groups'] = array(
     1 => 'AND',
@@ -2246,27 +2224,13 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_title($data);
   $handler->display->display_options['filters']['field_date_value']['operator'] = '<';
   $handler->display->display_options['filters']['field_date_value']['group'] = 1;
   $handler->display->display_options['filters']['field_date_value']['default_date'] = 'tomorrow';
-  /* Filter criterion: User: Current */
-  $handler->display->display_options['filters']['uid_current']['id'] = 'uid_current';
-  $handler->display->display_options['filters']['uid_current']['table'] = 'users';
-  $handler->display->display_options['filters']['uid_current']['field'] = 'uid_current';
-  $handler->display->display_options['filters']['uid_current']['relationship'] = 'reverse_field_user_committee_user';
-  $handler->display->display_options['filters']['uid_current']['value'] = '1';
-  $handler->display->display_options['filters']['uid_current']['group'] = 2;
-  /* Filter criterion: User: Current */
-  $handler->display->display_options['filters']['uid_current_1']['id'] = 'uid_current_1';
-  $handler->display->display_options['filters']['uid_current_1']['table'] = 'users';
-  $handler->display->display_options['filters']['uid_current_1']['field'] = 'uid_current';
-  $handler->display->display_options['filters']['uid_current_1']['relationship'] = 'reverse_field_follows_committee_user';
-  $handler->display->display_options['filters']['uid_current_1']['value'] = '1';
-  $handler->display->display_options['filters']['uid_current_1']['group'] = 2;
-  /* Filter criterion: User: Current */
-  $handler->display->display_options['filters']['uid_current_2']['id'] = 'uid_current_2';
-  $handler->display->display_options['filters']['uid_current_2']['table'] = 'users';
-  $handler->display->display_options['filters']['uid_current_2']['field'] = 'uid_current';
-  $handler->display->display_options['filters']['uid_current_2']['relationship'] = 'reverse_field_follows_committee_plus_user';
-  $handler->display->display_options['filters']['uid_current_2']['value'] = '1';
-  $handler->display->display_options['filters']['uid_current_2']['group'] = 2;
+  /* Filter criterion: Filter meetings from my committees only */
+  $handler->display->display_options['filters']['php']['id'] = 'php';
+  $handler->display->display_options['filters']['php']['table'] = 'views';
+  $handler->display->display_options['filters']['php']['field'] = 'php';
+  $handler->display->display_options['filters']['php']['ui_name'] = 'Filter meetings from my committees only';
+  $handler->display->display_options['filters']['php']['use_php_setup'] = 0;
+  $handler->display->display_options['filters']['php']['php_filter'] = 'return os2dagsorden_meeting_views_last_8_meetings_block_my_meetings_filter($row->nid);';
   $translatables['seneste_8_m_der_i_de_st_ende_politiske_udvalg_'] = array(
     t('Master'),
     t('Seneste 8 møder i alle udvalg'),
@@ -2280,7 +2244,6 @@ os2dagsorden_meeting_views_last_8_meetings_fields_meeting_title($data);
 os2dagsorden_meeting_views_last_8_meetings_help_text();
 ?>'),
     t('term from field_committee'),
-    t('field_user_committee'),
     t('Status'),
     t('&nbsp;'),
     t('Møde'),
@@ -2291,8 +2254,6 @@ os2dagsorden_meeting_views_last_8_meetings_help_text();
     t('Block all meetings'),
     t('Block my meetings'),
     t('Seneste 8 møder i mine udvalg'),
-    t('field_user_follows_committee'),
-    t('field_user_follows_committee_plus'),
   );
   $export['seneste_8_m_der_i_de_st_ende_politiske_udvalg_'] = $view;
 

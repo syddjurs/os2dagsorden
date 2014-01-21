@@ -41,6 +41,43 @@ function os2dagsorden_meeting_views_last_8_meetings_block_my_meetings_access(){
   else
     return FALSE;
 }
+
+function os2dagsorden_meeting_views_last_8_meetings_block_my_meetings_filter($meeting_id){
+  //get meeting committee tid
+  $meeting = node_load($meeting_id);
+  $meeting_committee_tid = $meeting->field_committee['und'][0]['tid'];
+
+  //get full user
+  $full_user = os2dagsorden_access_helper_get_user();
+
+  //check if user meeting committee in 'member of'
+  if (isset($full_user->field_user_committee['und'])){
+    foreach($full_user->field_user_committee['und'] as $com){
+      if ($meeting_committee_tid == $com['tid']){
+	return FALSE;
+      }
+    }
+  }
+  //check if user meeting committee in 'follows'
+  if (isset($full_user->field_follows_committee['und'])){
+    foreach($full_user->field_follows_committee['und'] as $com){
+      if ($meeting_committee_tid == $com['tid']){
+	return FALSE;
+      }
+    }
+  }
+  //check if user meeting committee in 'follows plus'
+  if (isset($full_user->field_follows_committee_plus['und'])){
+    foreach($full_user->field_follows_committee_plus['und'] as $com){
+      if ($meeting_committee_tid == $com['tid']){
+	return FALSE;
+      }
+    }
+  }
+
+  //none of the above, filter entry out
+  return TRUE;
+}
 /////////////////////////////////////////BLOCK MY MEETINGS END/////////////////////////////////////////
 
 /////////////////////////////////////////PAGE START/////////////////////////////////////////
