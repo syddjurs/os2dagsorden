@@ -29,6 +29,5 @@ features[variable][] = os2dagsorden_pws_v_acadregroups_url
 features[variable][] = os2dagsorden_pws_v_meetinggroups_url
 features[variable][] = os2dagsorden_pws_v_meetings_url
 features[variable][] = os2web_adlib_url
-features[variable][] = os2web_meetings_approved_committee
 features[variable][] = os2web_meetings_path
 features[variable][] = site_name
