@@ -216,13 +216,14 @@ function _os2dagsorden_pdf2htmlex_improve_html($data){
  */
 function os2dagsorden_pdf2htmlex_convert($fid, $did) {
   $file = file_load($fid);
+  $uri_parts=pathinfo($file->uri);
   
   $file_path_real = drupal_realpath($file->uri);//with file name
   $file_path_real_arr = explode('/', $file_path_real);
   array_pop($file_path_real_arr);
   
   if (variable_get('pdf2html_rendering_path') && file_exists(drupal_realpath(variable_get('pdf2html_rendering_path')))){//is set
-    $dest_dir_real = drupal_realpath(variable_get('pdf2html_rendering_path'));
+    $dest_dir_real = drupal_realpath(variable_get('pdf2html_rendering_path')) . '/' . preg_replace("#(private|public):///?#is",'',  $uri_parts['dirname']);
   } else {
     $dest_dir_real = implode('/', $file_path_real_arr);//without file name
   }
