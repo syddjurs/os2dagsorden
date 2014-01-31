@@ -224,7 +224,7 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#type' => 'checkbox',
     '#title' => t('User that are just Follow the committee are getting notifications '),
     '#description'=>t('Decide whether user that are just Follow the committee are getting notifications about new messages appeared on that committee.'),
-    '#default_value' => variable_get('s2dagsorden_follows_committee_send_notification', false), 
+    '#default_value' => variable_get('os2dagsorden_follows_committee_send_notification', false), 
   );
   $form['os2dagsorden_meeting_import']['os2dagsorden_send_timespan_of_notification'] = array(
     '#type' => 'textfield',
