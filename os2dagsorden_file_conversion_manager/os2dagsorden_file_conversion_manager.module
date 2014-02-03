@@ -66,72 +66,121 @@ function os2dagsorden_file_manager() {
 function os2dagsorden_file_conversion_manager_cron() {
     $convertion_dir_path = drupal_realpath(variable_get('os2web_convertion_dir'));
     $converted_files = Array();
+
     if ($pdf_files = glob($convertion_dir_path . '/*.{pdf, PDF}', GLOB_BRACE)) {
         foreach ($pdf_files as $file) {
             $pdf_path_parts = pathinfo($file);
             foreach (glob($convertion_dir_path . '/' . $pdf_path_parts['filename'] . '.*') as $original_file) {
-                if ($original_file == $file)                     continue;
+                if ($original_file == $file)
+                    continue;
                 $original_file_parts = pathinfo($original_file);
                 $converted_files[] = array('pdf' => $pdf_path_parts['basename'], 'original' => $original_file_parts['basename']);
             }
         }
     }
     foreach ($converted_files as $file_arr) {
-        $original_filename = array_pop(explode('_', $file_arr['original']));
-        $pdf_filename = array_pop(explode('_', $file_arr['pdf']));
-        $query = db_query('SELECT f.fid, f.uri
-             FROM {file_managed} f
-             WHERE f.filename = :filename
-             ', array(':filename' => $original_filename)
-        );
-        $d_file = $query->fetchAssoc();
+        $original_filename = $file_arr['original'];
+        $pdf_filename = $file_arr['pdf'];
 
-        if ($d_file) {
+        $query = db_select('os2dagsorden_file_conversion_manager_files', "f");
+        $query->innerJoin('file_managed', 'fm', 'fm.fid = f.fid');
+        $result = $query->fields('fm', array('fid', 'uri'))
+                ->condition('tmp_filename', $original_filename)
+                ->execute();
+        while ($d_file = $result->fetchAssoc()) {
             $original_path_parts = pathinfo($d_file['uri']);
-            $dest = drupal_realpath($original_path_parts['dirname'] . '/' . $pdf_filename);
-            $uri = $original_path_parts['dirname'] . '/' . $pdf_filename;
+            $dest = drupal_realpath($original_path_parts['dirname'] . '/' . $original_path_parts['filename'] . '.pdf');
+            $uri = $original_path_parts['dirname'] . '/' . $original_path_parts['filename'] . '.pdf';
+
             if (copy(drupal_realpath(variable_get('os2web_convertion_dir')) . "/" . $file_arr['pdf'], $dest)) {
                 $uri_exists = db_query('SELECT count(*)
                         FROM {file_managed} f
-                        WHERE f.uri = :uri
-                        ', array(':uri' => $uri))
-                                   ->fetchField();
-               if ($uri_exists) {
-                    watchdog('file convertion managmnet:', 'Ignore file %file. Url exists %uri.', array('%file' => $pdf_filename, '%uri' => $dest), WATCHDOG_WARNING);
+                        WHERE f.uri = :uri AND fid!=:fid
+                        ', array(':uri' => $uri, ':fid' => $d_file['fid']))
+                        ->fetchField();
+
+                if ($uri_exists) {
+                    watchdog('file convertion managmnet:', 'Ignore file %file. Url exists %uri.', array('%file' => $original_path_parts['filename'] . '.pdf', '%uri' => $dest), WATCHDOG_WARNING);
                     continue;
                 }
-              
+
                 db_update('file_managed')
                         ->fields(array(
                             'uri' => $uri,
-                            'filename' => $pdf_filename,
+                            'filename' => $original_path_parts['filename'] . '.pdf',
                             'timestamp' => time(),
                             'filesize' => filesize($dest),
                             'filemime' => mime_content_type($dest)
                         ))
                         ->condition('fid', $d_file['fid'])
                         ->execute();
+                
+                if (module_exists('os2dagsorden_pdf2htmlex')) {
+                    $query = new EntityFieldQuery();
+                    $query->entityCondition('entity_type', 'node')
+                            ->fieldCondition('field_bpa_file', 'fid', $d_file['fid'], '=');
+                    $res = $query->execute();
+                     if (!empty($res['node'])) {
+                        foreach (array_keys($res['node']) as $nid)
+                            os2dagsorden_pdf2htmlex_schedule($d_file['fid'], $nid);
+                    }
+                }
+                db_delete('os2dagsorden_file_conversion_manager_files')
+                        ->condition('fid', $d_file['fid'])
+                        ->execute();
 
-                unlink(drupal_realpath(variable_get('os2web_convertion_dir')) . "/" . $file_arr['pdf']);
-                unlink(drupal_realpath(variable_get('os2web_convertion_dir')) . "/" . $file_arr['original']);
+
+                if (!db_query('SELECT f.fid
+                            FROM {os2dagsorden_file_conversion_manager_files} f
+                            WHERE f.tmp_filename = :tmp_filename', array(':tmp_filename' => $original_filename))
+                                ->fetchField()) {
+                    unlink(drupal_realpath(variable_get('os2web_convertion_dir')) . "/" . $file_arr['pdf']);
+                    unlink(drupal_realpath(variable_get('os2web_convertion_dir')) . "/" . $file_arr['original']);
+                }
+            } else {
+                watchdog('file convertion managmnet:', 'Can not copy  to %uri.', array('%uri' => $dest), WATCHDOG_WARNING);
+                continue;
             }
         }
     }
     drupal_flush_all_caches();
 }
 
-function _os2dagsorden_file_conversion_manager_copy_file_to_convertion_dir($filename){ 
-   $filename_parts = pathinfo($filename);
-   $type_arr=  explode(',', variable_get('os2web_copied_filetype'));
-   $pdf_path = $filename_parts['dirname'] . '/' . $filename_parts['filename'] . '.PDF';
-   $dir_parts=  explode('/', $filename_parts['dirname']);
-   if(_os2dagsorden_file_conversion_manager_similar_file_exists(drupal_realpath($pdf_path))) return;
-   if (in_array(strtolower($filename_parts['extension']),array_map('strtolower',$type_arr))){
-      $convertion_dir_path=drupal_realpath(variable_get('os2web_convertion_dir'));
-      if (!_os2dagsorden_file_conversion_manager_similar_file_exists( $convertion_dir_path. '/' .  $filename_parts['basename']))
-         copy(drupal_realpath($filename), $convertion_dir_path. '/' . array_pop($dir_parts).'_'.$filename_parts['basename']);
-   }
-  }
+function _os2dagsorden_file_conversion_manager_copy_file_to_convertion_dir($fid) {
+    $file = file_load($fid);
+    $filename = $file->uri;
+    $filename_parts = pathinfo($filename);
+    $tmp_filename = md5(md5_file(drupal_realpath($filename)) . $filename_parts['basename']) . '.' . $filename_parts['extension'];
+    $type_arr = explode(',', variable_get('os2web_copied_filetype'));
+    $pdf_path = $filename_parts['dirname'] . '/' . $filename_parts['filename'] . '.PDF';
+
+    if (_os2dagsorden_file_conversion_manager_similar_file_exists(drupal_realpath($pdf_path)))
+        return;
+
+    if (in_array(strtolower($filename_parts['extension']), array_map('strtolower', $type_arr))) {
+        $convertion_dir_path = drupal_realpath(variable_get('os2web_convertion_dir'));
+        copy(drupal_realpath($filename), $convertion_dir_path . '/' . $tmp_filename);
+        $file_exists = db_query('SELECT f.fid
+             FROM {os2dagsorden_file_conversion_manager_files} f
+             WHERE f.fid = :fid', array(':fid' => $fid))
+                ->fetchField();
+        if ($file_exists) {
+            db_update('os2dagsorden_file_conversion_manager_files')
+                    ->fields(array(
+                        'filename' => $filename_parts['basename'],
+                        'tmp_filename' => $tmp_filename))
+                    ->condition('fid', $fid)
+                    ->execute();
+        } else {
+            db_insert('os2dagsorden_file_conversion_manager_files')
+                    ->fields(array(
+                        'fid' => $fid,
+                        'filename' => $filename_parts['basename'],
+                        'tmp_filename' => $tmp_filename))
+                    ->execute();
+        }
+    }
+}
   
   function _os2dagsorden_file_conversion_manager_similar_file_exists($filename) {
   if (file_exists($filename)) {
