@@ -118,10 +118,19 @@ function os2dagsorden_pdf2htmlex_cron() {
 	
 	//$path = 'private://' . $acadre_dir . '/' . $filename ;
 	$path = $record['created_filepath'];
-	
+	if (variable_get('pdf2html_rendering_path') && file_exists(drupal_realpath(variable_get('pdf2html_rendering_path')))){//is set
+            $purl= drupal_realpath(variable_get('pdf2html_rendering_path'));
+            $uri = str_replace($purl, variable_get('pdf2html_rendering_path'), $path);      
+       } else {
+          if (strpos($path,drupal_realpath('private://'))===FALSE)
+            $uri=str_replace(drupal_realpath('public://'), 'public://',  $path);
+         else
+           $uri=str_replace(drupal_realpath('private://'),  'private://',$path);
+       }
+       
 	$fid = db_select('file_managed', 'fm')
                         ->fields('fm', array('fid'))
-                        ->condition('uri', $path)
+                        ->condition('uri', $uri)
                         ->execute()->fetchField();
 
         if ($fid) {
@@ -129,7 +138,7 @@ function os2dagsorden_pdf2htmlex_cron() {
 	    $file->display = 1;
 	} else {
 	  $file = new stdClass();
-	  $file->uri = $path;
+	  $file->uri = $uri;
 	  $file->display = 1;
 	  $file->filename = $filename;
 	  $file->filemime = file_get_mimetype($record['created_filepath']);
@@ -216,13 +225,14 @@ function _os2dagsorden_pdf2htmlex_improve_html($data){
  */
 function os2dagsorden_pdf2htmlex_convert($fid, $did) {
   $file = file_load($fid);
+  $uri_parts=pathinfo($file->uri);
   
   $file_path_real = drupal_realpath($file->uri);//with file name
   $file_path_real_arr = explode('/', $file_path_real);
   array_pop($file_path_real_arr);
   
   if (variable_get('pdf2html_rendering_path') && file_exists(drupal_realpath(variable_get('pdf2html_rendering_path')))){//is set
-    $dest_dir_real = drupal_realpath(variable_get('pdf2html_rendering_path'));
+    $dest_dir_real = drupal_realpath(variable_get('pdf2html_rendering_path')) . '/' . preg_replace("#(private|public):///?#is",'',  $uri_parts['dirname']);
   } else {
     $dest_dir_real = implode('/', $file_path_real_arr);//without file name
   }

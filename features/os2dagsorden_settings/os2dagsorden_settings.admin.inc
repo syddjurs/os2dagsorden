@@ -223,6 +223,12 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#description' => 'Comma-separated list of committees ID changing status of which should send an email notification.',
     '#default_value' => variable_get('os2dagsorden_send_notification_committee', ''),
   );
+  $form['os2dagsorden_meeting_import']['os2dagsorden_follows_committee_send_notification'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('User that are just Follow the committee are getting notifications '),
+    '#description'=>t('Decide whether user that are just Follow the committee are getting notifications about new messages appeared on that committee.'),
+    '#default_value' => variable_get('os2dagsorden_follows_committee_send_notification', false), 
+  );
   $form['os2dagsorden_meeting_import']['os2dagsorden_send_timespan_of_notification'] = array(
     '#type' => 'textfield',
     '#title' => 'Meeting should be not older than:',

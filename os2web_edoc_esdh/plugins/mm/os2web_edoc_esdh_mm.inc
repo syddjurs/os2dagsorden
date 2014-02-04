@@ -107,6 +107,9 @@ function os2web_edoc_esdh_mm_import_meeting($meeting) {
 	//$meeting_id = $meeting_agenda->xpath('MeetingAgendaItems/MeetingAgendaItem/Document/@documentid');
 	//$meeting_id = (string) $meeting_id[0][documentid];
 	$meeting_id = crc32($meeting_date . ' ' . $committee);//generated meeting_id
+        if ($meeting_id > 2147483647){
+          $meeting_id = substr($meeting_id, 0,9);//mysql int out of range fix
+        }
 	$meeting_pdf = $meeting_agenda->xpath('PDFDocument');
 	$meeting_pdf = (string) $meeting_pdf[0];
 	$meeting_state = $meeting_agenda->xpath('AgendaType');
@@ -262,52 +265,65 @@ function _os2web_edoc_esdh_mm_import_meeting_agenda_item($meeting, $xml) {
   if ($item['access'] !== 'SKAL PUBLICERES' || stripos($meeting['agenda_access'], 'lukket') !== FALSE) {
     $item['access'] = 'Lukket';
   }
-  //Process item body
-  if (!empty($xml_item['full_text'])){
-    $item['bullets'][] = array(
-	'title' => 'Beskrivelse',
-	'body' => $xml_item['full_text'],
-	'sysid' => $xml_item['documentid'] . $xml_item['number'],
-    );
-  }
-  
-  // Process bullets.
-  foreach ($xml_item_bullet->Attachment as $bullet_xml) {
-    $bullet_title = (string) $bullet_xml->NeutralTitle;
-    $bullet_body = (string) trim($bullet_xml->FullText);
-    $bullet_id = (string) $bullet_xml['attachmentid'];
-    $bullet_access = (string) $bullet_xml->PublishingType;
-    if (empty($bullet_body)) {
-      $bullet_body = "Intet indhold";
+
+  if (variable_get('os2web_edoc_esdh_bullet_source', 'xml') == 'xml'){
+    //Process item body
+    if (!empty($xml_item['full_text'])){
+      $item['bullets'][] = array(
+          'title' => 'Beskrivelse',
+          'body' => $xml_item['full_text'],
+          'sysid' => $xml_item['documentid'] . $xml_item['number'],
+      );
     }
-    else {
-      if($bullet_access !== 'SKAL PUBLICERES') {
-	$bullet_body = "Dette er et lukket punkt. Du kan læse selve indstillingen" . $bullet_xml['access'];
+
+    // Process bullets.
+    foreach ($xml_item_bullet->Attachment as $bullet_xml) {
+      $bullet_title = (string) $bullet_xml->NeutralTitle;
+      $bullet_body = (string) trim($bullet_xml->FullText);
+      $bullet_id = (string) $bullet_xml['attachmentid'];
+      $bullet_access = (string) $bullet_xml->PublishingType;
+      if (empty($bullet_body)) {
+        $bullet_body = "Intet indhold";
+      }
+      else {
+        if($bullet_access !== 'SKAL PUBLICERES') {
+          $bullet_body = "Dette er et lukket punkt. Du kan læse selve indstillingen" . $bullet_xml['access'];
+        }
+      }
+      if (!empty($bullet_title)) {
+        $item['bullets'][] = array(
+          'title' => (string) $bullet_title,
+          'body' => (string) $bullet_body,
+          'sysid' => $bullet_id,
+        );
+      }
+      
+      // Process enclosure, if any
+      $enclosure_item['filename_in'] = (string) $bullet_xml->PDFDocument;
+      $enclosure_item['access'] = (string) $bullet_xml->PublishingType;
+      if (strlen($enclosure_item['filename_in']) > 0 && $enclosure_item['access'] == 'SKAL PUBLICERES') {
+        $item['enclosures'][] = array(
+          'uri' => implode('/', array(
+          trim($meeting['uri'], "/"),
+          $xml_item['pdf'])),
+          'title' => trim((string) $bullet_xml->Title),
+          'sysid' => 'bilag_' . $bullet_id,
+          'access' => TRUE,
+          'filetype' => '.pdf',
+        );
       }
     }
-    if (!empty($bullet_title)) {
-      $item['bullets'][] = array(
-	'title' => (string) $bullet_title,
-	'body' => (string) $bullet_body,
-	'sysid' => $bullet_id,
-      );
-    }
-    
-    // Process enclosure, if any
-    $enclosure_item['filename_in'] = (string) $bullet_xml->PDFDocument;
-    $enclosure_item['access'] = (string) $bullet_xml->PublishingType;
-    if (strlen($enclosure_item['filename_in']) > 0 && $enclosure_item['access'] == 'SKAL PUBLICERES') {
-      $item['enclosures'][] = array(
-	'uri' => implode('/', array(
-	trim($meeting['uri'], "/"),
-	$enclosure_item['filename_in'])),
-	'title' => trim((string) $bullet_xml->Title),
-	'sysid' => 'bilag_' . $bullet_id,
-	'access' => TRUE,
-        'filetype' => '.pdf',
-      );
-    }
-    
+  } else {
+    //skipping content and importing just one PDF with all attachment gathered there
+    $item['enclosures'][] = array(
+       'uri' => implode('/', array(
+       trim($meeting['uri'], "/"),
+       $xml_item['pdf'])),
+       'title' => 'Indhold',
+       'sysid' => 'bilag_' . $xml_item['documentid'],
+       'access' => TRUE,
+       'filetype' => '.pdf',
+     );
   }
   
   $item += os2web_esdh_provider_default_item();
