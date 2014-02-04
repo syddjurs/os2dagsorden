@@ -246,14 +246,14 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#title' => t('Type of files to be converted when importing:'),
     '#maxlength' => 200,
     '#description' => t('Comma-separated list of file types. Example: xls,doc,docx,xlsx'),
-    '#default_value' => variable_get('os2web_copied_filetype', ''),
+    '#default_value' => variable_get('os2web_copied_filetype', OS2WEB_COPIED_FILETYPE),
   );
   $form['os2dagsorden_file_import']['os2web_convertion_dir'] = array(
     '#type' => 'textfield',
     '#title' => t('Directory to send the files for converting:'),
     '#maxlength' => 200,
     '#description' => t('This is the path where files copy for converting'),
-    '#default_value' => variable_get('os2web_convertion_dir', ''),
+    '#default_value' => variable_get('os2web_convertion_dir', OS2WEB_CONVERTION_DIR),
 );
   } 
   //hidden agenda

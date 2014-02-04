@@ -11,7 +11,10 @@
  * @license  http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2
  * @link     http://bellcom.dk
  */
-// to delete
+
+define('OS2WEB_CONVERTION_DIR','public://os2convert');
+define('OS2WEB_COPIED_FILETYPE','doc,docx,xls,xlsx');
+
 function os2dagsorden_file_conversion_manager_menu() {
     $items = array();
     $items['os2web/run_file_manager'] = array(
