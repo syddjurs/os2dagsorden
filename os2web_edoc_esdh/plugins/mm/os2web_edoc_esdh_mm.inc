@@ -319,7 +319,7 @@ function _os2web_edoc_esdh_mm_import_meeting_agenda_item($meeting, $xml) {
        'uri' => implode('/', array(
        trim($meeting['uri'], "/"),
        $xml_item['pdf'])),
-       'title' => 'Indhold',
+       'title' => variable_get('os2web_edoc_esdh_empty_bullet_title','Indhold'),
        'sysid' => 'bilag_' . $xml_item['documentid'],
        'access' => TRUE,
        'filetype' => '.pdf',
