@@ -223,6 +223,31 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#description' => 'Comma-separated list of committees ID changing status of which should send an email notification.',
     '#default_value' => variable_get('os2dagsorden_send_notification_committee', ''),
   );
+  $form['os2dagsorden_meeting_import']['os2dagsorden_send_email_subject'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Meeting notification email text',
+    '#description' => 'The email subject, which would be send to users interested in meeting publishing - Member / Follow+ / Follow (optional)',
+    '#default_value' => variable_get('os2dagsorden_send_email_subject', '!meeting_type til !committee er publiceret'),
+  );
+  $form['os2dagsorden_meeting_import']['os2dagsorden_send_email_body'] = array(
+    '#type' => 'textarea',
+    '#title' => 'Meeting notification email text',
+    '#description' => 'The email body, which would be send to users interested in meeting publishing - Member / Follow+ / Follow (optional)',
+    '#default_value' => variable_get('os2dagsorden_send_email_body', 'Til !user' . PHP_EOL . PHP_EOL .
+      'Du abonnerer på !committee.' . PHP_EOL . 'Der er publiceret !meeting_type til !meeting_name !meeting_date.')
+  );
+  $form['os2dagsorden_meeting_import']['os2dagsorden_send_email_text_available_variables'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#value' => 'Can be used both in subject and body:<br/>
+    <b>!committe</b> - name of the committee<br/>
+    <b>!meeting_name</b> - title of the meeting<br/>
+    <b>!meeting_date</b> - date of the meeting<br/>
+    <b>!meeting_type</b> - type of the meeting with acticle: <i>et referat</i> or <i>en dagsorden</i><br/>
+    <b>!user</b> - name of the user that message is sent to<br/>',
+    '#title' => t('Available variables'),
+  );
   $form['os2dagsorden_meeting_import']['os2dagsorden_follows_committee_send_notification'] = array(
     '#type' => 'checkbox',
     '#title' => t('User that are just Follow the committee are getting notifications '),
@@ -249,14 +274,14 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#title' => t('Type of files to be converted when importing:'),
     '#maxlength' => 200,
     '#description' => t('Comma-separated list of file types. Example: xls,doc,docx,xlsx'),
-    '#default_value' => variable_get('os2web_copied_filetype', ''),
+    '#default_value' => variable_get('os2web_copied_filetype', OS2WEB_COPIED_FILETYPE),
   );
   $form['os2dagsorden_file_import']['os2web_convertion_dir'] = array(
     '#type' => 'textfield',
     '#title' => t('Directory to send the files for converting:'),
     '#maxlength' => 200,
     '#description' => t('This is the path where files copy for converting'),
-    '#default_value' => variable_get('os2web_convertion_dir', ''),
+    '#default_value' => variable_get('os2web_convertion_dir', OS2WEB_CONVERTION_DIR),
 );
   } 
   //hidden agenda
