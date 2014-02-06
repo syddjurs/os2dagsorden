@@ -29,8 +29,7 @@ function os2dagsorden_meeting_views_meeting_details_description_download(){
   global $base_url;
   $q = explode('/',$_GET['q']);
   $meeting_id = $q[1];
-
-  //user has no access to agenda
+   //user has no access to agenda
   if (!os2dagsorden_access_helper_check_user_can_see_meeting_agenda($meeting_id))
     return;
 
@@ -107,7 +106,16 @@ function os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has
 
 /////////////////////////////////////////COMMENTS fields START /////////////////////////////////////////
 function os2dagsorden_meeting_views_meeting_details_comments_access(){
-    return variable_get('os2dagsorden_show_comments', 'false') === 'true';
+    if(variable_get('os2dagsorden_show_comments', false)){
+    $q = $_GET['q'];
+  $q = explode('/', $q);
+  $meeting_id = $q[1];
+  $meeting=node_load($meeting_id);
+   if ( !empty($meeting->field_meeting_comments['und'][0]['value']))
+       return TRUE;
+    }
+    
+    return FALSE;
   
 }
 /////////////////////////////////////////COMMENTS fields END /////////////////////////////////////////
