@@ -111,7 +111,7 @@ function os2web_sbsys_esdh_mm_import_meeting($meeting) {
       $meeting_date_when = $meeting_data[0]->When;
       $meeting_date_until = $meeting_data[0]->Until;
       $meeting_where = (string) $meeting_data[0]->Where;
-      $meeting_name = (string) $meeting_name[0];
+      $meeting_name = variable_get('os2web_sbsys_add_committee_to_title', false)? $committee_name." ".(string)$meeting_name[0]:(string)$meeting_name[0];
       $meeting_uri = (string) $meeting_uri[0];
       $acadre_version = (string) $acadre_version[0][ID];
       $meeting_type = $manifest->xpath('/Publication/PublicationTypeAsValue');
