@@ -16,6 +16,7 @@
  *   Node id
  */
 function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$context = NULL) {
+
   if (!lock_acquire(__FUNCTION__ . $meeting_id['id'])) {
     return;
   }
@@ -103,6 +104,11 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
       //Adding participants
       if ($meeting['participants']){
 	$node->field_meeting_participants[LANGUAGE_NONE][0]['value'] = implode(variable_get('participants_delimeter', ', '), $meeting['participants']);
+      }
+      
+     //Adding comments
+      if ($meeting['comments']){
+       $node->field_meeting_comments[LANGUAGE_NONE][0]['value'] = $meeting['comments'];
       }
  
       //Adding participants cancellations

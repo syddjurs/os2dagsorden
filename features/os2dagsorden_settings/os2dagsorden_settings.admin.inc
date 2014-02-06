@@ -150,6 +150,12 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#options' => array('true' => t('Group separately'), 'false' => t('Put inline')),
     '#description' => t('This decides whether closed bullet points will be grouped separately as a additional block called "Lukket dagsorden", or put inline together the rest of the bullet points.'),
   );
+   $form['os2dagsorden_meeting_view_settings']['os2dagsorden_show_comments'] = array(
+   '#type' => 'checkbox',
+   '#title' => t('Show comments on meeting view'),
+   '#description'=>t('This decides whether a comments field is visible on meeting view.'),
+   '#default_value' => variable_get('os2dagsorden_show_comments', false),
+  );
 
   //show latest meetings in my committee or all committees
   $form['os2dagsorden_latest_meetings_view_settings'] = array(

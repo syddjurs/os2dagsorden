@@ -105,6 +105,13 @@ function os2dagsorden_meeting_views_meeting_details_fields_indicator_meeting_has
 }
 /////////////////////////////////////////PAGE fields end /////////////////////////////////////////
 
+/////////////////////////////////////////COMMENTS fields START /////////////////////////////////////////
+function os2dagsorden_meeting_views_meeting_details_comments_access(){
+    return variable_get('os2dagsorden_show_comments', 'false') === 'true';
+  
+}
+/////////////////////////////////////////COMMENTS fields END /////////////////////////////////////////
+
 /////////////////////////////////////////PRINT ALL SPEAKER PAPER fields start /////////////////////////////////////////
 function os2dagsorden_meeting_views_meeting_details_fields_print_all_speaker_papers($nid){
   if (os2dagsorden_access_helper_meeting_has_speaker_paper($nid)){
