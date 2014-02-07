@@ -300,7 +300,7 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
       '#type' => 'checkboxes',
       '#description' => t('Select default value for user meeting category.'),
       '#options' => array('pol' => t('Political'), 'org' => t('Organisation')),
-      '#default_value'=>variable_get('os2dagsorden_user_default_meeting_category')
+      '#default_value'=>variable_get('os2dagsorden_user_default_meeting_category', array())
 );
   //hidden agenda
   $form['os2dagsorden_hidden_agenda_committee'] = array(
