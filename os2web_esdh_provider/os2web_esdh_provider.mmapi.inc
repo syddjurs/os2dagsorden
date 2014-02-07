@@ -101,6 +101,9 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
 	$node->field_location[LANGUAGE_NONE][0]['tid'] = $location->tid;
       }
       
+      //Adding default meeting category
+      $node->field_meeting_category[LANGUAGE_NONE][0]['value']=variable_get('os2dagsorden_default_meeting_cateroty','pol');
+      
       //Adding participants
       if ($meeting['participants']){
 	$node->field_meeting_participants[LANGUAGE_NONE][0]['value'] = implode(variable_get('participants_delimeter', ', '), $meeting['participants']);

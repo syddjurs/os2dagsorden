@@ -226,31 +226,32 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#description' => 'Comma-separated list of committees ID changing status of which should send an email notification.',
     '#default_value' => variable_get('os2dagsorden_send_notification_committee', ''),
   );
-  $form['os2dagsorden_meeting_import']['os2dagsorden_send_email_subject'] = array(
+   $form['os2dagsorden_meeting_import']['os2dagsorden_send_email_subject'] = array(
     '#type' => 'textfield',
     '#title' => 'Meeting notification email text',
     '#description' => 'The email subject, which would be send to users interested in meeting publishing - Member / Follow+ / Follow (optional)',
     '#default_value' => variable_get('os2dagsorden_send_email_subject', '!meeting_type til !committee er publiceret'),
-  );
+    );
   $form['os2dagsorden_meeting_import']['os2dagsorden_send_email_body'] = array(
     '#type' => 'textarea',
     '#title' => 'Meeting notification email text',
     '#description' => 'The email body, which would be send to users interested in meeting publishing - Member / Follow+ / Follow (optional)',
     '#default_value' => variable_get('os2dagsorden_send_email_body', 'Til !user' . PHP_EOL . PHP_EOL .
-      'Du abonnerer på !committee.' . PHP_EOL . 'Der er publiceret !meeting_type til !meeting_name !meeting_date.')
-  );
+      'Du abonnerer pÃ¥ !committee.' . PHP_EOL . 'Der er publiceret !meeting_type til !meeting_name !meeting_date.')
+    );
   $form['os2dagsorden_meeting_import']['os2dagsorden_send_email_text_available_variables'] = array(
     '#type' => 'fieldset',
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
     '#value' => 'Can be used both in subject and body:<br/>
-    <b>!committe</b> - name of the committee<br/>
+    <b>!committe</b> - name of the committee<br/> 
     <b>!meeting_name</b> - title of the meeting<br/>
     <b>!meeting_date</b> - date of the meeting<br/>
     <b>!meeting_type</b> - type of the meeting with acticle: <i>et referat</i> or <i>en dagsorden</i><br/>
     <b>!user</b> - name of the user that message is sent to<br/>',
     '#title' => t('Available variables'),
   );
+
   $form['os2dagsorden_meeting_import']['os2dagsorden_follows_committee_send_notification'] = array(
     '#type' => 'checkbox',
     '#title' => t('User that are just Follow the committee are getting notifications '),
@@ -265,6 +266,13 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#size' => 10,
     '#description' => 'If meeting is not older than the set amount of day, notification is sent. <br/>Otherwise notification process is skipped',
     '#default_value' => variable_get('os2dagsorden_send_timespan_of_notification', 10),
+  );
+  $form['os2dagsorden_meeting_import']['os2dagsorden_default_meeting_cateroty'] = array(
+    '#type' => 'radios',
+    '#title' => t('Default meeting category'),
+    '#default_value' => variable_get('os2dagsorden_default_meeting_cateroty','pol'),
+    '#options' =>  array('pol' => t('Political'), 'org' => t('Organisation')),
+    '#description' => t('This decides whether a default meeting category'),
   );
   if (module_exists('os2dagsorden_file_conversion_manager')){
   $form['os2dagsorden_file_import'] = array(
@@ -287,6 +295,13 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#default_value' => variable_get('os2web_convertion_dir', OS2WEB_CONVERTION_DIR),
 );
   } 
+    $form['os2dagsorden_user_default_meeting_category']=array(
+      '#title' => t('Default value for user meeting category'),
+      '#type' => 'checkboxes',
+      '#description' => t('Select default value for user meeting category.'),
+      '#options' => array('pol' => t('Political'), 'org' => t('Organisation')),
+      '#default_value'=>variable_get('os2dagsorden_user_default_meeting_category')
+);
   //hidden agenda
   $form['os2dagsorden_hidden_agenda_committee'] = array(
     '#type' => 'textfield',
