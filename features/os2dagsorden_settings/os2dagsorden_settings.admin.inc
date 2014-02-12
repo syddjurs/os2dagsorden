@@ -311,7 +311,26 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#default_value' => variable_get('os2dagsorden_hidden_agenda_committee', OS2DAGSORDEN_HIDDEN_AGENGA_COMMITTEE),
   );
   
-  return system_settings_form($form);
+    if (module_exists('os2dagsorden_pdf2htmlex')) {
+        $form['os2dagsorden_pdf2htmlex_path'] = array(
+            '#type' => 'textfield',
+            '#title' => 'Path to pdf2htmlEX',
+            '#description' => 'Path to pdf2htmlEX',
+            '#default_value' => variable_get('os2dagsorden_pdf2htmlex_path', ""),
+            '#element_validate' => array('_os2dagsorden_pdf2htmlEX_validate'),
+        );
+    }
+
+    return system_settings_form($form);
+}
+
+function _os2dagsorden_pdf2htmlEX_validate($element, &$form_state){
+    $value = $element['#value'];
+    $exec = shell_exec($value . ' --version 2>&1');
+    if(strpos($exec, 'pdf2htmlEX version') === false){
+            form_error($element, "Incorrect pdf2htmlEX path");
+            watchdog("os2dagsorden", t('Incorrect pdf2htmlEX path'));
+        }
 }
 
 /**
