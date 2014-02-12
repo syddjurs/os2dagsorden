@@ -326,7 +326,7 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
 
 function _os2dagsorden_pdf2htmlEX_validate($element, &$form_state){
     $value = $element['#value'];
-    $exec = shell_exec($value . ' pdf2htmlEX --version 2>&1');
+    $exec = shell_exec($value . ' --version 2>&1');
     if(strpos($exec, 'pdf2htmlEX version') === false){
             form_error($element, "Incorrect pdf2htmlEX path");
             watchdog("os2dagsorden", t('Incorrect pdf2htmlEX path'));
