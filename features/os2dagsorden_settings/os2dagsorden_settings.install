@@ -32,7 +32,7 @@ function os2dagsorden_settings_requirements($phase){
 
     if (module_exists('os2dagsorden_pdf2htmlex')) {
         if ($phase != 'install') {
-            $exec = shell_exec(variable_get('os2dagsorden_pdf2htmlex_path', "") . ' pdf2htmlEX --version 2>&1');
+            $exec = shell_exec(variable_get('os2dagsorden_pdf2htmlex_path', "") . ' --version 2>&1');
             $requirements['os2dagsorden_settings'] = array(
                 'title' => $t('pdf2htmlEX path'),
                 'value' => variable_get('os2dagsorden_pdf2htmlex_path', ""),
