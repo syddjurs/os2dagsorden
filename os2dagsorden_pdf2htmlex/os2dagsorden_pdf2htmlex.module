@@ -64,7 +64,12 @@ function os2dagsorden_pdf2htmlex_schedule($fid, $did) {
     ))
     ->execute();
 }
-
+function os2dagsorden_pdf2htmlex_cronapi($op, $job = NULL) {
+  switch ($op) {
+    case 'list':
+      return array('os2dagsorden_pdf2htmlex_cron' => t('Converts PDF files to HTML'));
+  }
+}
 /**
  * Cron implementation.
  * Goes through the entries in database table, converts the new records,

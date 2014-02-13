@@ -539,7 +539,12 @@ function os2dagsorden_access_helper_logout() {
   }
   drupal_goto();
 }
-
+function os2dagsorden_access_helper_cronapi($op, $job = NULL) {
+  switch ($op) {
+    case 'list':
+      return array('os2dagsorden_access_helper_cron' => t('Deletes all the user rights (is member of) if the right has expired'));
+  }
+}
 /**
  * Implements the hook_cron
  *

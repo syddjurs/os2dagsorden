@@ -140,6 +140,12 @@ function os2web_esdh_provider_node_delete($node) {
       ->execute();
   }
 }
+function os2web_esdh_provider_cronapi($op, $job = NULL) {
+  switch ($op) {
+    case 'list':
+      return array('os2web_esdh_provider_cron' => t('Run meetings import'));
+  }
+}
 
 /**
  * Implemets hook_cron().
