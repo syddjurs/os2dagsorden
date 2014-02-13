@@ -24,8 +24,8 @@ function os2dagsorden_meeting_views_ckeditor_profile_defaults() {
       ),
       'input_formats' => array(),
     ),
-    'Syddjurs_filtered' => array(
-      'name' => 'Syddjurs_filtered',
+    'OS2dagsoren_filtered' => array(
+      'name' => 'OS2dagsoren_filtered',
       'settings' => array(
         'ss' => '2',
         'default' => 't',
@@ -98,8 +98,8 @@ function os2dagsorden_meeting_views_ckeditor_profile_defaults() {
         'filtered_html' => 'Filtered HTML',
       ),
     ),
-    'Syddjurs_full' => array(
-      'name' => 'Syddjurs_full',
+    'OS2dagsoren_full' => array(
+      'name' => 'OS2dagsoren_full',
       'settings' => array(
         'ss' => '2',
         'default' => 't',
