@@ -185,6 +185,13 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#options' => $options3,
     '#description' => t('This decides whether a side menu expanded/collapsed.'),
   );
+  $form['os2dagsorden_frontpage_layout_settings']['os2dagsorden_show_search_block_title'] = array(
+    '#type' => 'radios',
+    '#title' => t('Show/Hide search block title'),
+    '#default_value' => variable_get('os2dagsorden_show_search_block_title', 'true'),
+    '#options' => array('true' => t('Show'), 'false' => t('Hide')),
+    '#description' => t('This decides whether a search block title show/hide.'),
+  ); 
   //show or not show meeting category in the calendar
   $form['os2dagsorden_show_meeting_category_settings'] = array(
       '#type' => 'fieldset',
