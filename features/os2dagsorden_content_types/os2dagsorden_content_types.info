@@ -37,6 +37,7 @@ features[field][] = node-meeting-field_meeting_acadre_id
 features[field][] = node-meeting-field_meeting_acadre_version
 features[field][] = node-meeting-field_meeting_category
 features[field][] = node-meeting-field_meeting_comments
+features[field][] = node-meeting-field_meeting_conditions
 features[field][] = node-meeting-field_meeting_description
 features[field][] = node-meeting-field_meeting_description_add
 features[field][] = node-meeting-field_meeting_description_add_c

@@ -150,6 +150,7 @@ function _acadre_esdh_import_meeting($info) {
       'location' => (string) array_shift($xml->xpath("//table[@name='meeting']/fields/field[@name='location']")),
       'agenda_access' => $info['access'],
       'agenda_type' => (string) array_shift($xml->xpath("//fields/field[@name='name']")),
+      'special_conditions'=> (string) array_shift($xml->xpath("//table[@name='meeting']/fields/field[@name='description']")),                
       'items' => array(),
     );
                     

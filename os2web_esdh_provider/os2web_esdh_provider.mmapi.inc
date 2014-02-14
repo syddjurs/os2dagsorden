@@ -113,6 +113,11 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
       if (isset($meeting['description'])){
        $node->field_meeting_comments[LANGUAGE_NONE][0]['value'] = $meeting['comments'];
       }
+      
+     
+      if (isset($meeting['special_conditions'])){
+           $node->field_meeting_conditions[LANGUAGE_NONE][0]['value'] = $meeting['special_conditions'];
+      }
  
       //Adding participants cancellations
       if ($meeting['participants_cancellation']){
