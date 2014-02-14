@@ -135,14 +135,28 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#description'=>t('This decides whether a  all bullet points will be expanded'),
     '#default_value' => variable_get('os2dagsorden_expand_all_bullets', false),
   );
+   $form['os2dagsorden_meeting_view_settings']['os2dagsorden_expand_attachment_onload'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Expand all attachments on bullet point open'),
+    '#description' => t('This decides whether all attachments will be expanded on bullet point open'),
+    '#default_value' => variable_get('os2dagsorden_expand_attachment_onload', FALSE),
+  );
   $options = array('true' => t('Expand'), 'false' => t('Not expand (but keep it that way if the bilag has been expanded before)'));
-  $form['os2dagsorden_meeting_view_settings']['os2dagsorden_expand_attachment'] = array(
+  $form['os2dagsorden_meeting_view_settings']['os2dagsorden_expand_bilag'] = array(
     '#type' => 'radios',
     '#title' => t('Expand attachment'),
-    '#default_value' => variable_get('os2dagsorden_expand_attachment'),
+    '#default_value' => variable_get('os2dagsorden_expand_bilag'),
     '#options' => $options,
     '#description' => t('This decides whether a certain type of bullet point attachment - bilag will be expanded (activated) when functionality "Expand whole bullet point" is executed.'),
   );
+   $form['os2dagsorden_meeting_view_settings']['os2dagsorden_show_massive_expand_collapse_button'] = array(
+    '#type' => 'radios',
+    '#title' => t('Massive expand/collapse button'),
+    '#default_value' => variable_get('os2dagsorden_show_massive_expand_collapse_button', 'true'),
+    '#options' => array('true' => t('Show'), 'false' => t('Hide')),
+    '#description' => t('This decides whether massive expand/collapse button will be shown on meeting views.'),
+  );
+  
   $form['os2dagsorden_meeting_view_settings']['os2dagsorden_group_closed_bullet_points'] = array(
     '#type' => 'radios',
     '#title' => t('Group closed closed bullet points as a separate block'),
