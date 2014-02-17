@@ -111,7 +111,7 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
       
      //Adding comments
       if (isset($meeting['description'])){
-       $node->field_meeting_comments[LANGUAGE_NONE][0]['value'] = $meeting['comments'];
+       $node->field_meeting_comments[LANGUAGE_NONE][0]['value'] = $meeting['description'];
       }
       
      
