@@ -140,6 +140,12 @@ function os2web_esdh_provider_node_delete($node) {
       ->execute();
   }
 }
+function os2web_esdh_provider_cronapi($op, $job = NULL) {
+  switch ($op) {
+    case 'list':
+      return array('os2web_esdh_provider_cron' => t('Run meetings import'));
+  }
+}
 
 /**
  * Implemets hook_cron().
@@ -154,7 +160,7 @@ function os2web_esdh_provider_cron() {
       foreach ($meetings as $meeting) {
         $queue->createItem(array('meeting' => $meeting, 'force' => FALSE));
         //to remove
-        //module_load_include('inc', 'os2web_esdh_provider', 'os2web_esdh_provider.mmapi');
+       // module_load_include('inc', 'os2web_esdh_provider', 'os2web_esdh_provider.mmapi');
 		//_os2web_esdh_provider_import_meeting($meeting, FALSE);
       }
       //no postprocess, uncomment to activate

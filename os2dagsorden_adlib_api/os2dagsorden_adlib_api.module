@@ -178,6 +178,12 @@ function os2dagsorden_adlib_api_delete_all_jobs() {
       $adlib->deleteJobFolder($folder[1]);
     }
 }
+function os2dagsorden_adlib_api_cronapi($op, $job = NULL) {
+  switch ($op) {
+    case 'list':
+      return array('os2dagsorden_adlib_api_cron' => t('Converts files to PDF or HTML through AdLib'));
+  }
+}
 
 /**
  * Implementation of hook_cron

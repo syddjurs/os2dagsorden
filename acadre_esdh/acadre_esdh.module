@@ -49,11 +49,11 @@ function acadre_esdh_form_os2web_settings_settings_form_alter(&$form, &$form_sta
 
  $form['meetings']['os2web_acadre_add_committee_to_title'] = array(
      '#type' => 'checkbox',
-     '#default_value' => variable_get('os2web_acadre_add_committee_to_title', false),
+     '#default_value' => variable_get('os2web_acadre_add_committee_to_title',false),
      '#title' => t('Add committee name to meeting title'), 
      '#description' =>'This decides whether a committee name will be added to meeting title'
   );
-   
+  
   $form['os2web_pws_adlib_group'] = array(
     '#type' => 'fieldset',
     '#title' => t('Adlib Endpoint configuration'),

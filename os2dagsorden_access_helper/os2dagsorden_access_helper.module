@@ -539,7 +539,12 @@ function os2dagsorden_access_helper_logout() {
   }
   drupal_goto();
 }
-
+function os2dagsorden_access_helper_cronapi($op, $job = NULL) {
+  switch ($op) {
+    case 'list':
+      return array('os2dagsorden_access_helper_cron' => t('Deletes all the user rights (is member of) if the right has expired'));
+  }
+}
 /**
  * Implements the hook_cron
  *
@@ -861,4 +866,11 @@ function os2dagsorden_access_helper_get_user() {
   }
 
   return $GLOBALS['full_user'];
+}
+function os2dagsorden_access_helper_user_presave(&$edit, $account, $category){
+  if ($account->is_new && variable_get('os2dagsorden_user_default_meeting_category')){
+    $user_category= variable_get('os2dagsorden_user_default_meeting_category');
+    foreach($user_category as $key=>$value)
+      $edit['field_user_meetings_category']['und'][]=array('value' => $value);    
+  } 
 }

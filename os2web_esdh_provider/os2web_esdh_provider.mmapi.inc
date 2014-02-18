@@ -16,6 +16,7 @@
  *   Node id
  */
 function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$context = NULL) {
+
   if (!lock_acquire(__FUNCTION__ . $meeting_id['id'])) {
     return;
   }
@@ -32,7 +33,8 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
 	  $nids = array_keys($result['node']);
 	  $node = reset(entity_load('node', $nids));
       }
-      else {//if fails, trying to get meeting from date and committe combination. Assuming this is unique
+
+      if (empty($node)){//if fails, trying to get meeting from date and committe combination. Assuming this is unique
 	  $committee = _os2web_esdh_provider_find_create_committee($meeting['committee_id'], $meeting['committee_name'], $meeting['committee_group_id']);
 	  
 	  //getting meeting
@@ -100,9 +102,22 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
 	$node->field_location[LANGUAGE_NONE][0]['tid'] = $location->tid;
       }
       
+      //Adding default meeting category
+      $node->field_meeting_category[LANGUAGE_NONE][0]['value']=variable_get('os2dagsorden_default_meeting_cateroty','pol');
+      
       //Adding participants
       if ($meeting['participants']){
 	$node->field_meeting_participants[LANGUAGE_NONE][0]['value'] = implode(variable_get('participants_delimeter', ', '), $meeting['participants']);
+      }
+      
+     //Adding comments
+      if (isset($meeting['description'])){
+       $node->field_meeting_comments[LANGUAGE_NONE][0]['value'] = $meeting['description'];
+      }
+      
+     
+      if (isset($meeting['special_conditions'])){
+           $node->field_meeting_conditions[LANGUAGE_NONE][0]['value'] = $meeting['special_conditions'];
       }
  
       //Adding participants cancellations

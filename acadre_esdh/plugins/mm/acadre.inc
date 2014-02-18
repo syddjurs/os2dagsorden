@@ -146,15 +146,16 @@ function _acadre_esdh_import_meeting($info) {
       'meeting_date_start' => (string) array_shift($xml->xpath("//table[@name='meeting']/fields/field[@name='date']")),
       'meeting_date_finish' => (string) array_shift($xml->xpath("//table[@name='meeting']/fields/field[@name='finish']")),
       'committee' => (string) array_shift($xml->xpath("//table[@name='committee']/fields/field[@name='name']")),
-      'committee_name' => (string) array_shift($xml->xpath("//table[@name='committee']/fields/field[@name='name']")),
       'committee_id' => (string) array_shift($xml->xpath("//table[@name='committee']/fields/field[@name='sysid']")),
       'location' => (string) array_shift($xml->xpath("//table[@name='meeting']/fields/field[@name='location']")),
       'agenda_access' => $info['access'],
       'agenda_type' => (string) array_shift($xml->xpath("//fields/field[@name='name']")),
+      'special_conditions'=> (string) array_shift($xml->xpath("//table[@name='meeting']/fields/field[@name='description']")),                
       'items' => array(),
     );
-   if (variable_get('os2web_acadre_add_committe_to_title', FALSE))
-      $meeting['title']=$meeting['committee_name']." ".$meeting['title'];
+                    
+   if (variable_get('os2web_acadre_add_committee_to_title', false))
+      $meeting['title']=$meeting['committee']." ".$meeting['title'];
     	
     $publish_committee = array_map('trim', explode(',', variable_get('os2web_meetings_approved_committee', ACADRE_MM_DEFAULT_APPROVED)));
     if ($meeting['committee'] == '' || !in_array($meeting['committee_id'], $publish_committee)) {
