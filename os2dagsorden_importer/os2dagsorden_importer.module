@@ -39,6 +39,13 @@ function os2dagsorden_importer_sync() {
     //os2dagsorden_importer_import_meetings();
 }
 
+function os2dagsorden_importer_cronapi($op, $job = NULL) {
+  switch ($op) {
+    case 'list':
+      return array('os2dagsorden_importer_cron' => t("Imports meetings, user's committees, user positions and committees"));
+  }
+}
+
 /**
  * Implementation of hook_cron().
  * Fires all imports.
