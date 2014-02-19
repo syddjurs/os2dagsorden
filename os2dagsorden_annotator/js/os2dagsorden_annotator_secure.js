@@ -48,3 +48,9 @@ function annotator_add_floatinscrollbar(){
 		jQuery("#pdf-main").floatingScrollbar();
 	});
 }
+
+function highlight_wrapper(element, searchParam){
+    jQuery(document).ready(function() {
+        jQuery(element).highlight(searchParam);
+    });
+}

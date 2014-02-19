@@ -76,6 +76,11 @@ function os2dagsorden_meeting_views_meetings_search_fields_bpa_id($meta_data){
   }
 }
 
+function os2dagsorden_meeting_views_meetings_search_fields_search_param(){
+  $search_param = $_GET['search_params'];
+  print('?search_param=' . $search_param);
+}
+
 function os2dagsorden_meeting_views_meetings_search_fields_meeting_has_sp($meeting_id){
   if (os2dagsorden_access_helper_meeting_has_speaker_paper($meeting_id))
     print '<div class="indicator-has-speaker-paper"></div>';
