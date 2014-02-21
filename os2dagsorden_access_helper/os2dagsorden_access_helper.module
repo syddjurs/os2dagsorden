@@ -746,12 +746,13 @@ function os2dagsorden_access_helper_set_meeting_status_and_save($node, $status) 
       $published_item = (strcasecmp($status, 'Dagsorden') == 0) ? 'en dagsorden' : 'et referat';
 
       //getting subject and body
-      $subject = variable_get('os2dagsorden_send_email_subject', '!meeting_type til !committee er publiceret');
-      $body = variable_get('os2dagsorden_send_email_body', 'Til !user' . PHP_EOL . PHP_EOL .
+      $subject_template = variable_get('os2dagsorden_send_email_subject', '!meeting_type til !committee er publiceret');
+      $body_template = variable_get('os2dagsorden_send_email_body', 'Til !user' . PHP_EOL . PHP_EOL .
         'Du abonnerer på !committee.' . PHP_EOL . 'Der er publiceret !meeting_type til !meeting_name !meeting_date.');
 
       //removing duplicates
       $uids = array_unique($uids);
+      drupal_set_message(print_r($uids,true));
 
       foreach ($uids as $uid) {
         //checking is there has been a notification for the same meeting, to the same user, with the same status
@@ -772,12 +773,12 @@ function os2dagsorden_access_helper_set_meeting_status_and_save($node, $status) 
 
           //composing search/replace
           $search = array('!committee', '!meeting_name', '!meeting_date', '!meeting_type', '!user', PHP_EOL);
-          $replace = array($cName, $mName, $mDate, $published_item, $uName, '<br/>');
+          $replace = array($cName, $mName, $mDate, $published_item, $uid, '<br/>');
 
           //making replacements
-          $subject = str_replace($search, $replace, $subject);
+          $subject = str_replace($search, $replace, $subject_template);
           $subject = ucfirst($subject);
-          $body = str_replace($search, $replace, $body);
+          $body = str_replace($search, $replace, $body_template);
           $body = ucfirst($body);
 
           $from = variable_get('system_mail');
