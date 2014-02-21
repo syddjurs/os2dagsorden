@@ -293,97 +293,116 @@ function _os2dagsorden_annotator_check_permission($meeting_id, $bullet_point_id,
  */
 function _os2dagsorden_annotator_view($meeting_id, $bullet_point_id, $bilag_id) {
     $bilag = node_load($bilag_id);
-    if (strcmp($bilag->type, 'bullet_point_attachment') == 0) {
-        drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.js');
-        drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.min.js');
-        drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/json2.js');
 
-        drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/js/os2dagsorden_annotator_secure.js');
-        drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/XPath.js');
-        
-        //floating scrollbar
-        drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/js/os2dagsorden_annotator_floatingscrollbar.min.js');
-	drupal_add_js('annotator_add_floatinscrollbar();', 'inline');
+    global $base_url, $base_path, $user;
+    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/js/os2dagsorden_annotator_secure.js');
+    drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.css');
+    drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.css');
 
-        global $base_url, $base_path, $user;
-        drupal_add_js('add_annotator(' . $meeting_id . ',' . $bullet_point_id . ',' . $bilag_id . ',"#content","' . $base_path . '?q=", true, "' . $user->name . '");', 'inline');
-        
-        //hiding the side pane menu
-	drupal_add_js('annotator_hide_menu();', 'inline');
+    //check mode
+    $mode = (isset($_GET['search_param']))? 'search_mode' : 'annotator_mode';
 
-	drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.css');
-        drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.css');
-        
-        //overriding title for bilag
-	drupal_set_title($bilag->title);
+    if ($mode === 'search_mode'){
+      drupal_add_js(drupal_get_path('theme', 'os2dagsorden_theme') . '/js/jquery.highlight.js');
+      $search_param = $_GET['search_param'];
+      drupal_add_js('highlight_wrapper(".node","' . $search_param . '");',  'inline');
 
-	//Help icon
-	$html = '<div class="node">
-		<div class="help-button" title="Hvis du ønsker at lave en kommentar til et ord eller et afsnit, så marker blot dette hvorefter du får mulighed for at indtaste kommentaren."></div>
-		<div class="controls-right">';
-		
-	//starting the breadcrumb - common for bilag/not bilag	
-	$breadcrumb[] = l('Hjem', $base_url);
-	$breadcrumb[] .= l('Mødedetaljer', 'meeting/' . $meeting_id);
-	$breadcrumb[] .= l('Dagsordenspunkt', 'meeting/' . $meeting_id . '/bullet-point/' . $bullet_point_id);
+      $path_to_annotate = $GLOBALS['base_url'] . '/meeting/' . $meeting_id . '/bullet-point/' . $bullet_point_id . '/bullet-point-attachment/' . $bilag_id;
+      echo <<<HTML
+        <div class="annotator-touch-widget annotator-touch-controls">
+          <div class="annotator-touch-widget-inner">
+            <a class="annotator-button annotator-add annotator-focus" href="{$path_to_annotate}">Skift til noter</a>
+          </div>
+        </div>
+HTML;
+    } else {
+      drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.js');
+      drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.min.js');
+      drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/json2.js');
+      drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/XPath.js');
 
-	if (!empty($bilag->field_bpa_file['und'][0]['uri'])){//is an actual bilag
-	  //finishing breadcrumb
-	  $breadcrumb[] .= '<span class="breadcrumb-active">Bilag</span>';
-	  drupal_set_breadcrumb($breadcrumb);
-	  
-	  //preparing the pager
-	  $pageStart = intval($_GET['page'])+1;
-	  $pageEnd = intval($_GET['page'])+ ANNOTATOR_PAGES_PER_VIEW;
-    
-	  //bilag has converter to HTML version of file, getting the text out of it
-	  if (!empty($bilag->field_bpa_file_html['und'][0])){
-	    $file_uri = $bilag->field_bpa_file_html['und'][0]['uri'];
-	    $body_file = file_get_contents($file_uri);
-	    $text = os2dagsorden_pdf2htmlex_hide_unused_pages($body_file, $pageStart, $pageEnd);
-	    $pageAmount = $bilag->field_bpa_page_amount['und'][0]['value'];
-	  }
-	  
-	  //creating link for downloading pdf version
-	  $download_pdf_link = file_create_url($bilag->field_bpa_file['und'][0]['uri']);
-	  
-	  $file_name = $bilag->field_bpa_file['und'][0]['filename'];//for example, NAME.PDF
-	  $file_name = explode('.', $file_name);
-	  $extention = strtoupper($file_name[1]);
-	  
-	  if (stripos($extention, 'xls') || stripos($extention, 'xls') === 0)//is excel file
-	    $extention = 'EXCEL';
-	  
-	  $html .= '<input class="form-submit" type="button" onclick="window.open(\'' . $download_pdf_link . '\')" value="Hent ' . $extention . '-version">';
-	  
-	  //composing the print link
-	  $print_link = $GLOBALS['base_url'] . '/print/meeting/' . $meeting_id . '/bullet-point/' . $bullet_point_id . '/bullet-point-attachment/' . $bilag_id . '/print';
-	  
-	  //composing html output
-	  $html .= 
-		'<input class="form-submit next-control print-button" type="button" onclick="window.open(\'' . $print_link . '\')" value="Print noter">' .
-		'</div>' . '<div class="clearfix"></div>' . 
-		_os2dagsorden_annotator_get_pager_html($meeting_id, $bullet_point_id, $bilag_id, $pageAmount) . 
-		'<div id="content"><div class="attachment-text">' . $text . '</div></div>' . 
-		_os2dagsorden_annotator_get_pager_html($meeting_id, $bullet_point_id, $bilag_id, $pageAmount) .
-		'</div>';
-	} else {//is not an actual bilag
-	  //finishing breadcrumb
-	  $breadcrumb[] .= '<span class="breadcrumb-active">' .$bilag->title. '</span>';
-	  drupal_set_breadcrumb($breadcrumb);
-	  
-	  //getting text
-	  $text = '<div class="attachment-text">' . $bilag->field_bpa_body['und'][0]['value'] . '</div>';
-	  
-	  //composing the print link
-	  $print_link = $GLOBALS['base_url'] . '/print/meeting/' . $meeting_id . '/bullet-point/' . $bullet_point_id . '/bullet-point-attachment/' . $bilag_id . '/print';
-	  
-	  //composing html output
-	  $html .= '<input class="form-submit print-button" type="button" onclick="window.open(\'' . $print_link . '\')" value="Print"></div>' .
-		  '<div class="clearfix"></div>' . 
-		  '<div class="clearfix" id="content">' . $text . '</div>' . 
-		  '</div>';
-	}
+      drupal_add_js('add_annotator(' . $meeting_id . ',' . $bullet_point_id . ',' . $bilag_id . ',"#content","' . $base_path . '?q=", true, "' . $user->name . '");', 'inline');
+
+      drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.css');
+      drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.css');
+    }
+
+    //floating scrollbar
+    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/js/os2dagsorden_annotator_floatingscrollbar.min.js');
+    drupal_add_js('annotator_add_floatinscrollbar();', 'inline');
+
+    //hiding the side pane menu
+    drupal_add_js('annotator_hide_menu();', 'inline');
+
+    //overriding title for bilag
+    drupal_set_title($bilag->title);
+
+    //Help icon
+    $html = '<div class="node">
+        <div class="help-button" title="Hvis du ønsker at lave en kommentar til et ord eller et afsnit, så marker blot dette hvorefter du får mulighed for at indtaste kommentaren."></div>
+        <div class="controls-right">';
+
+    //starting the breadcrumb - common for bilag/not bilag
+    $breadcrumb[] = l('Hjem', $base_url);
+    $breadcrumb[] .= l('Mødedetaljer', 'meeting/' . $meeting_id);
+    $breadcrumb[] .= l('Dagsordenspunkt', 'meeting/' . $meeting_id . '/bullet-point/' . $bullet_point_id);
+
+    if (!empty($bilag->field_bpa_file['und'][0]['uri'])){//is an actual bilag
+      //finishing breadcrumb
+      $breadcrumb[] .= '<span class="breadcrumb-active">Bilag</span>';
+      drupal_set_breadcrumb($breadcrumb);
+
+      //preparing the pager
+      $pageStart = intval($_GET['page'])+1;
+      $pageEnd = intval($_GET['page'])+ ANNOTATOR_PAGES_PER_VIEW;
+
+      //bilag has converter to HTML version of file, getting the text out of it
+      if (!empty($bilag->field_bpa_file_html['und'][0])){
+        $file_uri = $bilag->field_bpa_file_html['und'][0]['uri'];
+        $body_file = file_get_contents($file_uri);
+        $text = os2dagsorden_pdf2htmlex_hide_unused_pages($body_file, $pageStart, $pageEnd);
+        $pageAmount = $bilag->field_bpa_page_amount['und'][0]['value'];
+      }
+
+      //creating link for downloading pdf version
+      $download_pdf_link = file_create_url($bilag->field_bpa_file['und'][0]['uri']);
+
+      $file_name = $bilag->field_bpa_file['und'][0]['filename'];//for example, NAME.PDF
+      $file_name = explode('.', $file_name);
+      $extention = strtoupper($file_name[1]);
+
+      if (stripos($extention, 'xls') || stripos($extention, 'xls') === 0)//is excel file
+        $extention = 'EXCEL';
+
+      $html .= '<input class="form-submit" type="button" onclick="window.open(\'' . $download_pdf_link . '\')" value="Hent ' . $extention . '-version">';
+
+      //composing the print link
+      $print_link = $GLOBALS['base_url'] . '/print/meeting/' . $meeting_id . '/bullet-point/' . $bullet_point_id . '/bullet-point-attachment/' . $bilag_id . '/print';
+
+      //composing html output
+      $html .=
+        '<input class="form-submit next-control print-button" type="button" onclick="window.open(\'' . $print_link . '\')" value="Print noter">' .
+        '</div>' . '<div class="clearfix"></div>' .
+        _os2dagsorden_annotator_get_pager_html($meeting_id, $bullet_point_id, $bilag_id, $pageAmount) .
+        '<div id="content"><div class="attachment-text">' . $text . '</div></div>' .
+        _os2dagsorden_annotator_get_pager_html($meeting_id, $bullet_point_id, $bilag_id, $pageAmount) .
+        '</div>';
+    } else {//is not an actual bilag
+      //finishing breadcrumb
+      $breadcrumb[] .= '<span class="breadcrumb-active">' .$bilag->title. '</span>';
+      drupal_set_breadcrumb($breadcrumb);
+
+      //getting text
+      $text = '<div class="attachment-text">' . $bilag->field_bpa_body['und'][0]['value'] . '</div>';
+
+      //composing the print link
+      $print_link = $GLOBALS['base_url'] . '/print/meeting/' . $meeting_id . '/bullet-point/' . $bullet_point_id . '/bullet-point-attachment/' . $bilag_id . '/print';
+
+      //composing html output
+      $html .= '<input class="form-submit print-button" type="button" onclick="window.open(\'' . $print_link . '\')" value="Print"></div>' .
+          '<div class="clearfix"></div>' .
+          '<div class="clearfix" id="content">' . $text . '</div>' .
+          '</div>';
     }
 
     return $html;
