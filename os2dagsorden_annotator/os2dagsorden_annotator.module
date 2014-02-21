@@ -299,6 +299,8 @@ function _os2dagsorden_annotator_view($meeting_id, $bullet_point_id, $bilag_id) 
     drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.css');
     drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.css');
 
+    $html = "";
+
     //check mode
     $mode = (isset($_GET['search_param']))? 'search_mode' : 'annotator_mode';
 
@@ -308,7 +310,8 @@ function _os2dagsorden_annotator_view($meeting_id, $bullet_point_id, $bilag_id) 
       drupal_add_js('highlight_wrapper(".node","' . $search_param . '");',  'inline');
 
       $path_to_annotate = $GLOBALS['base_url'] . '/meeting/' . $meeting_id . '/bullet-point/' . $bullet_point_id . '/bullet-point-attachment/' . $bilag_id;
-      echo <<<HTML
+
+      $html .= <<<HTML
         <div class="annotator-touch-widget annotator-touch-controls">
           <div class="annotator-touch-widget-inner">
             <a class="annotator-button annotator-add annotator-focus" href="{$path_to_annotate}">Skift til noter</a>
@@ -338,7 +341,7 @@ HTML;
     drupal_set_title($bilag->title);
 
     //Help icon
-    $html = '<div class="node">
+    $html .= '<div class="node">
         <div class="help-button" title="Hvis du ønsker at lave en kommentar til et ord eller et afsnit, så marker blot dette hvorefter du får mulighed for at indtaste kommentaren."></div>
         <div class="controls-right">';
 
@@ -653,10 +656,10 @@ function _os2dagsorden_compare_xpath($path1, $path2){
   $path2_el = explode('/', $path2);
   
   //finding the array to start with
-  if (count($path1_el) > count($path1_e2))
+  if (count($path1_el) > count($path2_el))
     $start_with = $path1_el;
   else 
-    $start_with = $path2_e;;
+    $start_with = $path2_el;
     
   for ($i = 0; $i < count($start_with); $i++){
     if (!strpos($path1_el[$i], '[') && !strpos($path2_el[$i], '['))//if none of them have container index 
