@@ -773,7 +773,7 @@ function os2dagsorden_access_helper_set_meeting_status_and_save($node, $status) 
 
           //composing search/replace
           $search = array('!committee', '!meeting_name', '!meeting_date', '!meeting_type', '!user', PHP_EOL);
-          $replace = array($cName, $mName, $mDate, $published_item, $uid, '<br/>');
+          $replace = array($cName, $mName, $mDate, $published_item, $uName, '<br/>');
 
           //making replacements
           $subject = str_replace($search, $replace, $subject_template);
