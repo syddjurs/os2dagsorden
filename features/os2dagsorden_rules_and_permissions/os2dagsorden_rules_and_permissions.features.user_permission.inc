@@ -64,6 +64,15 @@ function os2dagsorden_rules_and_permissions_user_default_permissions() {
     'module' => 'toolbar',
   );
 
+  // Exported permission: administer menu.
+  $permissions['administer menu'] = array(
+    'name' => 'administer menu',
+    'roles' => array(
+      0 => 'os2dagsorden admin',
+    ),
+    'module' => 'menu',
+  );
+
   // Exported permission: administer os2web.
   $permissions['administer os2web'] = array(
     'name' => 'administer os2web',
@@ -118,6 +127,15 @@ function os2dagsorden_rules_and_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: edit context.
+  $permissions['edit context'] = array(
+    'name' => 'edit context',
+    'roles' => array(
+      0 => 'os2dagsorden admin',
+    ),
+    'module' => 'context_permissions',
+  );
+
   // Exported permission: edit own speaker_paper content.
   $permissions['edit own speaker_paper content'] = array(
     'name' => 'edit own speaker_paper content',
@@ -125,6 +143,15 @@ function os2dagsorden_rules_and_permissions_user_default_permissions() {
       0 => 'authenticated user',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: list context.
+  $permissions['list context'] = array(
+    'name' => 'list context',
+    'roles' => array(
+      0 => 'os2dagsorden admin',
+    ),
+    'module' => 'context_permissions',
   );
 
   // Exported permission: use text format filtered_html.
