@@ -202,7 +202,7 @@ function os2dagsorden_access_helper_file_download($uri) {
       }
      }
      else {
-         if (os2dagsorden_access_helper_check_user_can_download_bullet_point_attchment_file($file->fid)){
+         if (os2dagsorden_access_helper_check_user_can_download_bullet_point_attachment_file($file->fid)){
            return array(
           'Content-Type' => $file->filemime,
           'Content-Length' => $file->filesize,
@@ -932,7 +932,7 @@ function os2dagsorden_access_helper_user_presave(&$edit, $account, $category){
   } 
 }
 
-function os2dagsorden_access_helper_check_user_can_download_bullet_point_attchment_file($fid){
+function os2dagsorden_access_helper_check_user_can_download_bullet_point_attachment_file($fid){
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node')
             ->fieldCondition('field_bpa_file', 'fid', $fid, '=');
