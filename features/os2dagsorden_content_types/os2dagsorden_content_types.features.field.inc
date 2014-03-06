@@ -3401,6 +3401,71 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
   );
 
+  // Exported field: 'user-user-field_follows_committees_pp'.
+  $fields['user-user-field_follows_committees_pp'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_follows_committees_pp',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'committee',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'user',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => 8,
+        ),
+      ),
+      'entity_type' => 'user',
+      'field_name' => 'field_follows_committees_pp',
+      'label' => 'Follows committees++',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => 0,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_buttons',
+        'weight' => '9',
+      ),
+    ),
+  );
+
   // Exported field: 'user-user-field_user_committee'.
   $fields['user-user-field_user_committee'] = array(
     'field_config' => array(
@@ -3547,11 +3612,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
     ),
     'field_instance' => array(
       'bundle' => 'user',
-      'default_value' => array(
-        0 => array(
-          'value' => '0',
-        ),
-      ),
+      'default_value' => NULL,
       'deleted' => '0',
       'description' => '',
       'display' => array(
@@ -3734,6 +3795,7 @@ if (isset($entity->field_ref_bullet_points[\'und\'])) {
   t('File HTML');
   t('Follows committees');
   t('Follows committees+');
+  t('Follows committees++');
   t('Full name');
   t('Group ID');
   t('HEXColor');

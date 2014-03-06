@@ -26,6 +26,17 @@ function os2dagsorden_front_page_views_user_follows_committees_fields_print_comm
       print('<b>+</b><br/>');
     }
   }
+  if (isset($full_user->field_follows_committee_pp['und'])){
+    foreach ($full_user->field_follows_committee_pp['und'] as $com){
+      $com_term = taxonomy_term_load($com['tid']);
+      if (isset($com_term->field_name_short['und']))
+	print($com_term->field_name_short['und'][0]['value']);
+      else
+	print($com_term->name);
+      
+      print('<b>+</b><br/>');
+    }
+  }
 
   if (isset($full_user->field_follows_committee['und'])){
     foreach ($full_user->field_follows_committee['und'] as $com){
