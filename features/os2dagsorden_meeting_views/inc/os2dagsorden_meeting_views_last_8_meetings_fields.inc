@@ -74,6 +74,15 @@ function os2dagsorden_meeting_views_last_8_meetings_block_my_meetings_filter($me
       }
     }
   }
+  
+  //check if user meeting committee in 'follows plus'
+  if (isset($full_user->field_follows_committee_pp['und'])){
+    foreach($full_user->field_follows_committee_pp['und'] as $com){
+      if ($meeting_committee_tid == $com['tid']){
+	return FALSE;
+      }
+    }
+  }
 
   //none of the above, filter entry out
   return TRUE;
