@@ -364,7 +364,7 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     $form['os2dagsorden_cron_job_freq']['os2dagsorden_adlib_api_cron_button'] = array(
         '#type' => 'button',
         '#value' => t('Run now'),
-        '#attributes' => array('onclick' => 'location.href="/admin/ultimate-cron/service/start/os2web_adlib_api_cron?destination=/admin/config/os2dagsorden/settings"; return false;'),
+        '#attributes' => array('onclick' => 'location.href="/admin/ultimate-cron/service/start/os2dagsorden_adlib_api_cron?destination=/admin/config/os2dagsorden/settings"; return false;'),
   );
   }
   $form['#submit'][] = 'os2dagsorden_settings_cron_job_submit';
