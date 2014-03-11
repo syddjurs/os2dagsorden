@@ -282,6 +282,11 @@ function _os2dagsorden_importer_process_user_committees($xml_file) {
 			_os2dagsorden_importer_set_user_fullname($user, $xml_data['follower_plus_name']);
 		    }
 		}
+                if (!empty($xml_data['follower_plus_plus_name'])){
+		    if (strcmp($user->field_user_full_name['und'][0]['value'], $xml_data['follower_plus_plus_name']) != 0) {
+			_os2dagsorden_importer_set_user_fullname($user, $xml_data['follower_plus_plus_name']);
+		    }
+		}
 
 		//create user role
 		if (isset($xml_data['role'])) {
