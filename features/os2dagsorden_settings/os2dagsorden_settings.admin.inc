@@ -64,8 +64,8 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
   ); 
    $form['os2dagsorden_meeting_view_layout']['os2dagsorden_expand_all_bullets'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Expand all bullets on agenda'),
-    '#description'=>t('This decides whether a  all bullet points will be expanded'),
+    '#title' => t('Expand all bullets on agenda page load'),
+    '#description'=>t('This decides whether all bullet points will be expanded on page load'),
     '#default_value' => variable_get('os2dagsorden_expand_all_bullets', false),
   );
    $form['os2dagsorden_meeting_view_layout']['os2dagsorden_expand_attachment_onload'] = array(
