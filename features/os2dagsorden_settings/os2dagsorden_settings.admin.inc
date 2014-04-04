@@ -149,6 +149,12 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
       '#title' => t('Change order of sidepane blocks'),
        '#sufix' => '</p>',
   );
+  $form['os2dagsorden_sidepane_menu_layout']['os2dagsorden_show_calender'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show the calendar block on calendar pages:'),
+    '#description' => t('This decides whether show/hide the calendar block on the right side pane on the calendar pages.'),
+    '#default_value' => variable_get('os2dagsorden_show_calender', FALSE),
+  ); 
     
   //Meeting import settings
   $form['os2dagsorden_meeting_import'] = array(
