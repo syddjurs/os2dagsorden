@@ -126,7 +126,7 @@ function os2dagsorden_meeting_views_bullet_point_fields_attachments_and_content(
       if ($attachment->field_bpa_closed['und'][0]['value'] == 1)
 	  print '<div class="indicator-unlocked"></div>';
 
-      if (!empty($attachment->field_bpa_file_html['und'][0]))
+      if (!empty($attachment->field_bpa_file_html['und'][0]) && variable_get('os2dagsorden_show_attachments_mode', 'true')=='true')
 	  $link = $base_url . '/meeting/' . $meeting_id . '/bullet-point/' . $bp_id . '/bullet-point-attachment/' . $attachment->nid;
       else
 	  $link = file_create_url($attachment->field_bpa_file['und'][0]['uri']);

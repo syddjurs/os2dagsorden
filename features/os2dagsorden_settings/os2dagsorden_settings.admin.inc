@@ -89,6 +89,13 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#options' => array('true' => t('Show'), 'false' => t('Hide')),
     '#description' => t('This decides whether massive expand/collapse button will be shown on meeting views.'),
   );
+   $form['os2dagsorden_meeting_view_settings']['os2dagsorden_show_attachments_mode'] = array(
+    '#type' => 'radios',
+    '#title' => t('Show attachments'),
+    '#default_value' => variable_get('os2dagsorden_show_attachments_mode', 'true'),
+    '#options' => array('true' => t('As bullet point attachments view'), 'false' => t('As PDF file')),
+    '#description' => t('This decides whether bullet point attachments will shown as bullet point attachments view or as pdf file')
+  );
   
   
   //show latest meetings in my committee or all committees
