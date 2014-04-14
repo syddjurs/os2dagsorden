@@ -151,6 +151,9 @@ function _os2dagsorden_importer_process_user_committees($xml_file) {
             'follower_plus_id' => (int) array_shift($row->xpath('FollowerPlusID')),
             'follower_plus_initials' => (string) array_shift($row->xpath('FollowerPlusInitials')),
 	    'follower_plus_name' => (string) array_shift($row->xpath('FollowerPlusName')),
+            'follower_plus_plus_id' => (int) array_shift($row->xpath('FollowerPlusPlusID')),
+            'follower_plus_plus_initials' => (string) array_shift($row->xpath('FollowerPlusPlusInitials')),
+            'follower_plus_plus_name' => (string) array_shift($row->xpath('FollowerPlusPlusName')),
             'member_id' => (int) array_shift($row->xpath('MemberID')),
 	    'member_name' => (string) array_shift($row->xpath('MemberName')),
             'member_start_date' => (string) array_shift($row->xpath('MemberStartDate')),
@@ -218,6 +221,23 @@ function _os2dagsorden_importer_process_user_committees($xml_file) {
 
         }
 
+        //trying to get user from "Follows++" association 
+        if ($xml_data['follower_plus_plus_id'] != 0) {
+            $query = new EntityFieldQuery();
+            $query->entityCondition('entity_type', 'user')
+                    ->fieldCondition('field_user_id', 'value', intval($xml_data['follower_plus_plus_id']), '=');
+
+            $result = $query->execute();
+            if (isset($result['user'])) {
+                $uids = array_keys($result['user']);
+                $user = reset(entity_load('user', $uids));
+            }
+
+            if (empty($user)) {
+                $user = user_load_by_name($xml_data['follower_plus_plus_initials']);
+            }
+        }
+                  
         //if the entry is not deleted
         if ($xml_data['deactivated'] == 0) {
             //create committee
@@ -238,6 +258,10 @@ function _os2dagsorden_importer_process_user_committees($xml_file) {
 		      //add user follows committee PLUS
 		      _os2dagsorden_importer_add_user_follows_committee_plus($com_tid, $user);
 		  }
+                  if ($xml_data['follower_plus_plus_id'] != 0 && !empty($user)) {
+                        //add user follows committee PLUS
+                        _os2dagsorden_importer_add_user_follows_committee_plus_plus($com_tid, $user);
+                    }
                 }
             }
 
@@ -256,6 +280,11 @@ function _os2dagsorden_importer_process_user_committees($xml_file) {
 		if (!empty($xml_data['follower_plus_name'])){
 		    if (strcmp($user->field_user_full_name['und'][0]['value'], $xml_data['follower_plus_name']) != 0) {
 			_os2dagsorden_importer_set_user_fullname($user, $xml_data['follower_plus_name']);
+		    }
+		}
+                if (!empty($xml_data['follower_plus_plus_name'])){
+		    if (strcmp($user->field_user_full_name['und'][0]['value'], $xml_data['follower_plus_plus_name']) != 0) {
+			_os2dagsorden_importer_set_user_fullname($user, $xml_data['follower_plus_plus_name']);
 		    }
 		}
 
@@ -291,6 +320,10 @@ function _os2dagsorden_importer_process_user_committees($xml_file) {
 		      //unset follows committee PLUS
 		      _os2dagsorden_importer_unset_user_follows_committee_plus($com_tid, $user);
 		  }
+                  if ($xml_data['follower_plus_plus_id'] != 0 && !empty($user)) {
+                        //unset follows committee PLUS
+                        _os2dagsorden_importer_unset_user_follows_committee_plus_plus($com_tid, $user);
+                    }
                 }
             }
             
@@ -701,7 +734,60 @@ function _os2dagsorden_importer_unset_user_follows_committee_plus($tid, $user) {
 
     user_save($user, $edit);
 }
+/**
+ * Helper function. Adds the follows++ committee to the user
+ *
+ * @param int   $tid  role id
+ * @param mixed $user user object
+ *
+ * @return none
+ */
+function _os2dagsorden_importer_add_user_follows_committee_plus_plus($tid, $user) {
+    $user_follows_committee_plus_plus = FALSE;
+    if (isset($user->field_follows_committee_pp['und'])) {
+        foreach ($user->field_follows_committee_pp['und'] as $committee_id) {
+            if ($tid == $committee_id['tid']) {
+                $user_follows_committee_plus_plus = TRUE;
+            }
+        }
+    }
 
+    if (!$user_follows_committee_plus_plus) {
+        $old_list = $user->field_follows_committee_pp;
+        $old_list['und'][]['tid'] = $tid;
+
+        $edit = array(
+            'field_follows_committee_pp' => $old_list,
+        );
+
+        user_save($user, $edit);
+    }
+}
+
+/**
+ * Helper function. Unsets the follows+ committee to the user
+ *
+ * @param int   $tid  role id
+ * @param mixed $user user object
+ *
+ * @return none
+ */
+function _os2dagsorden_importer_unset_user_follows_committee_plus_plus($tid, $user) {
+    $user_follows_plus_plus = array();
+    if (isset($user->field_follows_committee_pp['und'])) {
+        foreach ($user->field_follows_committee_pp['und'] as $committee_id) {
+            if ($tid != $committee_id['tid']) {
+                $user_follows_plus_plus['und'][]['tid'] = $committee_id['tid'];
+            } 
+        }
+    }
+
+    $edit = array(
+	'field_follows_committee_pp' => $user_follows_plus_plus,
+    );
+
+    user_save($user, $edit);
+}
 /**
  * Helper function. Processes the committees xml.
  * Delegates to create committees.

@@ -231,6 +231,7 @@ os2dagsorden_front_page_views_user_follows_committees_help_text();
     'uid' => 'uid',
     'nothing' => 'nothing',
   );
+  $handler->display->display_options['row_options']['hide_empty'] = TRUE;
   /* Field: User: Full name */
   $handler->display->display_options['fields']['field_user_full_name']['id'] = 'field_user_full_name';
   $handler->display->display_options['fields']['field_user_full_name']['table'] = 'field_data_field_user_full_name';

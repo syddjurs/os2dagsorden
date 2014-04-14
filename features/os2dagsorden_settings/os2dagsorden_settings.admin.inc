@@ -62,8 +62,8 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
   ); 
    $form['os2dagsorden_meeting_view_layout']['os2dagsorden_expand_all_bullets'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Expand all bullets on agenda'),
-    '#description'=>t('This decides whether a  all bullet points will be expanded'),
+    '#title' => t('Expand all bullets on agenda page load'),
+    '#description'=>t('This decides whether all bullet points will be expanded on page load'),
     '#default_value' => variable_get('os2dagsorden_expand_all_bullets', false),
   );
    $form['os2dagsorden_meeting_view_layout']['os2dagsorden_expand_attachment_onload'] = array(
@@ -86,6 +86,13 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#default_value' => variable_get('os2dagsorden_show_massive_expand_collapse_button', 'true'),
     '#options' => array('true' => t('Show'), 'false' => t('Hide')),
     '#description' => t('This decides whether massive expand/collapse button will be shown on meeting views.'),
+  );
+   $form['os2dagsorden_meeting_view_settings']['os2dagsorden_show_attachments_mode'] = array(
+    '#type' => 'radios',
+    '#title' => t('Show attachments'),
+    '#default_value' => variable_get('os2dagsorden_show_attachments_mode', 'true'),
+    '#options' => array('true' => t('As bullet point attachments view'), 'false' => t('As PDF file')),
+    '#description' => t('This decides whether bullet point attachments will shown as bullet point attachments view or as pdf file')
   );
   
   
@@ -125,6 +132,33 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#default_value' => variable_get('os2dagsorden_show_search_block_title', 'true'),
     '#options' => array('true' => t('Show'), 'false' => t('Hide')),
     '#description' => t('This decides whether a search block title show/hide.'),
+  );
+    $form['os2dagsorden_sidepane_menu_layout'] = array(
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#title' => t('Sidepane menu layout'),
+  );
+  
+  $form['os2dagsorden_sidepane_menu_layout']['main_menu_links'] = array(
+      '#type' => 'link',
+       '#prefix' => '<p>',
+      '#href' => 'admin/structure/menu/manage/menu-sidepane-menu',
+      '#title' => t('Change order of the main menu links'),
+         '#sufix' => '</p>',
+  );
+   $form['os2dagsorden_sidepane_menu_layout']['sipepane_blocks_order'] = array(
+      '#type' => 'link',
+      '#prefix' => '<p>',
+      '#href' => 'admin/structure/context/list/os2dagsorden_sidepane/edit',
+      '#title' => t('Change order of sidepane blocks'),
+       '#sufix' => '</p>',
+  );
+  $form['os2dagsorden_sidepane_menu_layout']['os2dagsorden_show_calender'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show the calendar block on calendar pages:'),
+    '#description' => t('This decides whether show/hide the calendar block on the right side pane on the calendar pages.'),
+    '#default_value' => variable_get('os2dagsorden_show_calender', FALSE),
   ); 
     
   //Meeting import settings
@@ -290,6 +324,12 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
                                 (isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)),
         '#title' => t('Frequency of SOFD import cron job'),
     );
+    
+  $form['os2dagsorden_cron_job_freq']['os2dagsorden_importer_cron_button'] = array(
+      '#type' => 'button',
+      '#value' => t('Run now'),
+      '#attributes' => array('onclick' => 'location.href="/admin/ultimate-cron/service/start/os2dagsorden_importer_cron?destination=/admin/config/os2dagsorden/settings"; return false;'),
+  );
   }
   
   $conf = ultimate_cron_get_settings("os2web_esdh_provider_cron");
@@ -301,6 +341,11 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
       '#title' => t('Frequency of meeting import cron job'),
   );
   
+  $form['os2dagsorden_cron_job_freq']['os2web_esdh_provider_cron_button'] = array(
+      '#type' => 'button',
+      '#value' => t('Run now'),
+      '#attributes' => array('onclick' => 'location.href="/admin/ultimate-cron/service/start/os2web_esdh_provider_cron?destination=/admin/config/os2dagsorden/settings"; return false;'),
+  );
   if(module_exists('os2dagsorden_pdf2htmlex')){
     $conf = ultimate_cron_get_settings("os2dagsorden_pdf2htmlex_cron");
     $form['os2dagsorden_cron_job_freq']['os2dagsorden_pdf2htmlex_cron'] = array(
@@ -310,6 +355,12 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
                                 (isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)),
         '#title' => t('Frequency of PDF to HTML conversion cron job'), 
     );
+    
+    $form['os2dagsorden_cron_job_freq']['os2dagsorden_pdf2htmlex_cron_button'] = array(
+       '#type' => 'button',
+       '#value' => t('Run now'),
+       '#attributes' => array('onclick' => 'location.href="/admin/ultimate-cron/service/start/os2dagsorden_pdf2htmlex_cron?destination=/admin/config/os2dagsorden/settings"; return false;'),
+  );
   }
   
   if(module_exists('os2dagsorden_adlib_api')){
@@ -321,6 +372,11 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
                                 (isset($conf['rules'])? implode(';', $conf['rules']) : variable_get('ultimate_cron_rule', ULTIMATE_CRON_RULE)),
         '#title' => t('Frequency of Adlib (* to PDF) conversion cron job'), 
     );
+    $form['os2dagsorden_cron_job_freq']['os2dagsorden_adlib_api_cron_button'] = array(
+        '#type' => 'button',
+        '#value' => t('Run now'),
+        '#attributes' => array('onclick' => 'location.href="/admin/ultimate-cron/service/start/os2dagsorden_adlib_api_cron?destination=/admin/config/os2dagsorden/settings"; return false;'),
+  );
   }
   $form['#submit'][] = 'os2dagsorden_settings_cron_job_submit';
     // SOFD Integration settings

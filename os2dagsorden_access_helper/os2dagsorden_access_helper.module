@@ -189,15 +189,29 @@ function os2dagsorden_access_helper_file_download($uri) {
         $meeting_id = reset($nids);
       }
 
-      if (os2dagsorden_access_helper_check_user_can_see_meeting_agenda($meeting_id)) {
+     if($meeting_id) {
+       if (os2dagsorden_access_helper_check_user_can_see_meeting_agenda($meeting_id)) {
         return array(
           'Content-Type' => $file->filemime,
           'Content-Length' => $file->filesize,
           'Content-Disposition' => 'attachment; filename=' . $file->filename
         );
       }
-      else {
+      else {                   
         return -1;
+      }
+     }
+     else {
+         if (os2dagsorden_access_helper_check_user_can_download_bullet_point_attachment_file($file->fid)){
+           return array(
+          'Content-Type' => $file->filemime,
+          'Content-Length' => $file->filesize,
+          'Content-Disposition' => 'attachment; filename=' . $file->filename
+        );
+      }
+      else {                   
+        return -1;
+       }  
       }
     }
   }
@@ -234,7 +248,14 @@ function os2dagsorden_access_helper_check_user_can_see_closed_agenda($meeting_id
       }
     }
   }
-
+  
+  if (!empty($user_ent->field_follows_committee_pp)) { //follows committee PLUS
+    foreach ($user_ent->field_follows_committee_pp['und'] as $user_committee_id) {
+      if (intval($meeting_committee_id) == $user_committee_id['tid']) {
+        return TRUE;
+      }
+    }
+  }
   //none of the above, access denied
   return FALSE;
 }
@@ -367,13 +388,22 @@ function os2dagsorden_access_helper_check_user_can_see_bullet_point($meeting_id,
         }
       }
 
-      if (!empty($user_ent->field_follows_committee_plus)) { //follows committee PLUS
-        foreach ($user_ent->field_follows_committee_plus['und'] as $user_committee_id) {
+      if (!empty($user_ent->field_follows_committee_pp)) { //follows committee PLUS
+        foreach ($user_ent->field_follows_committee_pp['und'] as $user_committee_id) {
           if (intval($meeting_committee_id) == $user_committee_id['tid']) {
             return TRUE;
           }
         }
       }
+      if(intval(is_closed)==1 && intval($is_personal)==0){
+        if (!empty($user_ent->field_follows_committee_plus)) { //follows committee PLUS
+          foreach ($user_ent->field_follows_committee_plus['und'] as $user_committee_id) {
+            if (intval($meeting_committee_id) == $user_committee_id['tid']) {
+              return TRUE;
+            }
+          }
+        }
+      } 
       //none of the above, access denied
       return FALSE;
     }
@@ -411,6 +441,14 @@ function os2dagsorden_access_helper_check_user_can_see_bullet_point_attachment($
 
       if (!empty($user->field_follows_committee_plus)) { //follows committee PLUS
         foreach ($user->field_follows_committee_plus['und'] as $user_committee_id) {
+          if (intval($meeting_committee_id) == $user_committee_id['tid']) {
+            return TRUE;
+          }
+        }
+      }
+      
+      if (!empty($user->field_follows_committee_pp)) { //follows committee PLUS
+        foreach ($user->field_follows_committee_pp['und'] as $user_committee_id) {
           if (intval($meeting_committee_id) == $user_committee_id['tid']) {
             return TRUE;
           }
@@ -728,6 +766,15 @@ function os2dagsorden_access_helper_set_meeting_status_and_save($node, $status) 
       if (isset($result['user'])) {
         $uids = array_merge($uids, array_keys($result['user']));
       }
+      
+      //follow++  
+      $query = new EntityFieldQuery();
+      $query->entityCondition('entity_type', 'user')
+        ->fieldCondition('field_follows_committee_pp', 'tid', $committee_id, '=');
+      $result = $query->execute();
+      if (isset($result['user'])) {
+        $uids = array_merge($uids, array_keys($result['user']));
+      }
 
       //follow
       if (variable_get('os2dagsorden_follows_committee_send_notification', FALSE)) {
@@ -853,6 +900,14 @@ function os2dagsorden_access_helper_show_byradet_menu() {
       }
     }
   }
+  
+  if (!empty($user->field_follows_committee_pp)) { //follows committee PLUS
+    foreach ($user->field_follows_committee_pp['und'] as $user_committee_id) {
+      if (intval($term->tid) == $user_committee_id['tid']) {
+        return TRUE;
+      }
+    }
+  }
 
   return FALSE;
 }
@@ -872,6 +927,38 @@ function os2dagsorden_access_helper_user_presave(&$edit, $account, $category){
   if ($account->is_new && variable_get('os2dagsorden_user_default_meeting_category')){
     $user_category= variable_get('os2dagsorden_user_default_meeting_category');
     foreach($user_category as $key=>$value)
-      $edit['field_user_meetings_category']['und'][]=array('value' => $value);    
+      if ($value)  
+       $edit['field_user_meetings_category']['und'][]=array('value' => $value);    
   } 
+}
+
+function os2dagsorden_access_helper_check_user_can_download_bullet_point_attachment_file($fid){
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+            ->fieldCondition('field_bpa_file', 'fid', $fid, '=');
+    $result = $query->execute();
+    if (isset($result['node'])) {
+        $nids = array_keys($result['node']);
+        $bullet_point_attachments_id = reset($nids);
+        $query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+                ->fieldCondition('field_ref_attachment', 'target_id', $bullet_point_attachments_id, '=');
+        $result = $query->execute();
+        if (isset($result['node'])) {
+            $nids = array_keys($result['node']);
+            $bullet_point_id = reset($nids);           
+            $query = new EntityFieldQuery();
+            $query->entityCondition('entity_type', 'node')
+                ->fieldCondition('field_ref_bullet_points', 'target_id',  $bullet_point_id, '=');
+             $result = $query->execute(); 
+            if (isset($result['node'])){
+              $nids = array_keys($result['node']);
+             $meeting_id = reset($nids);      
+            }   
+        }
+    if (isset($meeting_id) && isset($bullet_point_id))
+       return os2dagsorden_access_helper_check_user_can_see_bullet_point($meeting_id, $bullet_point_id);
+    }
+           
+  return TRUE;  
 }

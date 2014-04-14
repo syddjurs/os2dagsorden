@@ -234,6 +234,17 @@ function os2dagsorden_content_modify_user_edit_form($form, $form_state, $uid){
       The committees user follows+ are presented in the right side pane.'),
   );
   
+   $form['follows_plus_plus'] = array(
+      '#access' => user_access('administer os2web', $full_user),
+      '#type' => 'select',
+      '#title' => t('Follows++:'),
+      '#options' => $com_select,
+      '#multiple' => TRUE,
+      '#size' => 10,
+      '#description' => t('For multiple selection hold <b>CTRL</b>.<br/>
+      The committees user follows++ are presented in the right side pane.'),
+  );
+  
   if ($uid) {
     //saving for usage in the submit function
     $form['uid'] = array(
@@ -291,6 +302,15 @@ function os2dagsorden_content_modify_user_edit_form($form, $form_state, $uid){
 	$selection[] = $follows_plus['tid'];
       }
       $form['follows_plus']['#default_value'] = $selection;
+    }
+    
+    if (field_get_items('user', $user, 'field_follows_committee_pp')){
+      $user_follows_plus_plus_field = field_get_items('user', $user, 'field_follows_committee_pp');
+      $selection = array();
+      foreach ($user_follows_plus_plus_field as $follows_plus){
+	$selection[] = $follows_plus['tid'];
+      }
+      $form['follows_plus_plus']['#default_value'] = $selection;
     }
   }
   
@@ -363,6 +383,14 @@ function os2dagsorden_content_modify_user_submit($form, $form_state){
     if ($follows_plus){
       foreach ($follows_plus as $tid){
 	$user->field_follows_committee_plus['und'][]['tid'] = $tid;
+      }
+    }
+    
+    //unsetting follows++ committees
+    $user->field_follows_committee_pp['und'] = array();
+    if ($follows_plus_plus){
+      foreach ($follows_plus_plus as $tid){
+	$user->field_follows_committee_pp['und'][]['tid'] = $tid;
       }
     }
   }
