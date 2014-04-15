@@ -218,14 +218,30 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#default_value' => variable_get('os2dagsorden_follows_committee_send_notification', false), 
   );
   $form['os2dagsorden_meeting_import']['os2dagsorden_send_timespan_of_notification'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+    '#value' => 'If meeting is not older than the set amount of day, notification is sent. <br/>Otherwise notification process is skipped',
+    '#title' => t('Meeting notification:'),
+  );
+
+  $form['os2dagsorden_meeting_import']['os2dagsorden_send_timespan_of_notification'] ['os2dagsorden_dagsorden_send_timespan_of_notification'] = array(
     '#type' => 'textfield',
-    '#title' => 'Meeting should be not older than:',
+    '#title' => 'Dagsorden meeting should be not older than:',
     '#maxlength' => 200,
     '#field_suffix' => 'Days',
     '#size' => 10,
-    '#description' => 'If meeting is not older than the set amount of day, notification is sent. <br/>Otherwise notification process is skipped',
-    '#default_value' => variable_get('os2dagsorden_send_timespan_of_notification', 10),
+    '#default_value' => variable_get('os2dagsorden_dagsorden_send_timespan_of_notification', 10),
   );
+
+  $form['os2dagsorden_meeting_import']['os2dagsorden_send_timespan_of_notification'] ['os2dagsorden_referat_send_timespan_of_notification'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Referat meeting should be not older than:',
+    '#maxlength' => 200,
+    '#field_suffix' => 'Days',
+    '#size' => 10,
+    '#default_value' => variable_get('os2dagsorden_referat_send_timespan_of_notification', 10),
+ );
  if (module_exists('os2dagsorden_file_conversion_manager')){
   $form['os2dagsorden_file_import'] = array(
     '#type' => 'fieldset',
