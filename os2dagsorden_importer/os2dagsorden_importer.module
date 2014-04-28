@@ -35,6 +35,10 @@ function os2dagsorden_importer_menu() {
     );
     return $items;
 }
+
+/**
+ * Access callback. Returns SOFD importer form
+ **/
 function _os2dagsorden_importer_page_callback() {
     return theme('table', array('header' => $head, 'rows' => $rows)) .
             '<h2>' . t('Run SOFD importer') . '</h2>' .
@@ -64,7 +68,9 @@ function os2dagsorden_importer_sync() {
     //os2dagsorden_importer_import_committees();
     //os2dagsorden_importer_import_meetings();
 }
-
+/**
+ * Implementation of hook_cronapi().
+ */
 function os2dagsorden_importer_cronapi($op, $job = NULL) {
   switch ($op) {
     case 'list':
@@ -83,10 +89,18 @@ function os2dagsorden_importer_cron() {
     os2dagsorden_importer_import_committees();
     os2dagsorden_importer_import_meetings();
 }
+
+/**
+ * Imports the user committees (user roles: member of, follows, follows+) from the remotely located xml view.
+ * Delete user committees(user roles: member of, follows, follows+), that are not found in the SOFD system any longer.
+ * @return none
+ */
+
 function os2dagsorden_importer_import_user_committees_improved(){
   $userCommittees = os2dagsorden_importer_load_user_committees_from_xml(); 
   _os2dagsorden_importer_process_user_committees_improved($userCommittees);  
 }
+
 /**
  * Imports the user committees (user roles: member of, follows, follows+) from the remotely located xml view.
  *
@@ -179,6 +193,15 @@ function _os2dagsorden_importer_process_user_committees_improved($xml_file){
   _os2dagsorden_importer_process_user_committees_update($xml_file);  
   _os2dagsorden_importer_process_user_committees_delete($xml_file);
 }
+
+/**
+ * Helper function. Processes the user committees xml file.
+ * Delegates to create/delete method based on the xml controller.
+ *
+ * @param mixed $xml_file xml file
+ *
+ * @return none
+ */
 function _os2dagsorden_importer_process_user_committees_update($xml_file) {
     $result = $xml_file->xpath('//Row');
 
@@ -375,6 +398,14 @@ function _os2dagsorden_importer_process_user_committees_update($xml_file) {
     }
 }
 
+/**
+ * Helper function. Processes the user committees xml file.
+ * Checks all the SOFD rights and delete those, that are not found in the SOFD system any longer.
+ * 
+ *  @param mixed $xml_file xml file
+ *
+ * @return none
+ */
 function _os2dagsorden_importer_process_user_committees_delete($xml_file){
  $users = db_select('users', 'u')
     ->fields('u', array('uid', 'name'))
