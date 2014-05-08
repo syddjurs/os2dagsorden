@@ -458,14 +458,14 @@ function _os2dagsorden_importer_process_user_committees_delete($xml_file){
    foreach ($full_user->field_user_committee['und'] as $com) { 
     if (!in_array($com['tid'], $userMemberOfCommittees)){
      //unset is part of
-      _os2dagsorden_importer_unset_committee_from_user($com['tid'], $full_user); }       
+      $full_user = _os2dagsorden_importer_unset_committee_from_user($com['tid'], $full_user); }       
     }
    }
   if (isset($full_user->field_follows_committee['und'])) {
    foreach ($full_user->field_follows_committee['und'] as $com) {  
     if (!in_array($com['tid'], $userFollowerCommittees)){
      //unset is part of
-     _os2dagsorden_importer_unset_user_follows_committee($com['tid'], $full_user); 
+     $full_user = _os2dagsorden_importer_unset_user_follows_committee($com['tid'], $full_user); 
     }
    }
   }
@@ -473,23 +473,22 @@ function _os2dagsorden_importer_process_user_committees_delete($xml_file){
    foreach ($full_user->field_follows_committee_plus['und'] as $com) {        
     if (!in_array($com['tid'], $userFollowerPlusCommittees))
      //unset is part of
-     _os2dagsorden_importer_unset_user_follows_committee_plus($com['tid'], $full_user);        
+     $full_user = _os2dagsorden_importer_unset_user_follows_committee_plus($com['tid'], $full_user);        
     }
    }
    if (isset($full_user->field_follows_committee_pp['und'])) {
    foreach ($full_user->field_follows_committee_pp['und'] as $com) {        
     if (!in_array($com['tid'], $userFollowerPlusPlusCommittees))
      //unset is part of
-     _os2dagsorden_importer_unset_user_follows_committee_plus_plus($com['tid'], $full_user);        
+     $full_user = _os2dagsorden_importer_unset_user_follows_committee_plus_plus($com['tid'], $full_user);        
     }
    }
-  // var_dump($userSystemID);
    if (isset($full_user->field_user_positions['und'])) {
       foreach ($full_user->field_user_positions['und'] as $pos_index => $pos) {
           $pos_full = taxonomy_term_load($pos['tid']);
           $pos_id=$pos_full->field_user_pos_id['und']['0']['value'];
-       if (!in_array($pos_id, $userSystemID))
-          _os2dagsorden_importer_delete_user_role(array('user_pos_id'=>$pos_id), $full_user);
+          if (!in_array($pos_id, $userSystemID))
+                _os2dagsorden_importer_delete_user_role(array('user_pos_id'=>$pos_id), $full_user);
     }
   }
  }
@@ -783,7 +782,10 @@ function _os2dagsorden_importer_unset_committee_from_user($tid, $user){
 	'field_user_committee' => $user_committees,
     );
 
-    user_save($user, $edit);
+    $user = user_save($user, $edit);
+    $cid = 'field:user:' . $user->uid;
+    cache_clear_all($cid, 'cache_field');
+    return $user;
 }
 
 
@@ -813,7 +815,10 @@ function _os2dagsorden_importer_add_user_follows_committee($tid, $user) {
             'field_follows_committee' => $old_list,
         );
 
-        user_save($user, $edit);
+        $user = user_save($user, $edit);
+        $cid = 'field:user:' . $user->uid;
+        cache_clear_all($cid, 'cache_field');
+        return $user;
     }
 }
 
@@ -839,7 +844,10 @@ function _os2dagsorden_importer_unset_user_follows_committee($tid, $user) {
 	'field_follows_committee' => $user_follows,
     );
 
-    user_save($user, $edit);
+    $user = user_save($user, $edit);
+    $cid = 'field:user:' . $user->uid;
+    cache_clear_all($cid, 'cache_field');
+    return $user;
 }
 
 /**
@@ -868,7 +876,10 @@ function _os2dagsorden_importer_add_user_follows_committee_plus($tid, $user) {
             'field_follows_committee_plus' => $old_list,
         );
 
-        user_save($user, $edit);
+        $user = user_save($user, $edit);
+        $cid = 'field:user:' . $user->uid;
+        cache_clear_all($cid, 'cache_field');
+        return $user;
     }
 }
 
@@ -894,7 +905,10 @@ function _os2dagsorden_importer_unset_user_follows_committee_plus($tid, $user) {
 	'field_follows_committee_plus' => $user_follows_plus,
     );
 
-    user_save($user, $edit);
+    $user = user_save($user, $edit);
+    $cid = 'field:user:' . $user->uid;
+    cache_clear_all($cid, 'cache_field');
+    return $user;
 }
 /**
  * Helper function. Adds the follows++ committee to the user
@@ -922,7 +936,10 @@ function _os2dagsorden_importer_add_user_follows_committee_plus_plus($tid, $user
             'field_follows_committee_pp' => $old_list,
         );
 
-        user_save($user, $edit);
+        $user = user_save($user, $edit);
+        $cid = 'field:user:' . $user->uid;
+        cache_clear_all($cid, 'cache_field');
+        return $user;
     }
 }
 
@@ -948,7 +965,10 @@ function _os2dagsorden_importer_unset_user_follows_committee_plus_plus($tid, $us
 	'field_follows_committee_pp' => $user_follows_plus_plus,
     );
 
-    user_save($user, $edit);
+    $user = user_save($user, $edit);
+    $cid = 'field:user:' . $user->uid;
+    cache_clear_all($cid, 'cache_field');
+    return $user;
 }
 /**
  * Helper function. Processes the committees xml.
