@@ -504,7 +504,10 @@ function _os2dagsorden_importer_process_user_committees_delete($xml_file){
  */
 function _os2dagsorden_importer_set_user_fullname($user, $name) {
     $user->field_user_full_name['und'][0]['value'] = $name;
-    user_save($user);
+    $user = user_save($user);
+    $cid = 'field:user:' . $user->uid;
+    cache_clear_all($cid, 'cache_field');
+    return $user;
 }
 
 /**
@@ -525,7 +528,10 @@ function _os2dagsorden_importer_update_meeting_category($user, $category) {
     }
     $user->field_user_meetings_category['und'][]['value'] = strtolower($category);
     
-    user_save($user);
+    $user = user_save($user);
+    $cid = 'field:user:' . $user->uid;
+    cache_clear_all($cid, 'cache_field');
+    return $user;
 }
 
 /**
@@ -632,7 +638,10 @@ function _os2dagsorden_importer_add_role_to_user($tid, $user) {
             'field_user_positions' => $user_positions,
         );
 
-        user_save($user, $edit);
+        $user = user_save($user, $edit);
+        $cid = 'field:user:' . $user->uid;
+        cache_clear_all($cid, 'cache_field');
+        return $user;
     }
 }
 
@@ -753,7 +762,10 @@ function _os2dagsorden_importer_add_committee_to_user($tid, $user) {
             'field_user_committee' => $user_committees,
         );
 
-        user_save($user, $edit);
+        $user = user_save($user, $edit);
+        $cid = 'field:user:' . $user->uid;
+        cache_clear_all($cid, 'cache_field');
+        return $user;
     }
 }
 
