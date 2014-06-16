@@ -133,7 +133,9 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#options' => array('true' => t('Show'), 'false' => t('Hide')),
     '#description' => t('This decides whether a search block title show/hide.'),
   );
-    $form['os2dagsorden_sidepane_menu_layout'] = array(
+
+  // sidemenu layout settings
+  $form['os2dagsorden_sidepane_menu_layout'] = array(
       '#type' => 'fieldset',
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
@@ -159,7 +161,26 @@ function os2dagsorden_settings_settings_form($form, $form_state) {
     '#title' => t('Show the calendar block on calendar pages:'),
     '#description' => t('This decides whether show/hide the calendar block on the right side pane on the calendar pages.'),
     '#default_value' => variable_get('os2dagsorden_show_calender', FALSE),
-  ); 
+  );
+  $vid = db_select('taxonomy_vocabulary', 'tv')
+            ->fields('tv', array('vid'))
+            ->condition('machine_name', 'committee')
+            ->execute()
+            ->fetchField();
+
+  $committees = taxonomy_get_tree($vid);
+  foreach ($committees as $committee){
+    $options_committee[$committee->tid] = $committee->name;
+  }
+
+  $form['os2dagsorden_sidepane_menu_layout']['os2dagsorden_budget_committee'] = array(
+    '#type' => 'select',
+    '#title' => t('Select a committee which meeting will be available in <b>Budget</b> menu link'),
+    '#description' => t('This decides committee will update the meeting link in Budget menu link in the side panel'),
+    '#options' => $options_committee,
+    '#empty_option' => t('- None - '),
+    '#default_value' => variable_get('os2dagsorden_budget_committee', FALSE),
+  );
     
   //Meeting import settings
   $form['os2dagsorden_meeting_import'] = array(

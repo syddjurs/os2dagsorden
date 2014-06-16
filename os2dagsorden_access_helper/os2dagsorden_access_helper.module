@@ -914,6 +914,21 @@ function os2dagsorden_access_helper_show_byradet_menu() {
   return FALSE;
 }
 
+/**
+ * Hook to node insert.
+ * The function checks the committee of the meeting, and if it matched with the selected committeed for Budget in the settings,
+ * then this meeting is considered as the right Budget meeting and the custom URL is updated to point to it.
+ */
+function os2dagsorden_access_helper_node_insert($node){
+  if ($node->type === 'meeting'){
+    if ($node->field_committee['und'][0]['tid'] == variable_get('os2dagsorden_budget_committee', FALSE)){
+      $path['source'] = 'meeting/' . $node->nid;
+      $path['alias'] = 'budget';
+      path_save($path);
+    }
+  }
+}
+
 function os2dagsorden_access_helper_get_user() {
   global $user;
   if (!isset($GLOBALS['full_user']) && $user->uid) {
