@@ -36,7 +36,7 @@ function os2dagsorden_sidepane_menu_menu_default_menu_links() {
     'menu_name' => 'menu-sidepane-menu',
     'link_path' => 'http://drupal.org',
     'router_path' => '',
-    'link_title' => 'Budget 2014',
+    'link_title' => 'Budget',
     'options' => array(
       'attributes' => array(
         'id' => 'menu-byradet',
